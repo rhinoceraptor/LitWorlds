@@ -1,4 +1,8 @@
 \documentclass[12pt, letterpaper]{report}
+\usepackage[xindy]{glossaries}
+\makeglossaries
+
+
 \author{Owen Watson, John Lewis, Tim Cunningham}
 \title{Literate World Project Report}
 \date{March 12, 2014}
@@ -14,7 +18,10 @@
 	%-- Abstract --%
 	\chapter{Abstract}
 	\par
-	EnCore Literary Worlds is an interactive, networked environment for exploration of literary works. Each environment is created by an ordinary user familiar with the source work, to create a more immersive experience for other users and students.
+	EnCore Literary Worlds is an interactive, networked environment for exploration of literary works. Each environment is created by an ordinary user familiar with the source work, to create a more immersive experience for other users and students. The system is designed to be very easy for new and non-technical users, as well as being complex enough for creation of manipulable objects, abilities, and interaction between users in the environment.
+	
+	\par
+	The EnCore Literary Worlds system can be used for many genres and types of worlds, with both original or derivative works. It can be used to extrapolate source text, create second worlds, create role play or alternative reality, or even virtual tours and museums.
 	
 	\par
 	This project proposes a drop in replacement for the existing, outdated Java browser applet for interacting with the EnCore Literary Worlds system. The new system will be fully compatible with the existing script, server and backend tools and will work with common web browsers, both on desktop and mobile platforms.
@@ -27,11 +34,21 @@
 	\par
 	EnCore Literary Worlds is built on open source software, using enCore 4, which itself is built from LambdaMOO. LambdaMOO stands for Multi-User Domain, Object Oriented.
 	
+	\par
+	Introduce client
+	
+
+	\par
+	Way too much detail about client
+
+	\par 
+	why Java is evil
+	
 	
 	%-- Stories --%
 	\chapter{Stories}
 	\par
-	In eXtreme Programming, stories are functional descriptions in the system. The stories are rigorously defined such that there is no doubt whether or not it is implemented correctly and completely.
+	In eXtreme Programming, stories are functional descriptions in the system. The stories are rigorously defined such that there is no doubt whether or not the story is implemented correctly and completely. The stories will be written, a short description of the functionality in question. Then, the story will be estimated by the development team. Upon this feedback, the client is able to prioritize which stories get implemented first so that each release contains the most important functions.
 	
 	\par
 	As it stands now, the claim made in "Teaching Literature in Virtual Worlds", that "All is needed [to access Literary Worlds] is web access and a standard browser set to 'accept popups'" is no longer true. Java applets have fallen out of favor, and therefore require significant configuration on the user end to access Literary Worlds. Moving into the future, fewer and fewer users will have Java applets enabled on their desktop computers, and none of the major mobile platforms currently support a Java Runtime Environment in the browser. Therefore, a new client compatible with current and future browsers is needed.
@@ -39,14 +56,16 @@
 	\par
 	The new system will provide a secure, convenient interface to the existing system, over the telnet networking protocol. The first release of the system will strictly a feature for feature reimplementation of the Java applet system, using JavaScript and Node.js. This will ensure that Literary Worlds can be used by school districts, literary enthusiasts, and the general public without time consuming and potentially insecure modifications to their web browser configuration. It will also ensure that the system will be accessible through new web platforms, on smartphones and tablets of all types.
 	
-		\par
+	\par
 	The most basic implementation of the software will provide the text console interface that of original Java applet. This input will be accepted in a console interface, and will then be sent back to the telnet server running under EnCore v4, and the console response sent back to the user's terminal.
 	
 	\par
-	The secondary functionality of the original Java applet is the graphical interface, which displays text, images, video, audio, and other multimedia. This interface provides a more intuitive and less intimidating way for users to interact with the literary worlds.
+	The secondary functionality of the original Java applet is the graphical interface, which displays text, images, video, audio, and other multimedia. This interface provides a more intuitive and less intimidating way for users to interact with the literary worlds. 
 	
 	%-- Spikes --%
 	\chapter{Spikes}
+	\par
+	Implementing a web server in Node.JS is trivial.
 	
 	%-- Legal --%
 	\chapter{Legal}
@@ -55,22 +74,24 @@
 	
 	
 	%-- Glossary --%
-	\usepackage{glossaries}
 	\chapter{Glossary}
 
+		
 	\newglossaryentry{MOO}
 	{
-		name=MOO,
-  		description={Multi-User, Object Oriented}
+		name={MOO},
+		description={Multi User, Object Oriented},
+		sort=MOO
 	}
-	
-	\newglossaryentry{eXtreme Programming}
+	\newglossaryentry{XP}
 	{
-		name=eXtreme Programming,
-		description ={A software development methodology}
+		name={eXtreme Programming},
+		description={A software development methodology that stresses communication, estimation, planning, testing, and flexibility.},
+		sort=XP
 	}
-	\makeglossaries
-	
+
+	\glsaddall
+	\printglossary
 	
 	%-- References - Using APA 6th edition style - citationmachine.net --%
 	\chapter{References}
