@@ -2,6 +2,8 @@
 \author{Owen Watson, John Lewis, Tim Cunningham}
 \title{Literate World Project Report}
 \date{March 12, 2014}
+\linespread{1.5}
+
 
 \begin{document}
 	%-- title page --%
@@ -28,6 +30,8 @@
 	
 	%-- Stories --%
 	\chapter{Stories}
+	\par
+	In eXtreme Programming, stories are functional descriptions in the system. The stories are rigorously defined such that there is no doubt whether or not it is implemented correctly and completely.
 	
 	\par
 	As it stands now, the claim made in "Teaching Literature in Virtual Worlds", that "All is needed [to access Literary Worlds] is web access and a standard browser set to 'accept popups'" is no longer true. Java applets have fallen out of favor, and therefore require significant configuration on the user end to access Literary Worlds. Moving into the future, fewer and fewer users will have Java applets enabled on their desktop computers, and none of the major mobile platforms currently support a Java Runtime Environment in the browser. Therefore, a new client compatible with current and future browsers is needed.
@@ -35,6 +39,11 @@
 	\par
 	The new system will provide a secure, convenient interface to the existing system, over the telnet networking protocol. The first release of the system will strictly a feature for feature reimplementation of the Java applet system, using JavaScript and Node.js. This will ensure that Literary Worlds can be used by school districts, literary enthusiasts, and the general public without time consuming and potentially insecure modifications to their web browser configuration. It will also ensure that the system will be accessible through new web platforms, on smartphones and tablets of all types.
 	
+		\par
+	The most basic implementation of the software will provide the text console interface that of original Java applet. This input will be accepted in a console interface, and will then be sent back to the telnet server running under EnCore v4, and the console response sent back to the user's terminal.
+	
+	\par
+	The secondary functionality of the original Java applet is the graphical interface, which displays text, images, video, audio, and other multimedia. This interface provides a more intuitive and less intimidating way for users to interact with the literary worlds.
 	
 	%-- Spikes --%
 	\chapter{Spikes}
@@ -46,11 +55,21 @@
 	
 	
 	%-- Glossary --%
+	\usepackage{glossaries}
 	\chapter{Glossary}
-	\par
-	MOO - Multi-User, Object Oriented
-	\par
+
+	\newglossaryentry{MOO}
+	{
+		name=MOO,
+  		description={Multi-User, Object Oriented}
+	}
 	
+	\newglossaryentry{eXtreme Programming}
+	{
+		name=eXtreme Programming,
+		description ={A software development methodology}
+	}
+	\makeglossaries
 	
 	
 	%-- References - Using APA 6th edition style - citationmachine.net --%
