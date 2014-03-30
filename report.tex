@@ -1,12 +1,66 @@
 \documentclass[12pt, letterpaper]{report}
-\usepackage[nonumberlist, toc]{glossaries}
+\usepackage{hyperref}
 \usepackage{listings}
+\usepackage{color}
+\usepackage[toc]{glossaries}
+
 \makeglossaries
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstdefinelanguage{JavaScript}
+{
+  keywords={typeof, new, true, false, catch, function, return, 		null, catch, switch, var, if, in, while, do, else, case, break, require},
+  comment=[s]{/*}{*/},
+  morecomment=[l]//,
+  string=[b]",
+  morestring=[b]'
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	All glossary entries are defined here.  These must be compiled
+%	outside of Gummi and will show in the final document.
+%
+%	Commands
+%		$latex report
+%		$makeglossaries report
+%		$latex report
+%
+%	This produces a div file which can be converted to a pdf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newglossaryentry{MOO}
 {
 	name={MOO},
-	description={Multi User, Object Oriented}
+	description={MUD (Multi-User Domain), Object Oriented. a text-based online virtual reality system to which multiple users (players) are connected at the same time.}
+}
+\newglossaryentry{MUD}
+{
+	name={MUD},
+	description={Multi-User Domain. A multiplayer real-time virtual world, usually text-based. MUDs combine elements of role-playing games, hack and slash, player versus player, interactive fiction, and online chat.}
+}
+\newglossaryentry{LambdaMOO}
+{
+	name={LambdaMOO Server},
+	description={A network-accessible, multi-user, programmable, interactive system well-suited to the construction of text-based adventure games, conferencing systems, and other collaborative software}
+}
+\newglossaryentry{enCore}
+{
+	name={enCore},
+	description={A computer program that allows multiple users to connect via the Internet to a shared database of rooms and other objects and interact with each other and the database in real time}
+}
+\newglossaryentry{TECFAMOO}
+{
+	name={TECFAMOO},
+	description={A text-based virtual reality. It is a Virtual Space for Educational Technology, Education, Research and Life at TECFA, School of Psychology and Education, University of Geneva, Switzerland}
+}
+\newglossaryentry{TKMOO}
+{
+	name={TKMOO},
+	description={An advanced chat client suitable for use with MUDs and especially MOO systems.}
+}
+\newglossaryentry{MOOtcan}
+{
+	name={MOOtcan},
+	description={A simple MOO-client, Java applet, used in enCore. It is currently only usable for MOO-connections as it sends and read lines, not characters, through and from the socket. This class glues together a GUI (currently only a panel inside a frame) and a network-connection. It supports processing of the stream from the MOO.}
 }
 \newglossaryentry{XP}
 {
@@ -16,7 +70,7 @@
 \newglossaryentry{freeSoftware}
 {
 	name={Free Software},
-	description={Software licensed such that the user has the freedom to run, redistribute, and study the source code as they wish, and that any modifications must also be licensed under the same or compatible licenses}
+	description={Software licensed such that the user has the freedom to run, redistribute, and study the source code as they wish}
 }
 \newglossaryentry{LARP}
 {
@@ -26,24 +80,35 @@
 \newglossaryentry{GNU}
 {
     name={GNU},
-    description={A free software operating system developed by the GNU project. Its software is typically bundled with the Linux kernel to form an operating system commonly called Linux. GNU is a recursive acronym, standing for 'GNU's Not Unix!'}
+    description={A free software operating system developed by the GNU project. Its software is typically bundled with the Linux kernel to form an operating system commonly called Linux}
 }
 \glsaddall
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	All the title page information is listed here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \author{Owen Watson, John Lewis, Tim Cunningham}
-\title{Literary Worlds Feasibility Report}
+\title{Literary Worlds Project Report}
 \date{March 12, 2014}
-\linespread{1.5}
+\linespread{1.25}
 
 
+\usepackage{graphicx}
 \begin{document}
-	%-- title page --%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Title Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\begin{titlepage}
 	\Huge \maketitle \par
 	\end{titlepage}
 	
-	%-- Abstract --%
-	\chapter{Abstract}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Abstract
+%
+%	May need to be changed to reflect what is written later.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{abstract}
 	\par
 	EnCore Literary Worlds is an interactive, networked environment for exploration of literary works. Each environment is created by an ordinary user familiar with the source work, to create a more immersive experience for other users and students. The system is designed to be very easy for new and non-technical users, as well as being complex enough for creation of manipulable objects, abilities, and interaction between users in the environment.
 	
@@ -60,38 +125,75 @@
 	
 	\par
 	This project proposes a drop in replacement for the first software release for the existing, outdated Java browser applet for interacting with the EnCore Literary Worlds system. The new system will be fully compatible with the existing script, server and backend tools and will work with common web browsers, both on desktop and mobile platforms well into the future, being built with JavaScript and other current web technologies.
-	
-	
-
+		
 	\par
     Further releases may augment the feature set offered by the browser client, update the version of the enCore software, or implement other client stories as needed.
-	%-- TOC --%
+    \end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Table of Contents 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
 	\tableofcontents
 
-	%-- Index --%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Start of Background Chapter.
+%
+%	The background chapter will contain the following:
+%		Client Introduction
+%			-The who, what, when, and where of the original project
+%			-What is the project
+%			-Any and everything else about the client
+%		Current Events on the Literate Worlds Project
+%			-Current status of the project
+%			-Problems
+%			-Solution to this problem
+%		Our Solution to the problem
+%			-What is our solution
+%			-Describe how this solves the problems
+%			-What can be done in the future
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\chapter{Background}
 	
-	\section{Client}
+	\section{The People Behind Literary Worlds}
 	\par
-	Allen Webb is a professor of Comparative Literature and Postcolonial Studies in the Western Michigan University Department of English. He edited the book, \textit{Teaching Literature in Virtual Worlds} (among other books, articles and presentations), and designed a literary virtual world for which he was awarded the A+ Award by Web English Teacher.
-    	
-	\section{Existing System}
+	Allen Webb is a professor of Comparative Literature and Postcolonial Studies in the Western Michigan University Department of English. He edited the book, \textit{Teaching Literature in Virtual Worlds} (among other books, articles and presentations), and designed a literary virtual world (Village of Umuofia) for which he was awarded the A+ Award by Web English Teacher.
+	
 	\par
-	EnCore Literary Worlds is built on free software, using enCore 4, which itself is built from LambdaMOO, MOO standing for Multi-User Domain, Object Oriented. LambdaMOO was created in January 1991 by Pavel Curtis at Xerox PARC.\cite{Wired}
+	Robert Rozema is a professor of English Education at Grand Valley State University.  In the processes of completing a doctoral degree, he built (along with his students) the prototype virtual literary world, while studying Aldous Huxley's \textit{Brave New World}. Robert was awarded the National Technology Leadership Award for his expirence and use of the literary world for education.  He completed his doctoral degree under Dr. Allen Web in 2004.
+	
+	\par
+	The initial literary world created by Robert, along with several others created by Joe Haughey (doctoral student in English Education at Western Michigan University), Cara Aver (graduate student in Arts of Teaching English at Western Michigan Unversity) and Allen Web, became the foundation for the grant that funded the Literary Worlds project.
+	
+	\section{Funding}
+	\par
+	Funding for the Literary Worlds projects came from the President's Innovation Fund.  The past president of Western Michigan University, Judtih I. Bailey, created the grant, looking for "truly transformational" ideas. A pool of \$2 million was to be distributed to selected projects, ranging from \$25,000 to \$1 million. Literary Worlds was one of seven project select to receive money from this grant. \$116,898 was awarded to the Literary Worlds project.
+	
+		\section{Technology}
+		\par
+		The technology framework for the Literary Worlds Project is enCore 4, an open-source software package emerging from text-based multi-user domain technology and designed for educational use.   Built on LambdaMOO (a Multi-user domain Object Oriented) with a built-in server-side client called Xpress, enCore allows builders to create online learning environments, featuring visual images, easy navigation between rooms, static avatars, synchronous participant communication, textual activities, the incorporation and complex utilization of a wide range of objects including textual, visual, audio and video files, maintenance of running records of actions and speech, the incorporation of “bots” (virtual characters with a pre-programmed speaking repertoire), and a wide range of programmable options.  EnCore is not three dimensional, but it is an immersive, self-contained multi-user virtual environment (MUVE).
 	
 	\par 
+	The enCore MOO project was created in 1997, its aim to to create easy and convenient access to MOO systems and scripts by creating a point and click interface around the typically text based existing tools. enCore is based on the Feb 02, 1997 version of the original LambdaCore Database and supplemented with a number of useful educational tools and enhancements, such as support for the enCore Xpress and MacMOOSE interfaces. Literary Worlds uses enCore version 4 to allow users access to the created vitrual worlds.
 	
-		\par 
-	The enCore MOO project was created in 1997, its aim to to create easy and convenient access to MOO systems and scripts by creating a point and click interface around the typically text based existing tools.
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=1.00]{"enCore Screen.png}
+\caption{enCoreExpress}
+\end{figure}
 
 	\par
-	The existing system uses a Java browser applet on the client end. The server end of the system runs on Mac OS X, version 10.6.8, with two 2.66 gigahertz dual core Xeon processors, four gigabytes of RAM, and several hard disks. A replacement system would likely be deployed on CentOS, Ubuntu or Debian Linux since there is no licensing fee or special hardware requirement.
-
-	\par 
+	The existing system uses a Java browser applet on the client end. The server end of the system runs on Mac OS X, version 10.6.8, with two 2.66 GHz dual core Xeon processors, four GB of RAM, and several hard disks. A replacement system would likely be deployed on CentOS, Ubuntu or Debian Linux since there is no licensing fee or special hardware requirement.
 	
-	
-	
-	%-- Stories --%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Start of Stories Chapter
+%
+%	The stories chapter will contain the following:
+%		-An explanation of stories in XP
+%		-Explain the projects functionality and requirements
+%		-A general explanation of each story for the project
+%		-Total time and risk for release one 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\chapter{Stories}
 	\par
 	In eXtreme Programming, stories are functional descriptions in the system. The stories are rigorously defined such that there is no doubt whether or not the story is implemented correctly and completely. The stories will be written, a short description of the functionality in question. Then, the story will be estimated by the development team. Upon this feedback, the client is able to prioritize which stories get implemented first so that each release contains the most important functions.
@@ -105,7 +207,7 @@
 	is no longer true. Java browser applets have fallen out of favor, and therefore require significant configuration on the user end to access Literary Worlds. Moving into the future, fewer and fewer users will have Java applets enabled on their desktop computers, and none of the major mobile platforms currently support a Java Runtime Environment in the browser. Therefore, a new client compatible with current and future browsers is needed.
 	
 	\par
-	The new system will provide a secure, convenient interface to the existing system, over the telnet networking protocol. The first release of the system will strictly a feature for feature reimplementation of the Java browser applet system, using JavaScript and Node.js. This will ensure that Literary Worlds can be used by school districts, literary enthusiasts, and the general public without time consuming and potentially insecure modifications to their web browser configuration. It will also ensure that the system will be accessible through new web platforms, on smart phones and tablets of all types and operating systems.
+	The new system will provide a secure, convenient interface to the existing system, over the telnet networking protocol. The first release of the system will strictly a feature for feature re-implementation of the Java browser applet system, using JavaScript and Node.js. This will ensure that Literary Worlds can be used by school districts, literary enthusiasts, and the general public without time consuming and potentially insecure modifications to their web browser configuration. It will also ensure that the system will be accessible through new web platforms, on smart phones and tablets of all types and operating systems.
 	
 	\section{Console Interface}
 	The most basic implementation of the software will provide the text console interface that of original Java applet. This input will be accepted in a console interface, and will then be sent back to the telnet server running under EnCore v4, and the console response sent back to the user's terminal.
@@ -114,11 +216,7 @@
 	The secondary functionality of the original Java applet is the graphical interface, which displays text, images, video, audio, and other multimedia. This interface provides a more intuitive and less intimidating way for users to interact with the literary worlds. 
 	
 	\section{Secondary Features}
-	Convenience features for the console interface could be implemented after the console and graphical systems are fully functional. Currently, the console interface does not implement color highlighting of different classes of text. It has no support for tab completion. It also does not have a feature that tries to correct typos or malformed commands. All of these would make the console interface much more convenient to use, and provide a more immersive experience.
-	
-	\par
-	
-	
+	Convenience features for the console interface could be implemented after the console and graphical systems are fully functional. Currently, the console interface does not implement color highlighting of different classes of text. It has no support for tab completion. It also does not have a feature that tries to correct typos or malformed commands. All of these would make the console interface much more convenient to use, and provide a more immersive experience.	
 	
 	%-- Spikes --%
 	\chapter{Spikes}
