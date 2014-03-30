@@ -16,7 +16,7 @@
 \newglossaryentry{freeSoftware}
 {
 	name={Free Software},
-	description={Software licensed such that the user has the freedom to run, redistribute, and study the source code as they wish}
+	description={Software licensed such that the user has the freedom to run, redistribute, and study the source code as they wish, and that any modifications must also be licensed under the same or compatible licenses}
 }
 \newglossaryentry{LARP}
 {
@@ -26,12 +26,12 @@
 \newglossaryentry{GNU}
 {
     name={GNU},
-    description={A free software operating system developed by the GNU project. Its software is typically bundled with the Linux kernel to form an operating system commonly called Linux}
+    description={A free software operating system developed by the GNU project. Its software is typically bundled with the Linux kernel to form an operating system commonly called Linux. GNU is a recursive acronym, standing for 'GNU's Not Unix!'}
 }
 \glsaddall
 
 \author{Owen Watson, John Lewis, Tim Cunningham}
-\title{Literary Worlds Project Report}
+\title{Literary Worlds Feasibility Report}
 \date{March 12, 2014}
 \linespread{1.5}
 
@@ -75,14 +75,17 @@
 	\par
 	Allen Webb is a professor of Comparative Literature and Postcolonial Studies in the Western Michigan University Department of English. He edited the book, \textit{Teaching Literature in Virtual Worlds} (among other books, articles and presentations), and designed a literary virtual world for which he was awarded the A+ Award by Web English Teacher.
     	
+	\section{Existing System}
 	\par
-	EnCore Literary Worlds is built on free software, using enCore 4, which itself is built from LambdaMOO. LambdaMOO stands for Multi-User Domain, Object Oriented.
+	EnCore Literary Worlds is built on free software, using enCore 4, which itself is built from LambdaMOO, MOO standing for Multi-User Domain, Object Oriented. LambdaMOO was created in January 1991 by Pavel Curtis at Xerox PARC.\cite{Wired}
+	
+	\par 
 	
 		\par 
 	The enCore MOO project was created in 1997, its aim to to create easy and convenient access to MOO systems and scripts by creating a point and click interface around the typically text based existing tools.
 
 	\par
-	The existing system uses a Java browser applet on the client end. The server end of the system runs on Mac OS X, version 10.6.8, with two 2.66 GHz dual core Xeon processors, four GB of RAM, and several hard disks. A replacement system would likely be deployed on CentOS, Ubuntu or Debian Linux since there is no licensing fee or special hardware requirement.
+	The existing system uses a Java browser applet on the client end. The server end of the system runs on Mac OS X, version 10.6.8, with two 2.66 gigahertz dual core Xeon processors, four gigabytes of RAM, and several hard disks. A replacement system would likely be deployed on CentOS, Ubuntu or Debian Linux since there is no licensing fee or special hardware requirement.
 
 	\par 
 	
@@ -113,6 +116,9 @@
 	\section{Secondary Features}
 	Convenience features for the console interface could be implemented after the console and graphical systems are fully functional. Currently, the console interface does not implement color highlighting of different classes of text. It has no support for tab completion. It also does not have a feature that tries to correct typos or malformed commands. All of these would make the console interface much more convenient to use, and provide a more immersive experience.
 	
+	\par
+	
+	
 	
 	%-- Spikes --%
 	\chapter{Spikes}
@@ -120,7 +126,7 @@
 	
 
     \lstset{frame=tb,
-    language=JavaScript,
+    %language=javascript,
     aboveskip=3mm,
     belowskip=3mm,
     showstringspaces=false,
@@ -153,19 +159,25 @@
     \end{lstlisting}
     
     
-	\section{Ubuntu Server}
+	\section{Debian Server}
 	\par
-	Ubuntu is a distribution of GNU/Linux based on another distribution, Debian, commonly used in server deployments, with almost 30\% of web server market share.
+	Debian is a distribution of GNU/Linux, which is commonly used in server and desktop deployments, it claims almost 30\% of the total web server market share.
 	
 	\par 
-	EnCore MOO is distributed via Source Forge as a tar.gz file. An Ubuntu virtual machine was set up under Oracle VirtualBox, and enCore was installed. The server must be compiled from source, so GCC must be installed, and a Bourne Shell script automates compilation the software.
+	EnCore MOO is distributed via Source Forge as a tar.gz file. A Debian virtual server was created, configured to add a user for running the MOO, root login over SSH disabled, and then EnCore MOO as well as Apache webserver installed. To do this, we need several components: a copy of enCore version 5.0, patches for enCore, and the LambdaMOO server.
     	
 	%-- Legal --%
 	\chapter{Legal}
 	\section{Licensing}
 	\par
-	EnCore MOO uses the GNU GPLv2 free software license. It is managed by the enCore Consortium, a 501(c)3 corporation. The consortium has recieved several grants, one in 2006, and one in 2008.
+	EnCore MOO uses the GNU General Public License, version Two free software license. It is managed by the enCore Consortium, a 501(c)3 corporation. The consortium has received several grants, one in 2006, and one in 2008.
 	
+	\par
+	Of the many requirements mandated by the GNU GPLv2, the most important one to consider are that all derivative work that is distributed or released must also be licensed under the GPLv2 license, and typically may also be relicensed under subsequent GNU GPL licenses, such as the GPLv3 license.
+	
+	\section{EnCore Consortium}
+	\par
+    
 	\par 
 	From their website, the consortium's mission statement is,
 	
@@ -173,7 +185,8 @@
 	The enCore Consortium seeks to coordinate and promote the open source development and distribution of the enCore Program.
 	\end{quotation}
 	
-	
+	\par
+    The consortium uses a board of directors administration model, and was formed in 1997. Their goal is to convert text based MOOs into user friendly, graphical interfaces that can be used without training.
 	%-- Glossary --%
 	%\chapter{Glossary}
 
@@ -189,13 +202,17 @@
 
     \bibitem{Webb Bio}
     "Allen Webb - English - Western Michigan University." . Western Michigan University. Web. 18 Mar 2014. \\
-    \urlhhttp{http://www.wmich.edu/english/directory/faculty/webb.html}.
+    \urlhhttp{http://www.wmich.edu/english/directory/faculty/webb.html}
     
     \bibitem{GPLv2}
     "GNU General Public License, version 2". GNU Project. Web. 18 Mar 2014. \\
     \urlhhttp{http://www.gnu.org/licenses/gpl-2.0.html}
-	\end{thebibliography}
-
 	
+	
+	\bibitem{Wired}
+	"Rheingold , Howard. "PARC Is Back!." \textit{Wired}. 02 1994 \\
+	\urlhhttp{http://www.wired.com/wired/archive/2.02/parc\_pr.html}
+
+	\end{thebibliography}
 	
 \end{document}
