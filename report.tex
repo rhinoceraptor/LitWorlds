@@ -2,6 +2,8 @@
 \usepackage[nonumberlist, toc]{glossaries}
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{chngcntr}
+\counterwithout{figure}{chapter}
 \graphicspath{ {graphics/} }
 \makeglossaries
 %\definecolor{mymauve}{rgb}{0.58,0,0.82}
@@ -185,10 +187,11 @@ The enCore MOO project was created in 1997, its aim to to create easy and conven
 The existing system uses the enCore Xpress Java browser applet on the client end. The server end of the system runs on Mac OS X, version 10.6.8, with two 2.66 gigahertz dual core Xeon processors, four gigabytes of RAM, and several hard disks. A replacement system would likely be deployed on CentOS, Ubuntu or Debian Linux since there is no licensing fee or special hardware requirement.
 
 \par
-\begin{figure}[ht!]
+\begin{figure}[htp]
 \centering
 \includegraphics{enCoreScreen.png}
 \caption{A screenshot of the existing enCore Xpress system}
+\label{fig1}
 \label{overflow}
 \end{figure}
 
