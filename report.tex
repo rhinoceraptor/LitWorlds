@@ -3,6 +3,8 @@
 \usepackage{listings}
 \usepackage{graphicx}
 \usepackage{chngcntr}
+\usepackage{hyperref}
+\usepackage{breakurl}
 \counterwithout{figure}{chapter}
 \graphicspath{ {graphics/} }
 \makeglossaries
@@ -15,6 +17,17 @@
   string=[b]",
   morestring=[b]'
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This mess allows urls to not run off the end of the page, it's unfortunate but necessary.
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	All glossary entries are defined here.  These must be compiled
@@ -122,7 +135,7 @@ The EnCore Literary Worlds system can be used for many genres and types of world
 While all of the literary virtual worlds described in this book [Teaching Literature in Virtual Worlds] allow group interaction, several are explicitly designed as Alternative Reality Games (ARG) activities (%
 \textit{Thoughtcrime, Midsummer Madness, The Virtual Tempest}). Other worlds (%
 \textit{The Village of Umufofia, Mice, Men, and Migrant Labor, Gatsby's American Dream})
-could be described as a virtual Live Action Role Plays (LARPs), activities typically prepared by a "gamemaster", in this case the virtual world builder.\cite[4]{Webb}
+could be described as a virtual Live Action Role Plays (LARPs), activities typically prepared by a "gamemaster", in this case the virtual world builder. \cite[4]{Webb}
 \end{quotation}
 
 \par
@@ -168,17 +181,17 @@ Allen Webb is a professor of Comparative Literature and Postcolonial Studies in 
 Robert Rozema is a professor of English Education at Grand Valley State University.  In the processes of completing a doctoral degree, he built (along with his students) the prototype virtual literary world, while studying Aldous Huxley's \textit{Brave New World}. Robert was awarded the National Technology Leadership Award for his experience and use of the literary world for education.  He completed his doctoral degree under Dr. Allen Web in 2004.
 
 \par
-The initial literary world created by Robert, along with several others created by Joe Haughey (doctoral student in English Education at Western Michigan University), Cara Aver (graduate student in Arts of Teaching English at Western Michigan University) and Allen Web, became the foundation for the grant that funded the Literary Worlds project.\cite{VirtWorldsTech}
+The initial literary world created by Robert, along with several others created by Joe Haughey (doctoral student in English Education at Western Michigan University), Cara Aver (graduate student in Arts of Teaching English at Western Michigan University) and Allen Web, became the foundation for the grant that funded the Literary Worlds project. \cite{VirtWorldsTech}
 
 \section{Funding}
 \par
-Funding for the Literary Worlds projects came from the President's Innovation Fund.  The past president of Western Michigan University, Judtih I. Bailey, created the grant, looking for "truly transformational" ideas. A pool of \$2 million was to be distributed to selected projects, ranging from \$25,000 to \$1 million. Literary Worlds was one of seven project select to receive money from this grant. \$116,898 was awarded to the Literary Worlds project.\cite{VirtWorldsTech}
+Funding for the Literary Worlds projects came from the President's Innovation Fund.  The past president of Western Michigan University, Judtih I. Bailey, created the grant, looking for "truly transformational" ideas. A pool of \$2 million was to be distributed to selected projects, ranging from \$25,000 to \$1 million. Literary Worlds was one of seven project select to receive money from this grant. \$116,898 was awarded to the Literary Worlds project. \cite{VirtWorldsTech}
 
 \section{Technology}
 \par
 \textit{Virtual Worlds for Literary Study: Technological Pedagogical Content Knowledge in \textit{The Village of Umuofia} and other Literary Worlds} describes the technology stack employed by the Literary Worlds project:
 \begin{quotation}
-The technology framework for the Literary Worlds Project is enCore 4, an free software software package emerging from text-based multi-user domain technology and designed for educational use. Built on LambdaMOO (a Multi-user domain Object Oriented, created in January 1991 by Pavel Curtis at Xerox PARC.\cite{Wired}) with a built-in server-side client called Xpress, enCore allows builders to create online learning environments, featuring visual images, easy navigation between rooms, static avatars, synchronous participant communication, textual activities, the incorporation and complex utilization of a wide range of objects including textual, visual, audio and video files, maintenance of running records of actions and speech, the incorporation of bots (virtual characters with a pre-programmed speaking repertoire), and a wide range of programmable options.  EnCore is not three dimensional, but it is an immersive, self-contained multi-user virtual environment (MUVE).\cite{VirtWorldsTech}
+The technology framework for the Literary Worlds Project is enCore 4, an free software software package emerging from text-based multi-user domain technology and designed for educational use. Built on LambdaMOO (a Multi-user domain Object Oriented, created in January 1991 by Pavel Curtis at Xerox PARC.\cite{Wired}) with a built-in server-side client called Xpress, enCore allows builders to create online learning environments, featuring visual images, easy navigation between rooms, static avatars, synchronous participant communication, textual activities, the incorporation and complex utilization of a wide range of objects including textual, visual, audio and video files, maintenance of running records of actions and speech, the incorporation of bots (virtual characters with a pre-programmed speaking repertoire), and a wide range of programmable options.  EnCore is not three dimensional, but it is an immersive, self-contained multi-user virtual environment (MUVE). \cite{VirtWorldsTech}
 \end{quotation}
 \par 
 The enCore MOO project was created in 1997, its aim to to create easy and convenient access to MOO systems and scripts by creating a point and click interface around the typically text based existing tools. EnCore is based on the Feb 02, 1997 version of the original LambdaCore Database and supplemented with a number of useful educational tools and enhancements, such as support for the enCore Xpress and MacMOOSE interfaces. Literary Worlds uses enCore version 4 to allow users access to the created virtual worlds.
@@ -190,9 +203,59 @@ The existing system uses the enCore Xpress Java browser applet on the client end
 \begin{figure}[htp]
 \centering
 \includegraphics{enCoreScreen.png}
-\caption{A screenshot of the existing enCore Xpress system}
+\caption{A screenshot of the existing enCore Xpress system \cite{xpress}}
 \label{fig1}
 \label{overflow}
+\end{figure}
+
+\section{Problems With Literary Worlds}
+\par
+The enCore Xpress connection, used to view the virtual worlds, depend on Java applets for functionality.  These applets require the Java Runtime Environment to execute properly. Java applets would run as a pop up in a browser.  However, due to security issues with Java, the applets no long work in this manner.
+
+\par
+In 2013 a major security issue using a zero-day vulnerability (an unknown vulnerability that the developers had no time to address.)  Oracle, owner of Java, attempted to fix the issue with patch, but caused more vulnerabilities.  This cycle continued, to the point where Java applets can no longer run without changing various permissions.
+The new requirements to run Java applets make it inconvenient to open in a browser and possibly dangerous.
+
+\par
+Along with the security issues, there is another problem with the enCore Xpress interface.  Modern web applications are taking advantage the performance benefits of HTML5.  EnCore Xpress version 4 was released in 2004, unable to take advantage of this.  
+
+\section{Solutions}
+Modern web applications, today, use HTML5, CSS3, JavaScript, and SVG, eliminating the need to use Java applets or other native applications. The web browser renders (interprets) the HTML allowing for portability across all the major operating systems. Literary Worlds needs to be updated to reflect the current state of web applications. The current connections options are the text only, telnet connection (MOOtcan) and the graphic based, enCore Xpress. 
+
+\par
+The telnet connection to Literary Worlds can be written just an JavaScript framework, Node.js.  Node.js is used to make scalable server-side network applications. Along with Node.js, socket.io (a JavaScript library for real time web applications) would be used to implement the telnet connection without Java or other plugins.
+
+\par
+The enCore Xpress client can be written using HTML5 and JavaScript to implement the current features needed to interact with the MOO database. The main functionality is to have the ability to display images, sounds, and videos from the MOO database.  The application must be able to handle interaction with other players as well.
+
+\par
+Other solutions for bringing Literary Worlds update would be to use the newest version of enCore, version 5.  This version no long uses a telnet connection or Java and has a HTML chat application built in to enCore Xpress.  However, version 5 is still in beta and has little contribution to the project.  This solution would require more time to redeveloping the existing system that still recommends telnet and Java.  Piece of this code can be extracted and used to help build a stand alone web application for Literary Worlds.
+
+\section{Node.js Performance}
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.3]{threading_node.png}
+\caption{Node.js Server \cite{fullStackJS}}
+\label{node1}
+\end{figure}
+
+\par
+Node.js runs on a single thread with non-blocking I/O (Figure~\ref{node1}).  This allows for thousands of connections with no loss in performance.
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=0.3]{threading_java.png}
+\caption{Java Server \cite{fullStackJS}}
+\label{node2}
+\end{figure}
+
+\par
+A Java server, as well as most other languages, does not support the asynchronous non blocking pattern that node.js has Figure~\ref{node2}).
+
+\begin{figure}[htp]
+\centering
+\includegraphics[scale=3.0]{javavsnodejs.png}
+\caption{Java vs Node.js Concurrency \cite{javaVSnode}}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -212,7 +275,7 @@ In eXtreme Programming, stories are functional descriptions in the system. The s
 As it stands now, the statement made in "Teaching Literature in Virtual Worlds", that 
 
 \begin{quotation}
-All is needed [to access Literary Worlds] is web access and a standard browser set to 'accept popups'(Webb 9)
+All is needed [to access Literary Worlds] is web access and a standard browser set to "accept popups" \cite[9]{Webb}
 \end{quotation}
 is no longer true. Java browser applets have fallen out of favor, and therefore require significant configuration on the user end to access Literary Worlds. Moving into the future, fewer and fewer users will have Java applets enabled on their desktop computers, and none of the major mobile platforms currently support a Java Runtime Environment in the browser. Therefore, a new client compatible with current and future browsers is needed.
 
@@ -278,10 +341,10 @@ httpHelloWorld.createServer(function(request, response)
 Debian is a distribution of GNU/Linux, which is commonly used in server and desktop deployments, it claims almost 30\% of the total web server market share.
 
 \par 
-EnCore MOO is distributed via Source Forge as a tar.gz file. A Debian Wheezy virtual private server was created. It is configured to add a user with sudo permissions for running the MOO, root login over SSH disabled, and then enCore MOO and Apache web server installed. To do this, the server needs several components: a copy of enCore version 5.0, and the LambdaMOO server.
+EnCore MOO is distributed via Source Forge as a tar.gz file. A Debian Wheezy virtual private server was created. It is configured to add a user with sudo permissions for running the MOO, root login over SSH disabled, and then enCore MOO and Apache web server installed. The server needs several components for the MOO: a copy of enCore version 5.0, and the LambdaMOO server. LambdaMOO is compiled with GCC
 
 \par
-The relevant files for ther server are placed in the /usr/local/moo directory. An alias for Apache web server needs to be applied, by default enCore uses the /encore directory. /encore is aliased to /usr/local/moo/encore. Then the restart script is called once the files and put in place and the LambdaMOO server is started with the enCore database.
+The relevant files for ther server are placed in the /usr/local/moo directory. An alias for Apache web server needs to be applied, by default enCore uses the /encore directory. /encore is aliased to /usr/local/moo/encore. Then the restart script is called once the files and put in place, and then the LambdaMOO server is started on port 7000 (web interface), and port 7777 (telnet interface) with the enCore database (via a command line argument).
 	
 %-- Legal --%
 \chapter{Legal}
@@ -290,7 +353,7 @@ The relevant files for ther server are placed in the /usr/local/moo directory. A
 EnCore MOO uses the GNU General Public License, version Two free software license. It is managed by the enCore Consortium, a 501(c)3 corporation. The consortium has received several grants, one in 2006, and one in 2008.
 
 \par
-Of the many requirements mandated by the GNU GPLv2, the most important one to consider are that all derivative work that is distributed or released must also be licensed under the GPLv2 license, and typically may also be relicensed under subsequent GNU GPL licenses, such as the GPLv3 license.\cite{GPLv2}
+Of the many requirements mandated by the GNU GPLv2, the most important one to consider are that all derivative work that is distributed or released must also be licensed under the GPLv2 license, and typically may also be relicensed under subsequent GNU GPL licenses, such as the GPLv3 license. \cite{GPLv2}
 
 \section{EnCore Consortium}
 \par
@@ -336,6 +399,18 @@ The consortium uses a board of directors administration model, and was formed in
 
 \bibitem{VirtWorldsTech}
 Webb, Allen. "Virtual Worlds for Literary Study: Technological Pedagogical Content Knowledge in \textit{The Village of Umuofia} and other Literary Worlds ." Trans. Array \textit{RESEARCH IN ELA AND TECHNOLOGY}. Print.
+
+\bibitem{fullStackJS}
+Kar, Shubhra. "Mobile App Development with Full-Stack Javascript." \textit{StrongLoop}. N.p., 12 12 2013. Web. 30 Mar 2014. \\
+\burl{http://strongloop.com/strongblog/mobile-app-development-with-full-stack-javascript-part-1-of-4-loopback/}
+
+\bibitem{javaVSnode}
+Schwartz, Baron, and Kyle Redinger. "Analysis of PayPal's Node-vs-Java benchmarks." \textit{VividCortex}. N.p.. Web. 30 Mar 2014.  \\
+\burl{https://vividcortex.com/blog/2013/12/09/analysis-of-paypals-node-vs-java-benchmarks/}
+
+\bibitem{xpress}
+"Understanding the enCore Screen Appearance." \textit{enCore v.4 User's Guide}. TEFCA, 30 6 2004. Web. 30 Mar 2014. \\
+\burl{http://tecfa.unige.ch/moo/encoremoo-v4-guide/interface.html}
 
 \end{thebibliography}
 	
