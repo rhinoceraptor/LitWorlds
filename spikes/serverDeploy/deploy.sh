@@ -9,17 +9,17 @@
 ENCORE_URL=http://downloads.sourceforge.net/project/ele/enCore%20Database/enCore%204.0.1/enCore-4.0.1.tar.gz
 LAMBDA_MOO_URL=http://lingo.uib.no/v5/downloads/LambdaMOO-1.8.1-unicode.tar.gz
 INSTALLDIR=/usr/local/moo
-APACHEDIR=/
+APACHEDIR=/etc/apache2/apache2.conf
 #########################################################
 
 # If anything goes wrong, abort the script
 set -e
 
 # install sudo, apache-webserver, gcc
-apt-get install sudo apache2 gcc
+apt-get install sudo apache2 gcc make bison
 
 # create a moo user, with sudo group, 
-useradd -g wheel -G admin -s /bin/bash -p users -d /home/moo -m moo
+useradd -g wheel -s /bin/bash -p users -d /home/moo -m moo
 
 # make INSTALLDIR directory
 mkdir ${INSTALLDIR}
@@ -49,19 +49,20 @@ mkdir bin
 cp MOO-1.8.1/moo bin/
 cp MOO-1.8.1/restart bin/
 
-# make the encore directory
-cd ${INSTALLDIR}
-mkdir encore
-
 # go to the apache install directory and create an alias for Xpress
 cd ${APACHEDIR}
+echo -n "# Alias for encore" >> apache.conf
 echo -n "Alias /encore \"/usr/local/moo/encore\"" >> apache.conf
+
+# Add enCore.db, moo, and restart to the bin directory
+cd ${INSTALLDIR}
+
 
 # check that the bin directory has the correct contents
 cd ${INSTALLDIR}/bin
 ls > contents.txt
-echo enCore.db  moo  restart > correct.txt
-if diff file1 file2 >/dev/null ; then
+echo -n "enCore.db  moo  restart" > correct.txt
+if diff correct.txt correct.txt >/dev/null ; then
 	echo -n "Correct Directoy contents"
 	rm contents.txt correct.txt
 else
