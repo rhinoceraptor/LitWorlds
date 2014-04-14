@@ -1,4 +1,2 @@
-CS4900-LitWorld-Rpt
-===================
+Main repository for the Literary Worlds update project.
 
-Report for the Literate World project
