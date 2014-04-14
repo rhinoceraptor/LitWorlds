@@ -1,0 +1,27 @@
+<html>
+<head>
+<script>
+function textAlert()
+{
+	var x = document.getElementById("textbox");
+	if (x.value === "help")
+	{
+		getHelp(x.value)
+	}
+}
+function getHelp(elId,text) 
+{
+	document.getElementById("textbox").value += ("\n" + "Hello World");
+}
+</script>
+
+</head>
+<body>
+<center>
+
+<textarea rows="20" cols="70" type="text" id="textbox" onkeypress="if (event.keyCode == 13) textAlert()" placeholder="Enter some text!">
+</textarea>
+
+</center>
+</body>
+</html>
