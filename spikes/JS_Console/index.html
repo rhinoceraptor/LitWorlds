@@ -3,15 +3,15 @@
 <script>
 function textAlert()
 {
-	var x = document.getElementById("textbox");
-	if (x.value === "help")
+	var helpStr = document.getElementById("textbox");
+	if (helpStr.value === "help")
 	{
-		getHelp(x.value)
+		getHelp(helpStr.value);
 	}
 }
 function getHelp(elId,text) 
 {
-	document.getElementById("textbox").value += ("\n" + "Hello World");
+	document.getElementById("textbox").value += ("\nHello World");
 }
 </script>
 
