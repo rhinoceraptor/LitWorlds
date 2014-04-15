@@ -20,6 +20,8 @@ My Favorite Reporters
 
 ## How to use app.js
 `./app.js -h` diplays help
+
 Example:
-	`./app.js -q=".js"`
-	Displays .js files with default depth
+`./app.js -q=".js"`
+
+Displays .js files with default depth
