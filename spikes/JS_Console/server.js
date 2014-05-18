@@ -103,6 +103,8 @@ ser_io.sockets.on('connection', function(socket)
 	// Socket IO recieves the information typed into the client and sends to the server
 	socket.on('client_data', function(data) 
 	{
-		process.stdout.write(data.letter);
+		process.stdout.write(data.msg);
+		if (data.msg === 'ping\n')
+			socket.emit('server_data', {'msg': "pong"});
 	});
 });

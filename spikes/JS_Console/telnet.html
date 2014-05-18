@@ -7,17 +7,21 @@
 		{
 			resize: none;
 			color: #F8F8F2;
-			background-color: #3E3D32;
+			background-color: #272822;
 			border-width: 3px;
-			border-color: #272822;
+			border-color: #3E3D32;
 			border-style: solid;
+		}
+		#consoleWrapper
+		{
+			padding: 0px;
 		}
 	</style>
 </head>
 <body>
 <center>
 
-<div id="welcome">Welcome to the Telnet Console!</div>
+<!--<div id="welcome">Welcome to the Telnet Console!</div>-->
 
 <script>
 var socket = io.connect();
@@ -26,8 +30,6 @@ $(document).ready(function()
 {
 	$("#console").keypress(function(e)
 	{
-		socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
-
 		// Handle new lines
 		if (e.charCode === 13)
 		{
@@ -38,34 +40,46 @@ $(document).ready(function()
 			var $consoleIn = $("#console");
 			var $logOut = $("#backlog");
 
-			// Variables for the values of the text areas
-			var inVal = $consoleIn.val();
-			var outVal = $logOut.val()
-
 			// Append to backlog, then erase console
 			// If there is no text already, don't add a newline.
-			if (outVal != '')
-				$logOut.val(outVal + '\n' + inVal);
+			if ($logOut.val() != '')
+				$logOut.val($logOut.val() + '\n' + $consoleIn.val());
 			else
-				$logOut.val(outVal + inVal);
+				$logOut.val($logOut.val() + $consoleIn.val());
 
+			// Send the entered line back to the server with newline
+			socket.emit('client_data', {'msg': $consoleIn.val() + '\n'});
+			alert("emitting " + $consoleIn.val());
+
+			// Erase console
 			$consoleIn.val('');
 
 			// Automatically scroll the output
 			$logOut.scrollTop($logOut[0].scrollHeight - $logOut.height());
 
-			// Send newline back to Node server
-			socket.emit('client_data', {'letter' : '\n'});
+			// Add server messages to backlog textarea
+			socket.on('server_data', function(msg)
+			{
+				var $logOut = $("#backlog");
+				// Append to backlog, then erase console
+				// If there is no text already, don't add a newline.
+				if ($logOut.val() != '')
+					$logOut.val($logOut.val() + '\n' + msg.msg);
+				else
+					$logOut.val($logOut.val() + msg.msg);
+			});
 		}
 	});
 });
 </script>
 
+<div id = "consoleWrapper">
 <textarea readonly rows = "20" cols = "100" type = "text" id = "backlog" placeholder = "Telnet backlog goes here">
 </textarea>
-<p />
+
 <textarea rows = "1" cols = "100" type = "text" id = "console" placeholder = "Enter text here">
 </textarea>
+</div>
 
 </center>
 </body>
