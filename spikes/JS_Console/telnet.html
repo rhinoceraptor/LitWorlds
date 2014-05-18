@@ -20,45 +20,46 @@
 <div id="welcome">Welcome to the Telnet Console!</div>
 
 <script>
-	var socket = io.connect();
+var socket = io.connect();
 
-	socket.on('date', function(data)
+$(document).ready(function()
+{
+	$("#console").keypress(function(e)
 	{
-		$("#date").text(data.date);
-	});
+		socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
 
-	$(document).ready(function()
-	{
-		$("#console").keypress(function(e)
+		// Handle new lines
+		if (e.charCode === 13)
 		{
-			socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
+			// Prevent newlines from being made in text input
+			e.preventDefault();
 
-			// Handle new lines
-			if (e.charCode === 13)
-			{
+			// Variables for console and backlog text areas
+			var $consoleIn = $("#console");
+			var $logOut = $("#backlog");
 
-				// Variables for console and backlog text areas
-				var $consoleIn = $("#console");
-				var $logOut = $("#backlog");
+			// Variables for the values of the text areas
+			var inVal = $consoleIn.val();
+			var outVal = $logOut.val()
 
-				// Variables for the values of the text areas
-				var inVal = $consoleIn.val();
-				var outVal = $logOut.val()
-
-				// Append to backlog, then erase console
+			// Append to backlog, then erase console
+			// If there is no text already, don't add a newline.
+			if (outVal != '')
+				$logOut.val(outVal + '\n' + inVal);
+			else
 				$logOut.val(outVal + inVal);
-				$consoleIn.val('');
 
-				// Automatically scroll the output
-				$logOut.scrollTop($logOut[0].scrollHeight - $logOut.height());
+			$consoleIn.val('');
 
-				// Send newline back to Node server
-				socket.emit('client_data', {'letter' : '\n'});
-			}
-		});
+			// Automatically scroll the output
+			$logOut.scrollTop($logOut[0].scrollHeight - $logOut.height());
+
+			// Send newline back to Node server
+			socket.emit('client_data', {'letter' : '\n'});
+		}
 	});
+});
 </script>
-<div id="date"></div>
 
 <textarea readonly rows = "20" cols = "100" type = "text" id = "backlog" placeholder = "Telnet backlog goes here">
 </textarea>
