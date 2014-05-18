@@ -7,9 +7,9 @@
 		{
 			resize: none;
 			color: #F8F8F2;
-			background-color: #272822;
+			background-color: #3E3D32;
 			border-width: 3px;
-			border-color: #000000;
+			border-color: #272822;
 			border-style: solid;
 		}
 	</style>
@@ -36,6 +36,7 @@
 			// Handle new lines
 			if (e.charCode === 13)
 			{
+
 				// Variables for console and backlog text areas
 				var $consoleIn = $("#console");
 				var $logOut = $("#backlog");
@@ -47,6 +48,9 @@
 				// Append to backlog, then erase console
 				$logOut.val(outVal + inVal);
 				$consoleIn.val('');
+
+				// Automatically scroll the output
+				$logOut.scrollTop($logOut[0].scrollHeight - $logOut.height());
 
 				// Send newline back to Node server
 				socket.emit('client_data', {'letter' : '\n'});
