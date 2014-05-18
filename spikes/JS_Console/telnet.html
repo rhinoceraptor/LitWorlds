@@ -1,0 +1,67 @@
+<html>
+<head>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+	<style>
+		textarea
+		{
+			resize: none;
+			color: #F8F8F2;
+			background-color: #272822;
+			border-width: 3px;
+			border-color: #000000;
+			border-style: solid;
+		}
+	</style>
+</head>
+<body>
+<center>
+
+<div id="welcome">Welcome to the Telnet Console!</div>
+
+<script>
+	var socket = io.connect();
+
+	socket.on('date', function(data)
+	{
+		$("#date").text(data.date);
+	});
+
+	$(document).ready(function()
+	{
+		$("#console").keypress(function(e)
+		{
+			socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
+
+			// Handle new lines
+			if (e.charCode === 13)
+			{
+				// Variables for console and backlog text areas
+				var $consoleIn = $("#console");
+				var $logOut = $("#backlog");
+
+				// Variables for the values of the text areas
+				var inVal = $consoleIn.val();
+				var outVal = $logOut.val()
+
+				// Append to backlog, then erase console
+				$logOut.val(outVal + inVal);
+				$consoleIn.val('');
+
+				// Send newline back to Node server
+				socket.emit('client_data', {'letter' : '\n'});
+			}
+		});
+	});
+</script>
+<div id="date"></div>
+
+<textarea readonly rows = "20" cols = "100" type = "text" id = "backlog" placeholder = "Telnet backlog goes here">
+</textarea>
+<p />
+<textarea rows = "1" cols = "100" type = "text" id = "console" placeholder = "Enter text here">
+</textarea>
+
+</center>
+</body>
+</html>
