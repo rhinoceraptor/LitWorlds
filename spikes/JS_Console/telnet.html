@@ -21,8 +21,6 @@
 <body>
 <center>
 
-<!--<div id="welcome">Welcome to the Telnet Console!</div>-->
-
 <script>
 var socket = io.connect();
 
@@ -49,26 +47,24 @@ $(document).ready(function()
 
 			// Send the entered line back to the server with newline
 			socket.emit('client_data', {'msg': $consoleIn.val() + '\n'});
-			alert("emitting " + $consoleIn.val());
 
 			// Erase console
 			$consoleIn.val('');
 
 			// Automatically scroll the output
 			$logOut.scrollTop($logOut[0].scrollHeight - $logOut.height());
-
-			// Add server messages to backlog textarea
-			socket.on('server_data', function(msg)
-			{
-				var $logOut = $("#backlog");
-				// Append to backlog, then erase console
-				// If there is no text already, don't add a newline.
-				if ($logOut.val() != '')
-					$logOut.val($logOut.val() + '\n' + msg.msg);
-				else
-					$logOut.val($logOut.val() + msg.msg);
-			});
 		}
+	});
+	// Add server messages to backlog textarea
+	socket.on('server_data', function(msg)
+	{
+		var $logOut = $("#backlog");
+		// Append to backlog, then erase console
+		// If there is no text already, don't add a newline.
+		if ($logOut.val() != '')
+			$logOut.val($logOut.val() + '\n' + msg.msg);
+		else
+			$logOut.val($logOut.val() + msg.msg);
 	});
 });
 </script>

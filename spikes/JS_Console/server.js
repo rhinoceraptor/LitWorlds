@@ -105,6 +105,9 @@ ser_io.sockets.on('connection', function(socket)
 	{
 		process.stdout.write(data.msg);
 		if (data.msg === 'ping\n')
+		{
 			socket.emit('server_data', {'msg': "pong"});
+			console.log("emitting pong");
+		}
 	});
 });
