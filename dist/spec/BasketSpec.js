@@ -4,7 +4,7 @@
 JavaScript format for Jasmine testing:
 describe("Basket Class", function() 
 {
-	// individual tests ge here	
+	// individual tests go here	
 })
  */
 var test;
@@ -14,8 +14,8 @@ test = {};
 beforeEach(function() {
   var item2;
   test.basket = new Basket();
-  test.item = new Item(0x1, "Macbook Air", "Newer, thinner, better", 799);
-  item2 = new Item(0x2, "Magic Trackpad", "Better than a mouse", 50);
+  test.item = new Item(1, "Macbook Air", "Newer, thinner, better", 799);
+  item2 = new Item(2, "Magic Trackpad", "Better than a mouse", 50);
   return test.basket.add(item2, 1);
 });
 
@@ -36,8 +36,8 @@ describe("Basket Class", function() {
   });
   return it("should be able to update quantity when adding an item already in the basket", function() {
     var priorCountVal;
-    priorCountVal = test.basket.getQuantity(0x1);
+    priorCountVal = test.basket.getQuantity(1);
     test.basket.add(test.item, 1);
-    return expect(test.basket.getQuantity(0x1)).toEqual(priorCountVal + 1);
+    return expect(test.basket.getQuantity(1)).toEqual(priorCountVal + 1);
   });
 });
