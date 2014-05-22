@@ -51,6 +51,21 @@ rpnCalc = (function() {
     }
   };
 
+  rpnCalc.prototype.sum = function(prevSum) {
+    if (this.index > 0) {
+      if (prevSum == null) {
+        prevSum = 0;
+      }
+      return this.sum(this.pop() + prevSum);
+    } else {
+      if (prevSum != null) {
+        return prevSum;
+      } else {
+        return false;
+      }
+    }
+  };
+
   return rpnCalc;
 
 })();

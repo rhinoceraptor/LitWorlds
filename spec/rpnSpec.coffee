@@ -48,4 +48,13 @@ describe "RPN class", ->
 
 	it "should return false if a subtract is not possible", ->
 		test.calc.push(3)
-		expect(test.calc.add()).toEqual(false)
+		expect(test.calc.subtract()).toEqual(false)
+
+	it "should return false for sum if the stack is 0", ->
+		expect(test.calc.sum()).toEqual(false)
+
+	it "should be able to sum several numbers on the stack", ->
+		test.calc.push(-3)
+		test.calc.push(6)
+		test.calc.push(9)
+		expect(test.calc.sum()).toEqual(12)

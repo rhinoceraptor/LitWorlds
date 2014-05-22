@@ -48,8 +48,17 @@ describe("RPN class", function() {
     test.calc.push(300);
     return expect(test.calc.subtract()).toEqual(288);
   });
-  return it("should return false if a subtract is not possible", function() {
+  it("should return false if a subtract is not possible", function() {
     test.calc.push(3);
-    return expect(test.calc.add()).toEqual(false);
+    return expect(test.calc.subtract()).toEqual(false);
+  });
+  it("should return false for sum if the stack is 0", function() {
+    return expect(test.calc.sum()).toEqual(false);
+  });
+  return it("should be able to sum several numbers on the stack", function() {
+    test.calc.push(-3);
+    test.calc.push(6);
+    test.calc.push(9);
+    return expect(test.calc.sum()).toEqual(12);
   });
 });

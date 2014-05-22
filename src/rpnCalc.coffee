@@ -35,3 +35,14 @@ class rpnCalc
 			return numOne - numTwo
 		else
 			return false
+
+	sum: (prevSum) ->
+		if @index > 0
+			prevSum ?= 0
+			@sum(@pop() + prevSum)
+		else
+			if prevSum?
+				return prevSum
+
+			else
+				return false
