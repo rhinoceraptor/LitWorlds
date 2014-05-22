@@ -10,18 +10,42 @@ describe "RPN class", ->
 
 	it "should be able to push numbers to the stack", ->
 		test.calc.push(37)
-		expect(test.calc.getStackAtIndex(0)).toEqual 37
+		test.calc.push(67)
+		expect(test.calc.getStackAtIndex(1)).toEqual 67
 
-	it "should be able to increment the index when pushing numbers", ->
+	it "should increment the index when pushing numbers", ->
 		test.calc.push(52)
-		expect(test.calc.returnIndex()).toEqual 1
+		test.calc.push(67)
+		expect(test.calc.returnIndex()).toEqual 2
 
 	it "should be able to pop numbers from the stack", ->
 		test.calc.push(24)
 		expect(test.calc.pop()).toEqual 24
 
-	it "decrement the index when popping numbers", ->
-		test.calc.push(106)
-		test.calc.push(28)
-		test.calc.pop()
+	it "should decrement the index when popping numbers", ->
+								# index starts at 0
+		test.calc.push(106)		# index == 1
+		test.calc.push(28)		# index == 2
+		test.calc.pop()			# index == 1
 		expect(test.calc.returnIndex()).toEqual 1
+
+	it "should return false if an impossible pop is attempted", ->
+		expect(test.calc.pop()).toEqual(false)
+
+	it "should be able to perform an add operation", ->
+		test.calc.push(2000)
+		test.calc.push(4923)
+		expect(test.calc.add()).toEqual(6923)
+
+	it "should return false if an add is not possible", ->
+		test.calc.push(3)
+		expect(test.calc.add()).toEqual(false)
+
+	it "should be able to perform a subtract operation", ->
+		test.calc.push(12)
+		test.calc.push(300)
+		expect(test.calc.subtract()).toEqual(288)
+
+	it "should return false if a subtract is not possible", ->
+		test.calc.push(3)
+		expect(test.calc.add()).toEqual(false)

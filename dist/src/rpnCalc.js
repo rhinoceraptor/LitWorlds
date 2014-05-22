@@ -21,8 +21,34 @@ rpnCalc = (function() {
   };
 
   rpnCalc.prototype.pop = function() {
-    this.index--;
-    return this.stack[this.index];
+    if (this.index > 0) {
+      this.index--;
+      return this.stack[this.index];
+    } else {
+      return false;
+    }
+  };
+
+  rpnCalc.prototype.add = function() {
+    var numOne, numTwo;
+    if (this.index > 1) {
+      numOne = this.pop();
+      numTwo = this.pop();
+      return numOne + numTwo;
+    } else {
+      return false;
+    }
+  };
+
+  rpnCalc.prototype.subtract = function() {
+    var numOne, numTwo;
+    if (this.index > 1) {
+      numOne = this.pop();
+      numTwo = this.pop();
+      return numOne - numTwo;
+    } else {
+      return false;
+    }
   };
 
   return rpnCalc;

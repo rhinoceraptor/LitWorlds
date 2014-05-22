@@ -14,5 +14,24 @@ class rpnCalc
 		@index++
 
 	pop: ->
-		@index--
-		return @stack[@index]
+		if @index > 0
+			@index--
+			return @stack[@index]
+		else
+			return false
+			
+	add: ->
+		if @index > 1
+			numOne = @pop()
+			numTwo = @pop()
+			return numOne + numTwo
+		else
+			return false
+
+	subtract: ->
+		if @index > 1
+			numOne = @pop()
+			numTwo = @pop()
+			return numOne - numTwo
+		else
+			return false

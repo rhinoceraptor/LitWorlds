@@ -13,20 +13,43 @@ describe("RPN class", function() {
   });
   it("should be able to push numbers to the stack", function() {
     test.calc.push(37);
-    return expect(test.calc.getStackAtIndex(0)).toEqual(37);
+    test.calc.push(67);
+    return expect(test.calc.getStackAtIndex(1)).toEqual(67);
   });
-  it("should be able to increment the index when pushing numbers", function() {
+  it("should increment the index when pushing numbers", function() {
     test.calc.push(52);
-    return expect(test.calc.returnIndex()).toEqual(1);
+    test.calc.push(67);
+    return expect(test.calc.returnIndex()).toEqual(2);
   });
   it("should be able to pop numbers from the stack", function() {
     test.calc.push(24);
     return expect(test.calc.pop()).toEqual(24);
   });
-  return it("decrement the index when popping numbers", function() {
+  it("should decrement the index when popping numbers", function() {
     test.calc.push(106);
     test.calc.push(28);
     test.calc.pop();
     return expect(test.calc.returnIndex()).toEqual(1);
+  });
+  it("should return false if an impossible pop is attempted", function() {
+    return expect(test.calc.pop()).toEqual(false);
+  });
+  it("should be able to perform an add operation", function() {
+    test.calc.push(2000);
+    test.calc.push(4923);
+    return expect(test.calc.add()).toEqual(6923);
+  });
+  it("should return false if an add is not possible", function() {
+    test.calc.push(3);
+    return expect(test.calc.add()).toEqual(false);
+  });
+  it("should be able to perform a subtract operation", function() {
+    test.calc.push(12);
+    test.calc.push(300);
+    return expect(test.calc.subtract()).toEqual(288);
+  });
+  return it("should return false if a subtract is not possible", function() {
+    test.calc.push(3);
+    return expect(test.calc.add()).toEqual(false);
   });
 });
