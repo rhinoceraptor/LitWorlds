@@ -84,3 +84,4 @@ class rpnCalc
 			return Math.sqrt @pop()
 		else
 			return false
+

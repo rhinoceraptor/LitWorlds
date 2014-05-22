@@ -1,7 +1,14 @@
+buildSpec 	= ./dist/spec/ ./spec/rpnSpec.coffee 
+buildSrc 	= ./dist/src/ ./src/*.coffee 
+
 build:
-	coffee -c -b -o ./dist/spec/ ./spec/rpnSpec.coffee 
-	coffee -c -b -o ./dist/src/ ./src/rpnCalc.coffee 
+	 coffee -c -b -o $(buildSrc)
+	 coffee -c -b -o $(buildSpec)
 
 watch:
-	coffee -w -b -o ./dist/spec/ ./spec/rpnSpec.coffee &
-	coffee -w -b -o ./dist/src/ ./src/rpnCalc.coffee &
+	screen -S watchSrc -d -m bash -c 'coffee -w -b -o $(buildSrc)'
+	screen -S watchSpec -d -m bash -c 'coffee -w -b -o $(buildSpec)'
+
+stop:
+	screen -X -S watchSrc quit
+	screen -X -S watchSpec quit

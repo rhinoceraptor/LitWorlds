@@ -5,7 +5,7 @@ beforeEach ->
 
 describe "RPN class", ->
 
-# Simple stack functionality
+# Test simple stack functionality
 ###############################################################################
 	it "should have index of 0 at start", ->
 		expect(test.calc.returnIndex()).toEqual 0
@@ -131,4 +131,3 @@ describe "RPN class", ->
 
 	it "should return false if a square root it not possible", ->
 		expect(test.calc.sqrt()).toEqual(false)
-
