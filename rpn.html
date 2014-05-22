@@ -1,0 +1,55 @@
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+	<script src="dist/src/interface.js"></script>
+	<script src="dist/src/rpnCalc.js"></script>
+	<style>
+		textarea
+		{
+			resize: none;
+			color: #F8F8F2;
+			background-color: #272822;
+			border-width: 3px;
+			border-color: #3E3D32;
+			border-style: solid;
+		}
+		#calcWrapper
+		{
+			padding: 0px;
+		}
+	</style>
+</head>
+<body>
+<center>
+<div id = "calcWrapper">
+	<textarea readonly rows = "20" cols = "40" type = "text" id = "stack">
+	</textarea>
+	<p />
+	<textarea rows = "1" cols = "40" type = "text" id = "entry">
+	</textarea>
+	<p />
+
+	<button type = "button" id = "1" onclick = "num(1)">1</button>
+	<button type = "button" id = "2" onclick = "num(2)">2</button>
+	<button type = "button" id = "3" onclick = "num(3)">3</button>
+	<button type = "button" id = "+" onclick = "add()">+</button>
+	<p />
+	<button type = "button" id = "4" onclick = "num(4)">4</button>
+	<button type = "button" id = "5" onclick = "num(5)">5</button>
+	<button type = "button" id = "6" onclick = "num(6)">6</button>
+	<button type = "button" id = "-" onclick = "sub()">-</button>
+	<p />
+	<button type = "button" id = "7" onclick = "num(7)">7</button>
+	<button type = "button" id = "8" onclick = "num(8)">8</button>
+	<button type = "button" id = "9" onclick = "num(9)">9</button>
+	<button type = "button" id = "*" onclick = "mult()">*</button>
+	<p />
+	<button type = "button" id = "0" onclick = "num(0)">0</button>
+	<button type = "button" id = "Enter" onclick = "enterButton()">Enter</button>
+	<button type = "button" id = "/" onclick = "div()">/</button>
+	
+</div>
+
+</center>
+</body>
+</html>
