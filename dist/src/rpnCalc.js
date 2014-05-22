@@ -111,6 +111,14 @@ rpnCalc = (function() {
     }
   };
 
+  rpnCalc.prototype.sqrt = function() {
+    if (this.index > 0) {
+      return Math.sqrt(this.pop());
+    } else {
+      return false;
+    }
+  };
+
   return rpnCalc;
 
 })();

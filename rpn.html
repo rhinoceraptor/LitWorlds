@@ -1,0 +1,87 @@
+<html>
+<head>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+	<style>
+		textarea
+		{
+			resize: none;
+			color: #F8F8F2;
+			background-color: #272822;
+			border-width: 3px;
+			border-color: #3E3D32;
+			border-style: solid;
+		}
+		#calcWrapper
+		{
+			padding: 0px;
+		}
+	</style>
+</head>
+<body>
+<center>
+
+<script>
+$(document).ready(function()
+{
+	$("#entry").keypress(function(e)
+	{
+		// Handle new lines
+		if (e.charCode === 13)
+		{
+			// Prevent newlines from being made in text input
+			e.preventDefault();
+
+			// Variables for entry and stack text areas
+			var $entryBox = $("#entry");
+			var $stackBox = $("#stack");
+
+			// Append to stack, then erase entry
+			// If there is no text already, don't add a newline.
+			if ($stackBox.val() != '')
+				$stackBox.val($stackBox.val() + '\n' + $entryBox.val());
+			else
+				$stackBox.val($stackBox.val() + $entryBox.val());
+
+			// Erase entry
+			$entryBox.val('');
+
+			// Automatically scroll the output
+			$stackBox.scrollTop($stackBox[0].scrollHeight - $stackBox.height());
+		}
+	});
+});
+</script>
+
+<div id = "calcWrapper">
+	<textarea readonly rows = "10" cols = "20" type = "text" id = "stack">
+	</textarea>
+	<p />
+	<textarea rows = "1" cols = "20" type = "text" id = "entry">
+	</textarea>
+	<p />
+
+	<button type = "button" id = "1">1</button>
+	<button type = "button" id = "2">2</button>
+	<button type = "button" id = "3">3</button>
+	<button type = "button" id = "+">+</button>
+	<p />
+	<button type = "button" id = "4">4</button>
+	<button type = "button" id = "5">5</button>
+	<button type = "button" id = "6">6</button>
+	<button type = "button" id = "-">-</button>
+	<p />
+	<button type = "button" id = "7">7</button>
+	<button type = "button" id = "8">8</button>
+	<button type = "button" id = "9">9</button>
+	<button type = "button" id = "*">*</button>
+	<p />
+	<button type = "button" id = "0">0</button>
+	<button type = "button" id = "Enter">Enter</button>
+	<button type = "button" id = "/">/</button>
+	
+</div>
+
+</center>
+</body>
+</html>

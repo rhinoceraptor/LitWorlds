@@ -97,8 +97,15 @@ describe("RPN class", function() {
     test.calc.push(32);
     return expect(test.calc.mod()).toEqual(4);
   });
-  return it("should return false if a exponentiation is not possible", function() {
+  it("should return false if a exponentiation is not possible", function() {
     test.calc.push(3);
     return expect(test.calc.mod()).toEqual(false);
+  });
+  it("should be able to perform a square root function", function() {
+    test.calc.push(64);
+    return expect(test.calc.sqrt()).toEqual(8);
+  });
+  return it("should return false if a square root it not possible", function() {
+    return expect(test.calc.sqrt()).toEqual(false);
   });
 });

@@ -78,3 +78,9 @@ class rpnCalc
 			return numOne %% numTwo
 		else
 			return false
+
+	sqrt: ->
+		if @index > 0
+			return Math.sqrt @pop()
+		else
+			return false

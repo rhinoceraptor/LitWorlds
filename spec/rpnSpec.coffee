@@ -121,3 +121,14 @@ describe "RPN class", ->
 	it "should return false if a exponentiation is not possible", ->
 		test.calc.push(3)
 		expect(test.calc.mod()).toEqual(false)
+
+# Test sqrt function
+###############################################################################
+
+	it "should be able to perform a square root function", ->
+		test.calc.push(64)
+		expect(test.calc.sqrt()).toEqual(8)
+
+	it "should return false if a square root it not possible", ->
+		expect(test.calc.sqrt()).toEqual(false)
+
