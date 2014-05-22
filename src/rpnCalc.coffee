@@ -28,11 +28,27 @@ class rpnCalc
 		else
 			return false
 
-	subtract: ->
+	sub: ->
 		if @index > 1
 			numOne = @pop()
 			numTwo = @pop()
 			return numOne - numTwo
+		else
+			return false
+
+	mult: ->
+		if @index > 1
+			numOne = @pop()
+			numTwo = @pop()
+			return numOne * numTwo
+		else
+			return false
+
+	div: ->
+		if @index > 1
+			numOne = @pop()
+			numTwo = @pop()
+			return numOne / numTwo
 		else
 			return false
 
@@ -46,3 +62,19 @@ class rpnCalc
 
 			else
 				return false
+
+	exp: ->
+		if @index > 1
+			numOne = @pop()
+			numTwo = @pop()
+			return numOne ** numTwo
+		else
+			return false
+
+	mod: ->
+		if @index > 1
+			numOne = @pop()
+			numTwo = @pop()
+			return numOne %% numTwo
+		else
+			return false

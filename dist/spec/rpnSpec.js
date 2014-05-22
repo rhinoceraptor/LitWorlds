@@ -46,19 +46,59 @@ describe("RPN class", function() {
   it("should be able to perform a subtract operation", function() {
     test.calc.push(12);
     test.calc.push(300);
-    return expect(test.calc.subtract()).toEqual(288);
+    return expect(test.calc.sub()).toEqual(288);
   });
   it("should return false if a subtract is not possible", function() {
     test.calc.push(3);
-    return expect(test.calc.subtract()).toEqual(false);
+    return expect(test.calc.sub()).toEqual(false);
+  });
+  it("should be able to perform a multiply operation", function() {
+    test.calc.push(12);
+    test.calc.push(300);
+    return expect(test.calc.mult()).toEqual(3600);
+  });
+  it("should return false if a multiply is not possible", function() {
+    test.calc.push(3);
+    return expect(test.calc.mult()).toEqual(false);
+  });
+  it("should be able to perform a divide operation", function() {
+    test.calc.push(5);
+    test.calc.push(5);
+    return expect(test.calc.div()).toEqual(1);
+  });
+  it("should return false if a divide is not possible", function() {
+    test.calc.push(3);
+    return expect(test.calc.div()).toEqual(false);
   });
   it("should return false for sum if the stack is 0", function() {
     return expect(test.calc.sum()).toEqual(false);
   });
-  return it("should be able to sum several numbers on the stack", function() {
+  it("should be able to sum a single number on the stack", function() {
+    test.calc.push(1);
+    return expect(test.calc.sum()).toEqual(1);
+  });
+  it("should be able to sum several numbers on the stack", function() {
     test.calc.push(-3);
     test.calc.push(6);
     test.calc.push(9);
     return expect(test.calc.sum()).toEqual(12);
+  });
+  it("should be able to exponentiate", function() {
+    test.calc.push(2);
+    test.calc.push(4);
+    return expect(test.calc.exp()).toEqual(16);
+  });
+  it("should return false if a exponentiation is not possible", function() {
+    test.calc.push(3);
+    return expect(test.calc.exp()).toEqual(false);
+  });
+  it("should be able to perform a modulus", function() {
+    test.calc.push(7);
+    test.calc.push(32);
+    return expect(test.calc.mod()).toEqual(4);
+  });
+  return it("should return false if a exponentiation is not possible", function() {
+    test.calc.push(3);
+    return expect(test.calc.mod()).toEqual(false);
   });
 });
