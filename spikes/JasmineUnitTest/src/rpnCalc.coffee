@@ -9,6 +9,12 @@ class rpnCalc
 	getStackAtIndex: (query) ->
 		return @stack[query]
 
+	operationIsPossible: ->
+		if @index > 1
+			return true
+		else
+			return false
+
 	push: (numToPush) ->
 		@stack[@index] = numToPush
 		@index++
@@ -21,34 +27,42 @@ class rpnCalc
 			return false
 			
 	add: ->
-		if @index > 1
+		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			return numOne + numTwo
+			result = numOne + numTwo
+			@push(result)
+			return result
 		else
 			return false
 
 	sub: ->
-		if @index > 1
+		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			return numOne - numTwo
+			result = numOne - numTwo
+			@push(result)
+			return result
 		else
 			return false
 
 	mult: ->
-		if @index > 1
+		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			return numOne * numTwo
+			result = numOne * numTwo
+			@push(result)
+			return result
 		else
 			return false
 
 	div: ->
-		if @index > 1
+		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			return numOne / numTwo
+			result = numOne / numTwo
+			@push(result)
+			return result
 		else
 			return false
 
@@ -64,7 +78,7 @@ class rpnCalc
 				return false
 
 	exp: ->
-		if @index > 1
+		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
 			return numOne ** numTwo
@@ -72,7 +86,7 @@ class rpnCalc
 			return false
 
 	mod: ->
-		if @index > 1
+		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
 			return numOne %% numTwo

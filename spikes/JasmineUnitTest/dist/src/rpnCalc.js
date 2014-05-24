@@ -16,6 +16,14 @@ rpnCalc = (function() {
     return this.stack[query];
   };
 
+  rpnCalc.prototype.operationIsPossible = function() {
+    if (this.index > 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   rpnCalc.prototype.push = function(numToPush) {
     this.stack[this.index] = numToPush;
     return this.index++;
@@ -31,44 +39,52 @@ rpnCalc = (function() {
   };
 
   rpnCalc.prototype.add = function() {
-    var numOne, numTwo;
-    if (this.index > 1) {
+    var numOne, numTwo, result;
+    if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      return numOne + numTwo;
+      result = numOne + numTwo;
+      this.push(result);
+      return result;
     } else {
       return false;
     }
   };
 
   rpnCalc.prototype.sub = function() {
-    var numOne, numTwo;
-    if (this.index > 1) {
+    var numOne, numTwo, result;
+    if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      return numOne - numTwo;
+      result = numOne - numTwo;
+      this.push(result);
+      return result;
     } else {
       return false;
     }
   };
 
   rpnCalc.prototype.mult = function() {
-    var numOne, numTwo;
-    if (this.index > 1) {
+    var numOne, numTwo, result;
+    if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      return numOne * numTwo;
+      result = numOne * numTwo;
+      this.push(result);
+      return result;
     } else {
       return false;
     }
   };
 
   rpnCalc.prototype.div = function() {
-    var numOne, numTwo;
-    if (this.index > 1) {
+    var numOne, numTwo, result;
+    if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      return numOne / numTwo;
+      result = numOne / numTwo;
+      this.push(result);
+      return result;
     } else {
       return false;
     }
@@ -91,7 +107,7 @@ rpnCalc = (function() {
 
   rpnCalc.prototype.exp = function() {
     var numOne, numTwo;
-    if (this.index > 1) {
+    if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
       return Math.pow(numOne, numTwo);
@@ -102,7 +118,7 @@ rpnCalc = (function() {
 
   rpnCalc.prototype.mod = function() {
     var numOne, numTwo;
-    if (this.index > 1) {
+    if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
       return __modulo(numOne, numTwo);
