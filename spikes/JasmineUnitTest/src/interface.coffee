@@ -29,7 +29,6 @@ $ ->
 			$stackBox.scrollTop($stackBox[0].scrollHeight - $stackBox.height())
 
 	$(".number").click ->
-		console.log(">>>" + @id)
 		$entryBox = $("#entry")
 		oldEntry = $entryBox.val()
 		$entryBox.val(oldEntry + @id)
@@ -41,16 +40,14 @@ $ ->
 			# remove last two lines from stackBox
 			$stackBox = $("#stack")
 			stackText = $stackBox.val().split('\n')
-			numLines = container.rpnCalc.returnIndex() - 1
+			numLines = parseInt(container.rpnCalc.returnIndex())
+			console.log("removing lines " + numLines + " to " + numLines - 2)
 			stackText.splice(numLines - 2, numLines)
-			console.log("stackText = " + stackText)
 			$stackBox.val(stackText.join('\n'))
 
-			console.log(">" + @id.toString() + "<")
 			switch @id.toString()
 				when '+' 
 					result = container.rpnCalc.add()
-					console.log("add")
 				when '-' 
 					result = container.rpnCalc.sub()
 				when '*' 
@@ -67,3 +64,18 @@ $ ->
 
 	isNumber = (n) ->
   		return !isNaN(parseFloat(n)) and isFinite(n)
+
+
+
+###
+1
+2
+3
++
+
+1
+4
++
+
+5
+###

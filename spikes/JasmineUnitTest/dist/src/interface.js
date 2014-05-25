@@ -22,7 +22,6 @@ $(function() {
   });
   $(".number").click(function() {
     var $entryBox, oldEntry;
-    console.log(">>>" + this.id);
     $entryBox = $("#entry");
     oldEntry = $entryBox.val();
     $entryBox.val(oldEntry + this.id);
@@ -33,15 +32,13 @@ $(function() {
     if (container.rpnCalc.operationIsPossible()) {
       $stackBox = $("#stack");
       stackText = $stackBox.val().split('\n');
-      numLines = container.rpnCalc.returnIndex() - 1;
+      numLines = parseInt(container.rpnCalc.returnIndex());
+      console.log("removing lines " + numLines + " to " + numLines - 2);
       stackText.splice(numLines - 2, numLines);
-      console.log("stackText = " + stackText);
       $stackBox.val(stackText.join('\n'));
-      console.log(">" + this.id.toString() + "<");
       switch (this.id.toString()) {
         case '+':
           result = container.rpnCalc.add();
-          console.log("add");
           break;
         case '-':
           result = container.rpnCalc.sub();
@@ -64,3 +61,17 @@ $(function() {
     return !isNaN(parseFloat(n)) && isFinite(n);
   };
 });
+
+
+/*
+1
+2
+3
++
+
+1
+4
++
+
+5
+ */

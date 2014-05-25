@@ -66,6 +66,11 @@ describe("RPN class", function() {
     test.calc.push(5);
     return expect(test.calc.div()).toEqual(1);
   });
+  it("should be able to perform a floating point divide", function() {
+    test.calc.push(7);
+    test.calc.push(1);
+    return expect(test.calc.div()).toEqual(0.14285714285714285);
+  });
   it("should return false if a divide is not possible", function() {
     test.calc.push(3);
     return expect(test.calc.div()).toEqual(false);

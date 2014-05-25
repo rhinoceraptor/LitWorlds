@@ -78,6 +78,11 @@ describe "RPN class", ->
 		test.calc.push(5)
 		expect(test.calc.div()).toEqual(1)
 
+	it "should be able to perform a floating point divide", ->
+		test.calc.push(7)
+		test.calc.push(1)
+		expect(test.calc.div()).toEqual(0.14285714285714285)
+
 	it "should return false if a divide is not possible", ->
 		test.calc.push(3)
 		expect(test.calc.div()).toEqual(false)
