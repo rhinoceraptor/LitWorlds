@@ -35,8 +35,8 @@ describe("RPN class", function() {
     return expect(test.calc.pop()).toEqual(false);
   });
   it("should be able to perform an add operation", function() {
-    test.calc.push(2000);
     test.calc.push(4923);
+    test.calc.push(2000);
     return expect(test.calc.add()).toEqual(6923);
   });
   it("should return false if an add is not possible", function() {
@@ -44,8 +44,8 @@ describe("RPN class", function() {
     return expect(test.calc.add()).toEqual(false);
   });
   it("should be able to perform a subtract operation", function() {
-    test.calc.push(12);
     test.calc.push(300);
+    test.calc.push(12);
     return expect(test.calc.sub()).toEqual(288);
   });
   it("should return false if a subtract is not possible", function() {
@@ -53,9 +53,14 @@ describe("RPN class", function() {
     return expect(test.calc.sub()).toEqual(false);
   });
   it("should be able to perform a multiply operation", function() {
-    test.calc.push(12);
     test.calc.push(300);
+    test.calc.push(12);
     return expect(test.calc.mult()).toEqual(3600);
+  });
+  it("should be able to perform a floating point multiply operation", function() {
+    test.calc.push(0.5);
+    test.calc.push(0.25);
+    return expect(test.calc.mult()).toEqual(0.125);
   });
   it("should return false if a multiply is not possible", function() {
     test.calc.push(3);
@@ -67,8 +72,8 @@ describe("RPN class", function() {
     return expect(test.calc.div()).toEqual(1);
   });
   it("should be able to perform a floating point divide", function() {
-    test.calc.push(7);
     test.calc.push(1);
+    test.calc.push(7);
     return expect(test.calc.div()).toEqual(0.14285714285714285);
   });
   it("should return false if a divide is not possible", function() {
@@ -89,8 +94,8 @@ describe("RPN class", function() {
     return expect(test.calc.sum()).toEqual(12);
   });
   it("should be able to exponentiate", function() {
-    test.calc.push(2);
     test.calc.push(4);
+    test.calc.push(2);
     return expect(test.calc.exp()).toEqual(16);
   });
   it("should return false if a exponentiation is not possible", function() {

@@ -38,8 +38,8 @@ describe "RPN class", ->
 ###############################################################################
 
 	it "should be able to perform an add operation", ->
-		test.calc.push(2000)
 		test.calc.push(4923)
+		test.calc.push(2000)
 		expect(test.calc.add()).toEqual(6923)
 
 	it "should return false if an add is not possible", ->
@@ -50,8 +50,8 @@ describe "RPN class", ->
 ###############################################################################
 
 	it "should be able to perform a subtract operation", ->
-		test.calc.push(12)
 		test.calc.push(300)
+		test.calc.push(12)
 		expect(test.calc.sub()).toEqual(288)
 
 	it "should return false if a subtract is not possible", ->
@@ -62,9 +62,14 @@ describe "RPN class", ->
 ###############################################################################
 
 	it "should be able to perform a multiply operation", ->
-		test.calc.push(12)
 		test.calc.push(300)
+		test.calc.push(12)
 		expect(test.calc.mult()).toEqual(3600)
+
+	it "should be able to perform a floating point multiply operation", ->
+		test.calc.push(0.5)
+		test.calc.push(0.25)
+		expect(test.calc.mult()).toEqual(0.125)
 
 	it "should return false if a multiply is not possible", ->
 		test.calc.push(3)
@@ -79,8 +84,8 @@ describe "RPN class", ->
 		expect(test.calc.div()).toEqual(1)
 
 	it "should be able to perform a floating point divide", ->
-		test.calc.push(7)
 		test.calc.push(1)
+		test.calc.push(7)
 		expect(test.calc.div()).toEqual(0.14285714285714285)
 
 	it "should return false if a divide is not possible", ->
@@ -107,8 +112,8 @@ describe "RPN class", ->
 ###############################################################################
 
 	it "should be able to exponentiate", ->
-		test.calc.push(2)
 		test.calc.push(4)
+		test.calc.push(2)
 		expect(test.calc.exp()).toEqual(16)
 
 	it "should return false if a exponentiation is not possible", ->

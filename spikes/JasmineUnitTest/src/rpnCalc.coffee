@@ -30,7 +30,7 @@ class rpnCalc
 		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			result = numOne + numTwo
+			result = numTwo + numOne
 			@push(result)
 			return result
 		else
@@ -40,7 +40,7 @@ class rpnCalc
 		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			result = numOne - numTwo
+			result = numTwo - numOne
 			@push(result)
 			return result
 		else
@@ -50,7 +50,7 @@ class rpnCalc
 		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			result = numOne * numTwo
+			result = numTwo * numOne
 			@push(result)
 			return result
 		else
@@ -60,7 +60,7 @@ class rpnCalc
 		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			result = numOne / numTwo
+			result = numTwo / numOne
 			@push(result)
 			return result
 		else
@@ -99,3 +99,6 @@ class rpnCalc
 		else
 			return false
 
+	clr: ->
+		for i in [0..@index]
+			@pop()

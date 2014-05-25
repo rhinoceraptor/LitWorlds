@@ -3,7 +3,7 @@ $ ->
 	container = {}
 	container.rpnCalc = new rpnCalc()
 
-	$("#Enter").click ->
+	$("#enter").click ->
 		# Variables for entry and stack text areas
 		$entryBox = $("#entry")
 		$stackBox = $("#stack")
@@ -14,8 +14,6 @@ $ ->
 			console.log("pushing " + $entryBox.val())
 			container.rpnCalc.push(parseInt($entryBox.val(), 10))
 
-
-
 			# Append to stack box, then erase entry
 			# If there is no text already, don't add a newline.
 			if $stackBox.val() != ''
@@ -24,7 +22,6 @@ $ ->
 				$stackBox.val($entryBox.val())
 			# Erase entry
 			$entryBox.val('')
-
 			# Automatically scroll the output
 			$stackBox.scrollTop($stackBox[0].scrollHeight - $stackBox.height())
 
@@ -36,15 +33,7 @@ $ ->
 
 	$(".operator").click ->
 		if container.rpnCalc.operationIsPossible()
-
-			# remove last two lines from stackBox
-			$stackBox = $("#stack")
-			stackText = $stackBox.val().split('\n')
-			numLines = parseInt(container.rpnCalc.returnIndex())
-			console.log("removing lines " + numLines + " to " + numLines - 2)
-			stackText.splice(numLines - 2, numLines)
-			$stackBox.val(stackText.join('\n'))
-
+			removeLines(2)
 			switch @id.toString()
 				when '+' 
 					result = container.rpnCalc.add()
@@ -54,28 +43,39 @@ $ ->
 					result = container.rpnCalc.mult()
 				when '/' 
 					result = container.rpnCalc.div()
+			placeInStackBox(result)
 
-			# put result back in stackBox
-			console.log("result is " + result)
-			if $stackBox.val() != ''
-				$stackBox.val($stackBox.val() + '\n' + result)
-			else
-				$stackBox.val(result)
+	$(".function").click ->
+		if @id.toString() isnt 'clear' then removeLines(2)
+		switch @id.toString()
+			when 'clear'
+				removeLines(container.rpnCalc.returnIndex())
+				container.rpnCalc.clr()
+			when 'exp'
+				result = container.rpnCalc.exp()
+			when 'mod'
+				result = container.rpnCalc.mod()
+			when 'sqrt'
+				result = container.rpnCalc.sqrt()
+		if @id.toString() isnt 'clear' and result isnt false then placeInStackBox(result)
+
+	removeLines = (numLines) ->
+		# remove last two lines from stackBox
+		$stackBox = $("#stack")
+		stackText = $stackBox.val().split('\n')
+		numLines = parseInt(container.rpnCalc.returnIndex())
+		console.log("removing lines " + numLines + " to " + numLines - numLines)
+		stackText.splice(numLines - numLines, numLines)
+		$stackBox.val(stackText.join('\n'))
+
+	placeInStackBox = (num) ->
+		# put num back in stackBox
+		$stackBox = $("#stack")
+		console.log("num is " + num)
+		if $stackBox.val() != ''
+			$stackBox.val($stackBox.val() + '\n' + num)
+		else
+			$stackBox.val(num)
 
 	isNumber = (n) ->
-  		return !isNaN(parseFloat(n)) and isFinite(n)
-
-
-
-###
-1
-2
-3
-+
-
-1
-4
-+
-
-5
-###
+		return !isNaN(parseFloat(n)) and isFinite(n)

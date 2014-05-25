@@ -43,7 +43,7 @@ rpnCalc = (function() {
     if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      result = numOne + numTwo;
+      result = numTwo + numOne;
       this.push(result);
       return result;
     } else {
@@ -56,7 +56,7 @@ rpnCalc = (function() {
     if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      result = numOne - numTwo;
+      result = numTwo - numOne;
       this.push(result);
       return result;
     } else {
@@ -69,7 +69,7 @@ rpnCalc = (function() {
     if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      result = numOne * numTwo;
+      result = numTwo * numOne;
       this.push(result);
       return result;
     } else {
@@ -82,7 +82,7 @@ rpnCalc = (function() {
     if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      result = numOne / numTwo;
+      result = numTwo / numOne;
       this.push(result);
       return result;
     } else {
@@ -133,6 +133,15 @@ rpnCalc = (function() {
     } else {
       return false;
     }
+  };
+
+  rpnCalc.prototype.clr = function() {
+    var i, _i, _ref, _results;
+    _results = [];
+    for (i = _i = 0, _ref = this.index; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+      _results.push(this.pop());
+    }
+    return _results;
   };
 
   return rpnCalc;
