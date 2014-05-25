@@ -65,6 +65,9 @@ $(function() {
         break;
       case 'sqrt':
         result = container.rpnCalc.sqrt();
+        break;
+      case 'sum':
+        result = container.rpnCalc.sum();
     }
     if (this.id.toString() !== 'clear' && result !== false) {
       return placeInStackBox(result);

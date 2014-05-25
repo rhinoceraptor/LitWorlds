@@ -57,6 +57,8 @@ $ ->
 				result = container.rpnCalc.mod()
 			when 'sqrt'
 				result = container.rpnCalc.sqrt()
+			when 'sum'
+				result = container.rpnCalc.sum()
 		if @id.toString() isnt 'clear' and result isnt false then placeInStackBox(result)
 
 	removeLines = (numLines) ->

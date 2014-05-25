@@ -72,6 +72,7 @@ class rpnCalc
 			@sum(@pop() + prevSum)
 		else
 			if prevSum?
+				@push prevSum
 				return prevSum
 
 			else
@@ -81,7 +82,9 @@ class rpnCalc
 		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			return numOne ** numTwo
+			result = numOne ** numTwo
+			@push(result)
+			return result
 		else
 			return false
 
@@ -89,13 +92,17 @@ class rpnCalc
 		if @operationIsPossible()
 			numOne = @pop()
 			numTwo = @pop()
-			return numOne %% numTwo
+			result = numOne %% numTwo
+			@push(result)
+			return result
 		else
 			return false
 
 	sqrt: ->
-		if @index > 0
-			return Math.sqrt @pop()
+		if @index >= 0
+			result = Math.sqrt(@pop())
+			@push result
+			return result
 		else
 			return false
 

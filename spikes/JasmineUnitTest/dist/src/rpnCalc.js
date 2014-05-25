@@ -98,6 +98,7 @@ rpnCalc = (function() {
       return this.sum(this.pop() + prevSum);
     } else {
       if (prevSum != null) {
+        this.push(prevSum);
         return prevSum;
       } else {
         return false;
@@ -106,30 +107,37 @@ rpnCalc = (function() {
   };
 
   rpnCalc.prototype.exp = function() {
-    var numOne, numTwo;
+    var numOne, numTwo, result;
     if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      return Math.pow(numOne, numTwo);
+      result = Math.pow(numOne, numTwo);
+      this.push(result);
+      return result;
     } else {
       return false;
     }
   };
 
   rpnCalc.prototype.mod = function() {
-    var numOne, numTwo;
+    var numOne, numTwo, result;
     if (this.operationIsPossible()) {
       numOne = this.pop();
       numTwo = this.pop();
-      return __modulo(numOne, numTwo);
+      result = __modulo(numOne, numTwo);
+      this.push(result);
+      return result;
     } else {
       return false;
     }
   };
 
   rpnCalc.prototype.sqrt = function() {
-    if (this.index > 0) {
-      return Math.sqrt(this.pop());
+    var result;
+    if (this.index >= 0) {
+      result = Math.sqrt(this.pop());
+      this.push(result);
+      return result;
     } else {
       return false;
     }
