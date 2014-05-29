@@ -1,0 +1,35 @@
+<html>
+<head>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+	<script src="tcp.js"></script>
+	<style>
+		textarea
+		{
+			resize: none;
+			color: #F8F8F2;
+			background-color: #272822;
+			border-width: 3px;
+			border-color: #3E3D32;
+			border-style: solid;
+		}
+		#consoleWrapper
+		{
+			padding: 0px;
+		}
+	</style>
+</head>
+<body>
+<center>
+
+<div id = "consoleWrapper">
+<textarea readonly rows = "20" cols = "100" type = "text" id = "backlog" placeholder = "Telnet backlog goes here">
+</textarea>
+
+<textarea rows = "1" cols = "100" type = "text" id = "console" placeholder = "Enter text here">
+</textarea>
+</div>
+
+</center>
+</body>
+</html>
