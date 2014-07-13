@@ -1,0 +1,8 @@
+{
+  "name": "JS_Conslole",
+  "author": "Jack Lewis",
+  "license": "BSD",
+  "dependencies": {
+    "socket.io": "^1.0.6"
+  }
+}
