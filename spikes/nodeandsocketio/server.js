@@ -37,14 +37,14 @@ var server = http.createServer(function(req, res) {
   // each case handles one of the few request that can be made to the server
   switch (path) {
   // "/" case handles the index page of the server
-    case '/':
+    case '/socket.html':
       res.writeHead(200, {'Content-Type' : 'text/html'});
       res.write('<p>Hello World. Request counter: ' + counter + '.</p>');
       break;
 
   // "/socket.html" case reads the socket.html file and displays it in the
   // browser
-    case '/socket.html':
+    case '/':
       fs.readFile('socket.html', function(err, text) {
         if (err) {
           res.writeHead(404);
