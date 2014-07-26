@@ -1,11 +1,10 @@
 <html>
 	<head>
 		<title>Literary Worlds</title>
-		
 		<!-- CSS -->
-		<link href="lib/css/bootstrap.min.css" rel="stylesheet">
-		<link href="lib/css/bootstrap-responsive.min.css" rel="stylesheet">
-		<link href="lib/css/lw.css" rel="stylesheet">
+		<link rel="stylesheet" href="lib/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="lib/css/bootstrap.min.css">
+		<link rel="stylesheet" href="lib/css/lw.css">
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -14,8 +13,62 @@
 
 	<body>
 
-	<script src="lib/js/jquery-2.1.1.min.js" type="text/javascript" />
-	<script src="lib/js/bootstrap.min.js" type="text/javascript" />
-	<script src="lib/js/jquery-2.1.1.min.js" type="text/javascript" />
+		<!-- Disconnect Modal Dialog -->
+		<div class="modal hide fade" id="disconnect-modal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h4 id="modalLabel">Error</h4>
+			</div>
+			<div class="modal-body">
+				<p class="centered">Something has gone wrong, the server has been disconnected.</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn-cancel" aria-hidden="true">cancel</button>
+				<button class="btn-ok" data-dismiss="modal" aria-hidden="true">ok</button>
+			</div>
+		</div>
+
+		<!-- Login Modal Dialog -->
+		<div class="modal hide fade" id="login-modal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h4 id="modalLabel">Login</h4>
+			</div>
+			<div class="modal-body">
+				<input class="login-user" type="text" placeholder="username" />
+				<input class="login-password" type="password" placeholder="password" />
+			</div>
+			<div class="modal-footer">
+				<button class="btn-cancel" aria-hidden="true">cancel</button>
+				<button class="btn-ok" data-dismiss="modal" aria-hidden="true">ok</button>
+			</div>
+		</div>
+
+		<!-- Navigation header bar -->
+		<nav class="navbar navbar-inverse navbar-custom" role="navigation">
+			<div class="navbar-header container">
+				<a class="navbar-brand" href="#">Literary Worlds</a>
+				<div class="nav btn-group navbar-right pull-right dropdown-menu-right">
+					<button class="btn dropdown-toggle" id="modeButton" role="menu" data-toggle="dropdown">
+						Options
+						<span class="sr-only">Select text or graphic mode</span>
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+						<li class="textMode"><a href="#text">Text Mode</a></li>
+						<li class="graphicMode"><a href="#graphic">Graphic Mode</a></li>
+						<li class="mixedMode"><a href="#mixed">Mixed Mode</a></li>
+						<li class="divider"></li>
+						<li class="settings"><a href="#settings">Settings</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="main-body"></div>
+		
+	<script src="lib/js/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<script src="lib/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="lib/app/litworlds.js" type="text/javascript"></script>
 	</body>
 </html>

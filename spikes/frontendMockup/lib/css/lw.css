@@ -1,0 +1,57 @@
+@font-face {
+	font-family: ubuntu;
+	src: url(../font/ubuntu-reg.ttf);
+}
+
+@font-face {
+	font-family: ubuntu-mono;
+	src: url(../font/ubuntu-mono-reg.ttf);
+}
+
+* {
+	-webkit-border-radius: 0 !important;
+	-moz-border-radius: 0 !important;
+	border-radius: 0 !important;
+}
+
+body {
+	font-family: ubuntu;
+	
+	background-color: #D1D1D1;/*#353C3D;*/
+
+}
+
+.navbar {
+	overflow: visible;
+	background-image: none;
+}
+
+.navbar-custom {
+	background-color: #333333;
+}
+
+.navbar-brand {
+	color: #F3F3F3 !important;
+}
+
+.navbar-brand:hover {
+	color: #969696 !important;
+}
+
+.btn-group {
+	position: absolute;
+	padding-top: 7px;
+	padding-right: 7px;
+}
+
+#modeButton {
+	background-color: #F3F3F3;
+}
+
+#modeButton:hover {
+	background-color: #969696;
+}
+
+.dropdown-menu a:hover {
+	color: #2F374D !important;
+}
