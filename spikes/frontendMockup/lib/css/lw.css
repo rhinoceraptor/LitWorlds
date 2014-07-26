@@ -44,6 +44,15 @@ body {
 	padding-right: 7px;
 }
 
+#login-btn {
+	background-color: #F3F3F3;
+	right: 7px;
+}
+
+#login-btn:hover {
+	background-color: #969696;
+}
+
 #modeButton {
 	background-color: #F3F3F3;
 }
@@ -52,6 +61,18 @@ body {
 	background-color: #969696;
 }
 
+.modal-label {
+	text-align: center;
+}
+
 .dropdown-menu a:hover {
 	color: #2F374D !important;
+}
+
+.btn-primary {
+	background-color: #5F8199;
+}
+
+.btn-primary:hover {
+	background-color: #7BA6C4;
 }
