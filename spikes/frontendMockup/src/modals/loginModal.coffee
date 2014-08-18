@@ -2,8 +2,8 @@ define ->
 	class loginModal extends Backbone.View
 		el: "#login-modal"
 		events:
-			"click .btn-cancel": "cancel"
-			"click .btn-ok": "ok"
+			"click #btn-cancel": "cancel"
+			"click #btn-ok": "ok"
 
 		initialize: (opts) ->
 			@$okBtn = @$el.find(".btn-ok")

@@ -18,7 +18,8 @@ server = http.createServer((req, res) ->
 					res.write 'An error occured, try again later?'
 					res.end()
 				else
-					console.log 'writing web page ' +  __dirname + '/index.html'
+					console.log 'writing web page ' +  fileName
+					console.log text
 					res.writeHead 200, {'Content-Type' : 'text/html'}
 					res.write(text)
 					res.end()

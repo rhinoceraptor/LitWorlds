@@ -24,6 +24,9 @@ body {
 .navbar {
 	overflow: visible;
 	background-image: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .navbar-custom {
@@ -65,8 +68,20 @@ body {
 	text-align: center;
 }
 
+.dropdown-menu {
+	white-space: normal;
+}
+
 .dropdown-menu a:hover {
 	color: #2F374D !important;
+}
+
+.dropdown-selected {
+	background-color: #272822 !important;
+}
+
+.dropdown-selected a {
+	color: #F8F8F2 !important;
 }
 
 .btn-primary {
@@ -75,4 +90,25 @@ body {
 
 .btn-primary:hover {
 	background-color: #7BA6C4;
+}
+
+.text-mode {
+	width: 40%;
+	resize: none;
+	color: #F8F8F2;
+	background-color: #272822;
+	border-width: 3px;
+	border-color: #3E3D32;
+	border-style: solid;
+}
+
+.text-mode-ul li {
+	list-style: none;
+}
+
+#text-mode-backlog {
+	height: 80%;
+}
+
+#text-mode-input {
 }
