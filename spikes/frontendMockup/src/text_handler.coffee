@@ -5,8 +5,8 @@ define ->
 			console.log 'hello from text_handler'
 			@$el.on "keydown", "#text-mode-input", @input_handler
 
-
 		insert: (line) ->
+			line = @arraybuffer_to_string(line)
 			console.log 'insert a line: ' + line
 			$logOut = $("#text-mode-backlog")
 			# Append to backlog, then erase console
@@ -25,4 +25,7 @@ define ->
 				console.log "sending: " + input_line
 				App.Views.main_view.telnet_line_out(input_line)
 		
+		arraybuffer_to_string: (buf) ->
+			return String.fromCharCode.apply(null, new Uint8Array(buf))
+
 		socket: -> App.Views.main_view.socket

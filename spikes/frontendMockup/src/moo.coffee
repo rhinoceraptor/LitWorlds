@@ -34,7 +34,7 @@ define ["modals/disconnect_modal",
 				console.log 'mixed_mode'
 
 			telnet_line_in: (line) =>
-				console.log 'recvd: ' + line
+				console.log line
 				@text_handler.insert(line)
 
 			telnet_line_out: (line) ->

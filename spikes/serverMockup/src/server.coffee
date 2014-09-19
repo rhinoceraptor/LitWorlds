@@ -3,7 +3,7 @@ http = require 'http'
 io = require 'socket.io'
 
 telnetPort = 7777
-telnetHost = 'brn227.brown.wmich.edu'
+telnetHost = '104.131.36.137'
 
 socketPort = 8080
 
@@ -21,27 +21,29 @@ io.sockets.on('connection', (ioSocket) ->
 	ioSocket.on('auth', (authData) ->
 		user = authData.user
 		passwd = authData.passwd
+
+		if telnet?
+			telnet.write('CO ' + user + '\n' + passwd)
+			ioSocket.emit('authenticated')
 	)
-	###
+
 	telnet = net.createConnection(telnetPort, telnetHost)
 	telnet.on('data', (telnetData) ->
 		process.stdout.write('Recieved from server: ' + telnetData + '\n')
-		ioSocket.emit('telnetLine' + telnetData)
-	).on('connect', () ->
-		telnet.write('CO ' + user + '\n' + passwd)
-		ioSocket.emit('authenticated')
+		process.stdout.write('emitting to client\n')
+		ioSocket.emit('telnetLine', telnetData)
 	).on('end', () ->
 		ioSocket.emit('disconnected')
 	)
-	###
+
 	ioSocket.on('client_line', (socketData) ->
 		process.stdout.write('Recieved from client:\n>>>\t' + socketData + '\n')
-		#telnet.write(socketData)
+		telnet.write(socketData)
 	)
 
 	ioSocket.on('disconnect', () ->
 		process.stdout.write('disconnect the telnet connection!\n')
-		#telnet.end()
+		telnet.end()
 	)
 
 )
