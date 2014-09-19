@@ -37,8 +37,8 @@ io.sockets.on('connection', (ioSocket) ->
 	)
 
 	ioSocket.on('client_line', (socketData) ->
-		process.stdout.write('Recieved from client:\n>>>\t' + socketData + '\n')
-		telnet.write(socketData)
+		process.stdout.write('Recieved from client:\n>>>' + socketData + '\n')
+		telnet.write(socketData + "\n")
 	)
 
 	ioSocket.on('disconnect', () ->

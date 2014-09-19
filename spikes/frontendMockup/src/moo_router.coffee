@@ -26,6 +26,7 @@ define ["moo"], (moo) ->
 		App.Views = {}
 		App.Router = new moo_router
 		App.Views.navbar = new navbar
-		App.Views.main_view = new moo
+		App.Views.mainView = new moo
+		App.Views.mainView.render()
 
 		Backbone.history.start()
