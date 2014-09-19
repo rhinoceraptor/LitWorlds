@@ -1,5 +1,5 @@
 define ->
-	class disconnect_modal extends Backbone.View
+	class @disconnect_modal extends Backbone.View
 		el: "#disconnect-modal"
 		events:
 			"click #btn-cancel": "cancel"

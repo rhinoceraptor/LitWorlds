@@ -1,5 +1,5 @@
 define ->
-	class settings_modal extends Backbone.View
+	class @settings_modal extends Backbone.View
 		el: "#settings-modal"
 		events:
 			"click #btn-cancel": "cancel"

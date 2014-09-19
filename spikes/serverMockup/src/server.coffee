@@ -22,7 +22,7 @@ io.sockets.on('connection', (ioSocket) ->
 		user = authData.user
 		passwd = authData.passwd
 	)
-
+	###
 	telnet = net.createConnection(telnetPort, telnetHost)
 	telnet.on('data', (telnetData) ->
 		process.stdout.write('Recieved from server: ' + telnetData + '\n')
@@ -33,15 +33,15 @@ io.sockets.on('connection', (ioSocket) ->
 	).on('end', () ->
 		ioSocket.emit('disconnected')
 	)
-	
+	###
 	ioSocket.on('client_line', (socketData) ->
 		process.stdout.write('Recieved from client:\n>>>\t' + socketData + '\n')
-		telnet.write(socketData)
+		#telnet.write(socketData)
 	)
 
 	ioSocket.on('disconnect', () ->
 		process.stdout.write('disconnect the telnet connection!\n')
-		telnet.end()
+		#telnet.end()
 	)
 
 )
