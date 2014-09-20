@@ -1,3 +1,7 @@
+###############################################################################
+# Backbone.JS router class
+###############################################################################
+
 define ["moo"], (moo) ->
 	class moo_router extends Backbone.Router
 		# When a hash fragment URL is accessed, we want to show the user the

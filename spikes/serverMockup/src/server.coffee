@@ -10,6 +10,8 @@ socketPort = 8080
 console.log('Starting socket server on port ' + socketPort)
 io = io.listen(socketPort)
 
+telnet_connected = false
+
 # Main data interchange logic.
 # The data is lines between the client and the telnet server.
 # When a line of data comes from the telnet server, send it to the client.

@@ -1,3 +1,10 @@
+###############################################################################
+# Central class for the Literate Worlds project.
+# moo.coffee handles all of the socket.io logic, other classes call functions
+# here when they need to do something with the socket.
+###############################################################################
+
+
 define ["modals/disconnect_modal", \
 "modals/login_modal", \
 "modals/settings_modal", \

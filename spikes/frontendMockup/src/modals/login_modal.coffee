@@ -24,7 +24,6 @@ define ->
 				@$user.focus())
 
 		render: ->
-			console.log 'hi!'
 			@$el.modal()
 			this
 
