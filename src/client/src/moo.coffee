@@ -28,6 +28,9 @@ class @moo extends Backbone.View
 	render: ->
 		console.log 'rendering!'
 
+	auth: (user, passwd) =>
+		@socket.emit('auth', {'user': user, 'passwd': passwd})
+
 	disconnect: ->
 		new disconnect_modal().render()
 

@@ -5,6 +5,12 @@ files = [
 	'src'
 ]
 
+# Jasmine unit testing files
+test_files = [
+	'test/js'
+	'test/src'
+]
+
 fs = require 'fs'
 {print} = require 'util'
 {spawn, exec} = require 'child_process'
@@ -25,7 +31,7 @@ red = '\x1b[0;31m'
 # Task definitions
 task 'build', 'compile source', -> build -> log ":)", green
 task 'watch', 'compile and watch', -> build true, -> log ":-)", green
-task 'test', 'run tests', -> build -> mocha -> log ":)", green
+task 'test', 'run tests', -> build -> jasmine -> log ":)", green
 task 'clean', 'clean generated files', -> clean -> log ";)", green
 
 # Used for building recursively through the directory structure
@@ -65,6 +71,16 @@ build = (watch, callback) ->
 
 	options = ['-c', '-b', '-o' ]
 	options = options.concat files
+	options.unshift '-w' if watch
+	launch 'coffee', options, callback
+
+jasmine = (watch, callback) ->
+	if typeof watch is 'function'
+		callback = watch
+		watch = false
+
+	options = ['-c', '-b', '-o' ]
+	options = options.concat test_files
 	options.unshift '-w' if watch
 	launch 'coffee', options, callback
 

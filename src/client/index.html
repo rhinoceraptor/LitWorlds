@@ -87,13 +87,13 @@
 			<div class="navbar-header container">
 				<a class="navbar-brand" href="#">Literary Worlds</a>
 				<div class="nav btn-group navbar-right pull-right dropdown-menu-right">
-					<button class="btn" id="connect-btn" role="button">
+					<button class="btn nav-btn" id="connect-btn" role="button">
 						Connect
 					</button>
-					<button class="btn" id="login-btn" role="button">
+					<button class="btn nav-btn" id="login-btn" role="button">
 						Login
 					</button>
-					<button class="btn dropdown-toggle" id="modeButton" role="menu" data-toggle="dropdown">
+					<button class="btn nav-btn dropdown-toggle" id="modeButton" role="menu" data-toggle="dropdown">
 						Options
 						<span class="sr-only">Select text or graphic mode</span>
 						<span class="caret"></span>
@@ -128,11 +128,13 @@
 			</div>
 		</div>
 		
+	<!-- JavaScript library imports here -->
 	<script src="lib/js/jquery-2.1.1.min.js" type="text/javascript"></script>
 	<script src="lib/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="lib/js/underscore-min.js" type="text/javascript"></script>
 	<script src="lib/js/backbone-min.js" type="text/javascript"></script>
 	<script src="lib/js/socket.io-1.0.6.js" type="text/javascript"></script>
+	<!-- Main app logic imported using Require.JS -->
 	<script data-main="lib/app/app" src="lib/js/require.js" type="text/javascript"></script>
 	</body>
 </html>

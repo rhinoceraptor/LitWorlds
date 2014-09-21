@@ -47,12 +47,12 @@ body {
 	padding-right: 7px;
 }
 
-#login-btn {
+.nav-btn {
 	background-color: #F3F3F3;
-	right: 7px;
+	margin-left: 15px;
 }
 
-#login-btn:hover {
+.nav-btn:hover {
 	background-color: #969696;
 }
 
@@ -93,7 +93,7 @@ body {
 }
 
 .text-mode {
-	width: 40%;
+	width: 90%;
 	resize: none;
 	color: #F8F8F2;
 	background-color: #272822;
@@ -107,7 +107,7 @@ body {
 }
 
 #text-mode-backlog {
-	height: 80%;
+	height: calc(80% - 50px);
 }
 
 #text-mode-input {

@@ -1,4 +1,4 @@
-define ["modals/loginModal", "modals/settingsModal", "moo"], (loginModal, settingsModal, moo) ->
+define ["modals/login_modal", "modals/settings_modal", "moo"], (login_modal, settings_modal, moo) ->
 	class navbar extends Backbone.View
 		el: "#navbar"
 		events:
@@ -9,10 +9,10 @@ define ["modals/loginModal", "modals/settingsModal", "moo"], (loginModal, settin
 			"click .mixed-select": "mixedMode"
 
 		showLoginModal: ->
-			new loginModal().render()
+			new login_modal().render()
 
 		showSettingsModal: ->
-			new settingsModal().render()
+			new settings_modal().render()
 
 		textMode: ->
 			@setCheckMark("text")
