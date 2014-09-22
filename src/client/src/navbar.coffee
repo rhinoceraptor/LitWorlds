@@ -1,34 +1,34 @@
-define ["modals/loginModal", "modals/settingsModal", "moo"], (loginModal, settingsModal, moo) ->
+define ["modals/login_modal", "modals/settings_modal", "moo"], (login_modal, settings_modal, moo) ->
 	class navbar extends Backbone.View
 		el: "#navbar"
 		events:
-			"click #login-btn": "showLoginModal"
-			"click .settings": "showSettingsModal"
-			"click .text-select": "textMode"
-			"click .graphic-select": "graphicMode"
-			"click .mixed-select": "mixedMode"
+			"click #login-btn": "show_login_modal"
+			"click .settings": "show_settings_modal"
+			"click .text-select": "text_mode"
+			"click .graphic-select": "graphic_mode"
+			"click .mixed-select": "mixed_mode"
 
-		showLoginModal: ->
-			new loginModal().render()
+		show_login_modal: ->
+			new login_modal().render()
 
-		showSettingsModal: ->
-			new settingsModal().render()
+		show_settings_modal: ->
+			new settings_modal().render()
 
-		textMode: ->
-			@setCheckMark("text")
-			App.Views.mainView.textMode()
+		text_mode: ->
+			@set_check_mark("text")
+			App.Views.mainView.text_mode()
 
-		graphicMode: ->
-			@setCheckMark("graphic")
-			App.Views.mainView.graphicMode()
+		graphic_mode: ->
+			@set_check_mark("graphic")
+			App.Views.mainView.graphic_mode()
 
-		mixedMode: ->
-			@setCheckMark("mixed")
-			App.Views.mainView.mixedMode()
+		mixed_mode: ->
+			@set_check_mark("mixed")
+			App.Views.mainView.mixed_mode()
 
 		# When a mode is selected, we want to add a small black indicator box
 		# in the dropdown, and remove the others
-		setCheckMark: (mode) ->
+		set_check_mark: (mode) ->
 			console.log "hello to #{mode}"
 			$(".mode-select").removeClass("dropdown-selected")
 			$(".#{mode}-select").addClass("dropdown-selected")

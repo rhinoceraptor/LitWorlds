@@ -13,24 +13,14 @@ define ["moo"], (moo) ->
 			"*other": "moo"
 
 		moo: ->
-			#App.Views.mainView = new moo
-			moo.views.main_view.render()
+			App.Views.mainView.render()
 
 		text_mode: ->
 			console.log "text_mode"
-			App.Views.main_view.text_mode()
+			App.Views.mainView.text_mode()
 		mixed_mode: ->
 			console.log "mixed_mode"
-			App.Views.main_view.mixed_mode()
+			App.Views.mainView.mixed_mode()
 		graphic_mode: ->
 			console.log "graphic_mode"
-			App.Views.main_view.graphic_mode()
-
-		window.App = {}
-		App.Views = {}
-		App.Router = new moo_router
-		App.Views.navbar = new navbar
-		App.Views.mainView = new moo
-		App.Views.mainView.render()
-
-		Backbone.history.start()
+			App.Views.mainView.graphic_mode()
