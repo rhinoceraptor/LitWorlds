@@ -3,7 +3,7 @@ http = require 'http'
 io = require 'socket.io'
 
 telnetPort = 7777
-telnetHost = '104.131.36.137'
+telnetHost = '104.131.40.122'
 
 socketPort = 8080
 

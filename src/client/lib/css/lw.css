@@ -1,113 +1,112 @@
 @font-face {
-	font-family: ubuntu;
-	src: url(../font/ubuntu-reg.ttf);
+  font-family: ubuntu;
+  src: url(../font/ubuntu-reg.ttf);
 }
 
 @font-face {
-	font-family: ubuntu-mono;
-	src: url(../font/ubuntu-mono-reg.ttf);
+  font-family: ubuntu-mono;
+  src: url(../font/ubuntu-mono-reg.ttf);
 }
 
 * {
-	-webkit-border-radius: 0 !important;
-	-moz-border-radius: 0 !important;
-	border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 body {
-	font-family: ubuntu;
-	
-	background-color: #D1D1D1;/*#353C3D;*/
-
+  font-family: ubuntu;
+  background-color: #D1D1D1;
 }
 
 .navbar {
-	overflow: visible;
-	background-image: none;
+  overflow: visible;
+  background-image: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
 }
 
 .navbar-custom {
-	background-color: #333333;
+  background-color: #333333;
 }
 
 .navbar-brand {
-	color: #F3F3F3 !important;
+  color: #F3F3F3 !important;
 }
 
 .navbar-brand:hover {
-	color: #969696 !important;
+  color: #969696 !important;
 }
 
 .btn-group {
-	position: absolute;
-	padding-top: 7px;
-	padding-right: 7px;
+  position: absolute;
+  padding-top: 7px;
+  padding-right: 7px;
 }
 
-#login-btn {
-	background-color: #F3F3F3;
-	right: 7px;
+.btn {
+  background-color: #F3F3F3;
+  right: 7px;
+  border: 1px solid #333333;
 }
 
-#login-btn:hover {
-	background-color: #969696;
+.btn:hover {
+  background-color: #969696 !important;
 }
 
 #modeButton {
-	background-color: #F3F3F3;
-}
-
-#modeButton:hover {
-	background-color: #969696;
+  background-color: #F3F3F3;
 }
 
 .modal-label {
-	text-align: center;
+  text-align: center;
 }
 
 .dropdown-menu {
-	white-space: normal;
+  white-space: normal;
 }
 
 .dropdown-menu a:hover {
-	color: #2F374D !important;
+  color: #969696 !important;
 }
 
 .dropdown-selected {
-	background-color: #272822 !important;
+  background-color: #272822 !important;
 }
 
 .dropdown-selected a {
-	color: #F8F8F2 !important;
+  color: #F8F8F2 !important;
 }
 
 .btn-primary {
-	background-color: #5F8199;
+  background-color: #5F8199;
 }
 
 .btn-primary:hover {
-	background-color: #7BA6C4;
+  background-color: #7BA6C4;
 }
 
 .text-mode {
-	width: 40%;
-	resize: none;
-	color: #F8F8F2;
-	background-color: #272822;
-	border-width: 3px;
-	border-color: #3E3D32;
-	border-style: solid;
+  width: 80%;
+  resize: none;
+  color: #F8F8F2;
+  background-color: #272822;
+  border-width: 3px;
+  border-color: #3E3D32;
+  border-style: solid;
+}
+
+#text-wrapper {
+  margin: 0 auto !important;
 }
 
 .text-mode-ul li {
-	list-style: none;
+  list-style: none;
 }
 
 #text-mode-backlog {
-	height: 80%;
+  height: calc(80% - 70px);
 }
 
 #text-mode-input {
