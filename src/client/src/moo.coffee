@@ -23,7 +23,7 @@ class @moo extends Backbone.View
 		@socket = io.connect('http://127.0.0.1:8080' || location.host)
 		@socket.on 'connect', () -> console.log 'connected to socket'
 		@socket.on 'disconnect', @disconnect
-		@socket.on 'telnetLine', @telnet_line_in
+		@socket.on 'tcp_line', @telnet_line_in
 
 	render: ->
 		console.log 'rendering!'
@@ -43,8 +43,12 @@ class @moo extends Backbone.View
 	mixed_mode: ->
 		console.log 'mixed_mode'
 
+	auth: (user, passwd) =>
+		console.log 'authing ' + user + ': ' + passwd
+		@socket.emit('auth', {'user' : user, 'passwd': passwd})
+
 	telnet_line_in: (line) =>
 		@text_handler.insert(line)
 
 	telnet_line_out: (line) =>
-		@socket.emit('client_line', line)
+		@socket.emit('io_line', line)

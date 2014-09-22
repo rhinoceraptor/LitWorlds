@@ -28,6 +28,7 @@ define ->
 			this
 
 		ok: (e) ->
+			App.Views.mainView.auth(@$user.val(), @$passwd.val())
 			@$el.modal "hide"
 
 		cancel: ->

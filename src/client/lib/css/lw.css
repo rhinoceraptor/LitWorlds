@@ -101,6 +101,11 @@ body {
   margin: 0 auto !important;
 }
 
+.text-mode-ul {
+  font-family: ubuntu-mono;
+  font-size: 15;
+}
+
 .text-mode-ul li {
   list-style: none;
 }

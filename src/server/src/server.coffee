@@ -1,51 +1,66 @@
+# Literary Worlds
+# Node.JS interchange server
+# Interchanges data between a client with socket.io and a LambdaMOO server, 
+# over telnet.
+
+# Dependancy imports
+###############################################################################
 net = require 'net'
 http = require 'http'
-io = require 'socket.io'
+socket_io = require 'socket.io'
+express = require 'express'
+###############################################################################
 
-telnetPort = 7777
-telnetHost = '104.131.40.122'
+# Networking variables
+###############################################################################
+telnet_port = 7777
+telnet_host = '104.131.40.122'
+socket_port = 8080
+###############################################################################
 
-socketPort = 8080
-
-console.log('Starting socket server on port ' + socketPort)
-io = io.listen(socketPort)
-
-telnet_connected = false
+# Set up express to listen to the socket_port
+###############################################################################
+app = express()
+server = app.listen(socket_port)
+io = socket_io.listen(server)
 
 # Main data interchange logic.
 # The data is lines between the client and the telnet server.
 # When a line of data comes from the telnet server, send it to the client.
 # When a line of data comes from the socket.io client, sent it to the telnet server.
-# Todo: investigate client authentication, security precautions
-io.sockets.on('connection', (ioSocket) ->
-	process.stdout.write('Incoming socket.io connection\n')
-	ioSocket.emit('telnetLine', 'Hello from socket.io')
-	ioSocket.on('auth', (authData) ->
-		user = authData.user
-		passwd = authData.passwd
+###############################################################################
+io.sockets.on('connection', (io) =>
+  process.stdout.write('Incoming socket.io connection\n')
+  io.emit('tcp_line', 'Hello from socket.io')
+  io.on('auth', (authData) ->
+    user = authData.user
+    passwd = authData.passwd
 
-		if telnet?
-			telnet.write('CO ' + user + '\n' + passwd)
-			ioSocket.emit('authenticated')
-	)
+    telnet = net.createConnection(telnet_port, telnet_host)
 
-	telnet = net.createConnection(telnetPort, telnetHost)
-	telnet.on('data', (telnetData) ->
-		process.stdout.write('Recieved from server: ' + telnetData + '\n')
-		process.stdout.write('emitting to client\n')
-		ioSocket.emit('telnetLine', telnetData)
-	).on('end', () ->
-		ioSocket.emit('disconnected')
-	)
+    if telnet?
+      telnet.write('CO ' + @arraybuf_to_string(user) + '\n')
+      telnet.write(@arraybuf_to_string(passwd) + '\n')
+      io.emit('authenticated')
 
-	ioSocket.on('client_line', (socketData) ->
-		process.stdout.write('Recieved from client:\n>>>' + socketData + '\n')
-		telnet.write(socketData + "\n")
-	)
+    telnet.on('data', (telnetData) ->
+      process.stdout.write('Recieved from server: ' + telnetData + '\n')
+      process.stdout.write('emitting to client\n')
+      io.emit('tcp_line', telnetData)
+    ).on('end', () ->
+      io.emit('disconnect')
+    )
 
-	ioSocket.on('disconnect', () ->
-		process.stdout.write('disconnect the telnet connection!\n')
-		telnet.end()
-	)
+    io.on('io_line', (socketData) ->
+      process.stdout.write('Recieved from client:\n>>>' + socketData + '\n')
+      telnet.write(socketData + "\n")
+    )
+
+    io.on('disconnect', () ->
+      process.stdout.write('disconnect the telnet connection!\n')
+      telnet.end()
+    )
+
+  )
 
 )
