@@ -7,6 +7,7 @@ define ["modals/login_modal", "modals/settings_modal", "moo"], (login_modal, set
 			"click .text-select": "text_mode"
 			"click .graphic-select": "graphic_mode"
 			"click .mixed-select": "mixed_mode"
+			"click #connect-btn": "ready"
 
 		show_login_modal: ->
 			new login_modal().render()
@@ -25,6 +26,9 @@ define ["modals/login_modal", "modals/settings_modal", "moo"], (login_modal, set
 		mixed_mode: ->
 			@set_check_mark("mixed")
 			App.Views.mainView.mixed_mode()
+
+		ready: ->
+			App.Views.mainView.ready()
 
 		# When a mode is selected, we want to add a small black indicator box
 		# in the dropdown, and remove the others

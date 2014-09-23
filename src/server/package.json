@@ -1,9 +1,9 @@
 {
-  "name": "serverMockup",
+  "name": "LiteraryWorlds",
   "author": "Jack Lewis",
+  "license": "BSD 2 Clause",
   "dependencies": {
     "socket.io": "~1.0.6",
-    "mocha": "~1.21.4",
-    "express": "~4.9.4"
+    "mocha": "~1.21.4"
   }
 }

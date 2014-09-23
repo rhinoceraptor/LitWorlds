@@ -31,6 +31,9 @@ class @moo extends Backbone.View
 	disconnect: ->
 		new disconnect_modal().render()
 
+	ready: ->
+		@socket.emit('ready')
+
 	reconnect: ->
 		@connect.hide()
 

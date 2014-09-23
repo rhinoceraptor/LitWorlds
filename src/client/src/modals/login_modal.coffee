@@ -27,9 +27,19 @@ define ->
 			@$el.modal()
 			this
 
-		ok: (e) ->
-			App.Views.mainView.auth(@$user.val(), @$passwd.val())
-			@$el.modal "hide"
+		ok: (e) ->		
+			if @$el.find(".login-user").val() is "" or @$el.find(".login-passwd").val() is ""
+				@wiggle()
+			else
+				App.Views.mainView.auth(@$user.val(), @$passwd.val())
+				@$el.modal "hide"
 
 		cancel: ->
 			@$el.modal "hide"
+
+		wiggle: ->
+			len = 20
+			i = 0
+			while (i < 4)
+				@$el.animate({'margin-left': "+=" + (len = -len) + 'px'}, 50)
+				i++

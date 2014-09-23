@@ -8,7 +8,6 @@
 net = require 'net'
 http = require 'http'
 socket_io = require 'socket.io'
-express = require 'express'
 ###############################################################################
 
 # Networking variables
@@ -20,9 +19,7 @@ socket_port = 8080
 
 # Set up express to listen to the socket_port
 ###############################################################################
-app = express()
-server = app.listen(socket_port)
-io = socket_io.listen(server)
+io = socket_io.listen(socket_port)
 
 # Main data interchange logic.
 # The data is lines between the client and the telnet server.
@@ -35,12 +32,12 @@ io.sockets.on('connection', (io) =>
   io.on('auth', (authData) ->
     user = authData.user
     passwd = authData.passwd
-
+  )
+  io.on('ready', () -> 
     telnet = net.createConnection(telnet_port, telnet_host)
-
-    if telnet?
-      telnet.write('CO ' + @arraybuf_to_string(user) + '\n')
-      telnet.write(@arraybuf_to_string(passwd) + '\n')
+    if user? and passwd? and telnet?
+      telnet.write('CO ' + user + '\n')
+      telnet.write(passwd + '\n')
       io.emit('authenticated')
 
     telnet.on('data', (telnetData) ->
