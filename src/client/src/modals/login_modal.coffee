@@ -4,6 +4,7 @@ define ->
 		events:
 			"click #btn-cancel": "cancel"
 			"click #btn-ok": "ok"
+			"click #btn-guest": "guest"
 
 		initialize: (opts) ->
 			@$okBtn = @$el.find(".btn-ok")
@@ -33,6 +34,9 @@ define ->
 			else
 				App.Views.mainView.auth(@$user.val(), @$passwd.val())
 				@$el.modal "hide"
+		guest: () ->
+			App.Views.mainView.auth("guest", "")
+			@$el.modal "hide"
 
 		cancel: ->
 			@$el.modal "hide"

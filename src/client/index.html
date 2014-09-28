@@ -24,10 +24,31 @@
             <h3 class="modalLabel">Error</h3>
           </div>
           <div class="modal-body">
-            <p class="centered">Something has gone wrong, the server has been disconnected. Please check your internet connection.</p>
+            <p class="centered">Something has gone wrong, the server has been disconnected. 
+              Please check your internet connection.</p>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-default" id="btn-cancel" data-dismiss="modal" aria-hidden="true">cancel</button>
+            <button class="btn btn-primary" id="btn-ok" data-dismiss="modal" aria-hidden="true">ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Modal Dialog -->
+    <div class="modal fade" id="error-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h3 class="modalLabel">Error</h3>
+          </div>
+          <div class="modal-body">
+            <p class="centered">Something has gone wrong, the server could not make a connection to the Literary Worlds MUD.
+              Please try again later.</p>
+          </div>
+          <div class="modal-footer">
             <button class="btn btn-primary" id="btn-ok" data-dismiss="modal" aria-hidden="true">ok</button>
           </div>
         </div>
@@ -44,14 +65,15 @@
             </button>
             <h3 class="modalLabel">Login</h3>
           </div>
-          <div class="modal-body">
-            <input class="login-user" type="text" placeholder="username" />
+          <div class="modal-body login-body">
+            <input class="login-user" type="text" placeholder="username" /> <br /><br />
             <input class="login-passwd" type="password" placeholder="password" />
           </div>
           <div class="modal-footer">
+            <button class="btn" id="btn-cancel" data-dismiss="modal" aria-hidden="true">cancel</button>
             <button class="btn" id="btn-guest" data-dismiss="modal" aria-hidden="true">Login as a Guest</button>
-            <button class="btn btn-default" id="btn-cancel" data-dismiss="modal" aria-hidden="true">cancel</button>
-            <button class="btn btn-primary" id="btn-ok" data-dismiss="modal" aria-hidden="true">ok</button>
+            <button class="btn btn" id="btn-new-user" data-dismiss="modal" aria-hidden="true">create new user</button>
+            <button class="btn btn-primary" id="btn-ok" data-dismiss="modal" aria-hidden="true">login</button>
           </div>
         </div>
       </div>
@@ -69,13 +91,144 @@
           </div>
           <div class="modal-body">
             <h4>Theme</h4>
-            <input class="theme" id="dark-theme" type="radio" name="theme" value="dark" checked> Dark</input>
-            <p />
-            <input class="theme" id="light-theme" type="radio" name="theme" value="light"> Light</input>
-            <hr>
+              <input class="theme" id="dark-theme" type="radio" name="theme" value="dark" checked> Dark</input>
+              <p />
+              <input class="theme" id="light-theme" type="radio" name="theme" value="light"> Light</input>
+              <hr>
+            <h4>Font</h4>
+              <select>
+                <option value="source_code">Source Code Pro</option>
+                <option value="ubuntu_mono">Ubuntu Mono</option>
+                <option value="inconsolata">Inconsolata</option>
+              </select>
+              <hr>
+            <h4>Input Buffer</h4>
+              How many previously entered lines to store? (max: 9999)<br />
+              <input class="line-buf" type="text" min="0" max="9999" value="50">
           </div>
           <div class="modal-footer">
-            <button class="btn btn-default" id="btn-cancel" data-dismiss="modal" aria-hidden="true">cancel</button>
+            <button class="btn" id="btn-cancel" data-dismiss="modal" aria-hidden="true">cancel</button>
+            <button class="btn btn-primary" id="btn-ok" data-dismiss="modal" aria-hidden="true">ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- License Modal Dialog -->
+    <div class="modal fade" id="license-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
+            <h3 class="modalLabel">Licenses</h3>
+          </div>
+          <div class="modal-body">
+            <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" class="collapsed" data-target="#jsmoo-license" href="#jsmoo-license">jsMOO</a>
+            </h4>
+            </div>
+            <div id="jsmoo-license" class="panel-collapse collapse">
+            <div class="panel-body">
+              Copyright (c) 2014, John Lewis, Owen Watson, Tim Cunningham <br />
+              All rights reserved. <br /><br />
+              Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:<br />
+              1) Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. <br /><br />
+
+              2) Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. <br /><br />
+
+              THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+            </div>
+            </div>
+
+            <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" class="collapsed" data-target="#socketio-license" href="#socketio-license">socket.io</a>
+            </h4>
+            </div>
+            <div id="socketio-license" class="panel-collapse collapse">
+            <div class="panel-body">
+              Copyright (c) 2014 Automattic <dev@cloudup.com><br /><br />
+
+              Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br /><br />
+
+              The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<br /><br />
+
+              THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.<br /><br />
+            </div>
+            </div>
+
+            <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" class="collapsed" data-target="#requirejs-license" href="#requirejs-license">require.js</a>
+            </h4>
+            </div>
+            <div id="requirejs-license" class="panel-collapse collapse">
+            <div class="panel-body">
+              Copyright (c) 2010-2014, The Dojo Foundation<br /><br />
+
+              Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br /><br />
+
+              The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<br /><br />
+
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </div>
+            </div>
+
+            <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" class="collapsed" data-target="#jquery-license" href="#jquery-license">jQuery</a>
+            </h4>
+            </div>
+            <div id="jquery-license" class="panel-collapse collapse">
+            <div class="panel-body">
+              Copyright 2005, 2014 jQuery Foundation, Inc. and other contributors<br /><br />
+
+              Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br /><br />
+
+              The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </div>
+            </div>
+
+            <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" class="collapsed" data-target="#bootstrap-license" href="#bootstrap-license">Bootstrap</a>
+            </h4>
+            </div>
+            <div id="bootstrap-license" class="panel-collapse collapse">
+            <div class="panel-body">
+              Copyright (c) 2011-2014 Twitter, Inc<br /><br />
+
+              Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br /><br />
+
+              The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<br /><br />
+
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </div>
+            </div>
+
+            <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" class="collapsed" data-target="#backbone-license" href="#backbone-license">Backbone.js</a>
+            </h4>
+            </div>
+            <div id="backbone-license" class="panel-collapse collapse">
+            <div class="panel-body">
+              Copyright (c) 2010-2014 Jeremy Ashkenas, DocumentCloud<br /><br />
+
+              Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br /><br />
+
+              The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<br /><br />
+
+              THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </div>
+            </div>
+          </div>
+          <div class="modal-footer">
             <button class="btn btn-primary" id="btn-ok" data-dismiss="modal" aria-hidden="true">ok</button>
           </div>
         </div>
@@ -112,6 +265,10 @@
             <li class="settings">
               <a href="#settings">Settings</a>
             </li>
+            <li class="divider"></li>
+            <li class="license">
+              <a hread="#license">Licenses</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -120,7 +277,7 @@
     <div class="main-body text-center center-block">
       <div class="text-wrapper text-center center-block">
         <ul class="text-mode-ul text-center center-block">
-        <li><textarea readonly rows="20" cols="100" placeholder="Welcome to Literary Worlds!" class="text-mode" id="text-mode-backlog" type="text"></textarea></li>
+        <li><textarea readonly rows="20" cols="100" class="text-mode" id="text-mode-backlog" type="text"></textarea></li>
         <li><textarea rows="1" cols="100" class="text-mode" id="text-mode-input" type="text" placeholder="Enter text here"></textarea></li>
         </ul>
       </div>

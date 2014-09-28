@@ -1,4 +1,11 @@
-define ["modals/login_modal", "modals/settings_modal", "moo"], (login_modal, settings_modal, moo) ->
+define ["modals/login_modal", \
+"modals/settings_modal", \
+"modals/license_modal", \
+"moo"],
+(login_modal,
+settings_modal,
+license_modal,
+moo) ->
 	class navbar extends Backbone.View
 		el: "#navbar"
 		events:
@@ -8,12 +15,18 @@ define ["modals/login_modal", "modals/settings_modal", "moo"], (login_modal, set
 			"click .graphic-select": "graphic_mode"
 			"click .mixed-select": "mixed_mode"
 			"click #connect-btn": "ready"
+			"click #disconnect-btn": "close"
+			"click .license": "show_license_modal"
 
 		show_login_modal: ->
 			new login_modal().render()
 
 		show_settings_modal: ->
 			new settings_modal().render()
+
+		show_license_modal: () ->
+			console.log "hello"
+			new license_modal().render()
 
 		text_mode: ->
 			@set_check_mark("text")
@@ -27,8 +40,26 @@ define ["modals/login_modal", "modals/settings_modal", "moo"], (login_modal, set
 			@set_check_mark("mixed")
 			App.Views.mainView.mixed_mode()
 
-		ready: ->
+		ready: =>
+			$connect_btn = @$el.find("#connect-btn")
+			connect = $.trim($connect_btn.html())
+			if connect is "Connect"
+				$connect_btn.attr("id", "disconnect-btn")
+				$connect_btn.html("Disconnect")
+
+
 			App.Views.mainView.ready()
+			App.Views.mainView.text_handler.insert("\n\n\n")
+
+		close: () ->
+			$disconnect_btn = @$el.find("#disconnect-btn")
+			disconnect = $.trim($disconnect_btn.html())
+			if disconnect is "Disconnect"
+				App.Views.mainView.close()
+				$disconnect_btn.attr("id", "connect-btn")
+				$disconnect_btn.html("Connect")
+				App.Views.mainView.text_handler.clear_backlog()
+				App.Views.mainView.text_handler.insert("\t\tYou have disconnected from the MUD.\n")
 
 		# When a mode is selected, we want to add a small black indicator box
 		# in the dropdown, and remove the others

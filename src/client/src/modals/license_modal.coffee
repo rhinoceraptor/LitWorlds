@@ -1,11 +1,11 @@
 define ->
-	class @settings_modal extends Backbone.View
-		el: "#settings-modal"
+	class @license_modal extends Backbone.View
+		el: "#license-modal"
 		events:
 			"click #btn-cancel": "cancel"
 			"click #btn-ok": "ok"
 
-		initialize: (opts) =>
+		initialize: (opts) ->
 			@$okBtn = @$el.find(".btn-ok")
 
 			$(document).on "keyup checkout", (e) =>
@@ -19,9 +19,3 @@ define ->
 		render: ->
 			@$el.modal()
 			this
-
-		ok: (e) ->
-			length = parseInt(@$el.find(".line-buf")[0].value)
-			if length isnt null
-				App.Views.mainView.text_handler.set_line_buffer(length)
-			@$el.modal "hide"

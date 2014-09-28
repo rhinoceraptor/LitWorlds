@@ -44,6 +44,8 @@ io.sockets.on('connection', (io) =>
       process.stdout.write('Recieved from server: ' + telnetData + '\n')
       process.stdout.write('emitting to client\n')
       io.emit('tcp_line', telnetData)
+    ).on('error', () ->
+      io.emit('error')
     ).on('end', () ->
       io.emit('disconnect')
     )
@@ -55,7 +57,16 @@ io.sockets.on('connection', (io) =>
 
     io.on('disconnect', () ->
       process.stdout.write('disconnect the telnet connection!\n')
-      telnet.end()
+      if telnet?
+        telnet.end()
+        telnet = null
+    )
+
+    io.on('close', () ->
+      process.stdout.write('disconnect the telnet connection!\n')
+      if telnet?
+        telnet.end()
+        telnet = null
     )
 
   )
