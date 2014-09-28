@@ -8,5 +8,19 @@ define ->
 			@$el.modal()
 			this
 
-		ok: ->
+		initialize: (opts) ->
+			@$okBtn = @$el.find("$btn-ok")
+
+			$(document).on("keyup checkout", (e) =>
+				if e.keyCode is 13
+					e.preventDefault()
+					@ok()
+				if e.keyCode is 27
+					e.preventDefault()
+					@cancel())
+		ok: =>
+			@cleanup()
+
+		cleanup: ->
+			@$el.off("click", "#btn-ok")
 			@$el.modal "hide"

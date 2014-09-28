@@ -8,6 +8,16 @@
   src: url(../font/ubuntu-mono-reg.ttf);
 }
 
+@font-face {
+  font-family: source-code-pro;
+  src: url(../font/SourceCodePro-Regular.ttf);
+}
+
+@font-face {
+  font-family: inconsolata;
+  src: url(../font/Inconsolata-Regular.ttf);
+}
+
 * {
   -webkit-border-radius: 0 !important;
   -moz-border-radius: 0 !important;
