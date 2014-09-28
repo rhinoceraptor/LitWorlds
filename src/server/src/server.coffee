@@ -63,7 +63,7 @@ io.sockets.on('connection', (io) =>
     )
 
     io.on('close', () ->
-      process.stdout.write('disconnect the telnet connection!\n')
+      process.stdout.write('close the telnet connection!\n')
       if telnet?
         telnet.end()
         telnet = null
