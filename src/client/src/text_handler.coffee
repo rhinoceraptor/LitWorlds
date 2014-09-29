@@ -9,10 +9,18 @@ define ->
 		el: ".text-wrapper"
 		initialize: ->
 			@$el.on "keydown", "#text-mode-input", @input_handler
-			@insert("jsMOO version 0.0.1\n" +
-					"Copyright (c) 2014, John Lewis, Owen Watson, Tim Cunningham\n" + 
-					"All rights reserved.\n" +
-					"For license information, go to Options --> Licenses.\n")
+			# We have to escape the backslashes, that's why it looks goofy
+			@insert("\t                              _       \n" +
+					"\t   ____ ___  ____  ____      (_)____  \n" +
+					"\t  / __ `__ \\/ __ \\/ __ \\    / / ___/  \n" +
+					"\t / / / / / / /_/ / /_/ /   / (__  )   \n" +
+					"\t/_/ /_/ /_/\\____/\\____(_)_/ /____/    \n" +
+					"\t                       /___/          \n" +
+					"\t====================================\n" +
+					"\tmoo.js version 0.0.1\n" +
+					"\tFor license information, go to " +
+					"Options --> Licenses.\n\tTo connect the MUD, use the " +
+					"Login button or manually log in by pressing Connect.\n")
 
 			@line_buf_length = 50		# programatic limit to backlog
 			@scroll_buf_index = 0		# input log scroll index
@@ -29,7 +37,7 @@ define ->
 			if $log_output.val() isnt ''
 				$log_output.val($log_output.val() + line)
 			else
-				$log_output.val($log_output.val() + line)
+				$log_output.val(line)
 			@scroll_backlog()
 
 		input_handler: (e) =>
@@ -69,7 +77,6 @@ define ->
 
 				# If limit on the line buffer is not reached, push the input
 				if @line_buf_index < @line_buf_length
-					console.log 'push ' + input
 					@line_buf.push(input)
 					@line_buf_index++
 
@@ -86,7 +93,6 @@ define ->
 					@line_buf.reverse()
 					last = @line_buf.pop()
 					@line_buf.reverse()
-					console.log 'pop ' + last
 
 		# Keep the scroll position at the bottom of the scroll buffer when new
 		# text is added to it.

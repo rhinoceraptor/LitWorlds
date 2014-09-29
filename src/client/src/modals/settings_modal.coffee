@@ -25,7 +25,7 @@ define ->
 			# set previous line buffer length
 			length = parseInt(@$el.find(".line-buf")[0].value)
 			if length isnt null
-				App.Views.mainView.text_handler.set_line_buffer(length)
+				App.Views.text_handler.set_line_buffer(length)
 
 			# set font face and size
 			font = $(".font-select")[0].value

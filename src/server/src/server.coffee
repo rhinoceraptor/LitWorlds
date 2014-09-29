@@ -28,7 +28,6 @@ io = socket_io.listen(socket_port)
 ###############################################################################
 io.sockets.on('connection', (io) =>
   process.stdout.write('Incoming socket.io connection\n')
-  io.emit('tcp_line', 'Hello from socket.io')
   io.on('auth', (authData) ->
     user = authData.user
     passwd = authData.passwd
@@ -36,9 +35,10 @@ io.sockets.on('connection', (io) =>
   io.on('ready', () -> 
     telnet = net.createConnection(telnet_port, telnet_host)
     if user? and passwd? and telnet?
-      telnet.write('CO ' + user + '\n')
-      telnet.write(passwd + '\n')
-      io.emit('authenticated')
+      if telnet.writable
+        telnet.write('CO ' + user + '\n')
+        telnet.write(passwd + '\n')
+        io.emit('authenticated')
 
     telnet.on('data', (telnetData) ->
       process.stdout.write('Recieved from server: ' + telnetData + '\n')
@@ -46,26 +46,32 @@ io.sockets.on('connection', (io) =>
       io.emit('tcp_line', telnetData)
     ).on('error', () ->
       io.emit('error')
-    ).on('end', () ->
+    ).on('close', () ->
       io.emit('disconnect')
     )
 
     io.on('io_line', (socketData) ->
       process.stdout.write('Recieved from client:\n>>>' + socketData + '\n')
-      telnet.write(socketData + "\n")
+      if telnet?
+        if telnet.writable
+          telnet.write(socketData + "\n")
+        else
+          io.emit('error', 'timeout')
+    ).on('error', () ->
+      process.stdout.write('Error writing to telnet!')
     )
 
     io.on('disconnect', () ->
       process.stdout.write('disconnect the telnet connection!\n')
       if telnet?
-        telnet.end()
+        telnet.destroy()
         telnet = null
     )
 
     io.on('close', () ->
       process.stdout.write('close the telnet connection!\n')
       if telnet?
-        telnet.end()
+        telnet.destroy()
         telnet = null
     )
 

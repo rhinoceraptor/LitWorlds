@@ -9,7 +9,7 @@ define ->
 			this
 
 		initialize: (opts) ->
-			@$okBtn = @$el.find("$btn-ok")
+			@$okBtn = @$el.find("#btn-ok")
 
 			$(document).on("keyup checkout", (e) =>
 				if e.keyCode is 13
@@ -18,9 +18,10 @@ define ->
 				if e.keyCode is 27
 					e.preventDefault()
 					@cancel())
+
 		ok: =>
 			@cleanup()
 
 		cleanup: ->
 			@$el.off("click", "#btn-ok")
-			@$el.modal "hide"
+			@$el.modal("hide")

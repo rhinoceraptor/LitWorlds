@@ -31,4 +31,4 @@ define ->
 		cleanup: ->
 			$(document).off("keyup checkout")
 			@$el.off("click", "#btn-ok")
-			@$el.modal "hide"
+			@$el.modal("hide")

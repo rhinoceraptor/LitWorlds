@@ -1,11 +1,9 @@
 define ["modals/login_modal", \
 "modals/settings_modal", \
-"modals/license_modal", \
-"moo"],
+"modals/license_modal"],
 (login_modal,
 settings_modal,
-license_modal,
-moo) ->
+license_modal) ->
 	class navbar extends Backbone.View
 		el: "#navbar"
 		events:
@@ -25,7 +23,6 @@ moo) ->
 			new settings_modal().render()
 
 		show_license_modal: () ->
-			console.log "hello"
 			new license_modal().render()
 
 		text_mode: ->
@@ -49,7 +46,7 @@ moo) ->
 
 
 			App.Views.mainView.ready()
-			App.Views.mainView.text_handler.insert("\n\n\n")
+			App.Views.text_handler.insert("\n\n\n")
 
 		close: () ->
 			$disconnect_btn = @$el.find("#disconnect-btn")
@@ -58,8 +55,8 @@ moo) ->
 				App.Views.mainView.close()
 				$disconnect_btn.attr("id", "connect-btn")
 				$disconnect_btn.html("Connect")
-				App.Views.mainView.text_handler.clear_backlog()
-				App.Views.mainView.text_handler.insert("\t\tYou have disconnected from the MUD.\n")
+				App.Views.text_handler.clear_backlog()
+				App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n")
 
 		# When a mode is selected, we want to add a small black indicator box
 		# in the dropdown, and remove the others

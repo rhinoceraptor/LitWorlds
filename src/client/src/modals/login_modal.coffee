@@ -57,3 +57,4 @@ define ->
 			@$el.off("click", "#btn-cancel")
 			@$el.off("click", "#btn-ok")
 			@$el.off("click", "#btn-guest")
+			@$el.modal("hide")
