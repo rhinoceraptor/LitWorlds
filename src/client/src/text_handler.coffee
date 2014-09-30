@@ -54,6 +54,7 @@ define ->
 				if @scroll_buf_index < @line_buf_index
 					index = @line_buf_index - @scroll_buf_index - 1
 					$text_input.val(@line_buf[index])
+
 					if @scroll_buf_index < @line_buf_index - 1
 						@scroll_buf_index++
 

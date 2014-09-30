@@ -60,7 +60,7 @@ settings_modal) -> \
 			@socket.emit('close')
 
 		telnet_line_in: (line) =>
-			@text_handler.insert(line)
+			App.Views.text_handler.insert(line)
 
 		telnet_line_out: (line) =>
 			@socket.emit('io_line', line)
