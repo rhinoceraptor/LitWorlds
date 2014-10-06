@@ -29,6 +29,14 @@ body {
   background-color: #D1D1D1;
 }
 
+.main-body {
+  float: none !important;
+  margin: 0 auto !important;
+  float: none !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 .navbar {
   overflow: visible;
   background-image: none;
@@ -95,10 +103,6 @@ body {
 
 .btn-primary:hover {
   background-color: #7BA6C4;
-}
-
-#btn-cancel {
-  background-color: #BC5261;
 }
 
 .text-mode {

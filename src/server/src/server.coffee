@@ -8,18 +8,22 @@
 net = require 'net'
 http = require 'http'
 socket_io = require 'socket.io'
+express = require 'express'
+http = require 'http'
 ###############################################################################
 
 # Networking variables
 ###############################################################################
 telnet_port = 7777
-telnet_host = '104.131.40.122'
+telnet_host = '127.0.0.1'
 socket_port = 8080
 ###############################################################################
 
-# Set up express to listen to the socket_port
+# Set up express to serve the client and socket.io to listen to the socket_port
 ###############################################################################
+app = express()
 io = socket_io.listen(socket_port)
+app.use('/', express.static('../client/'))
 
 # Main data interchange logic.
 # The data is lines between the client and the telnet server.
@@ -33,6 +37,7 @@ io.sockets.on('connection', (io) =>
     passwd = authData.passwd
   )
   io.on('ready', () -> 
+    process.stdout.write('connection is ready')
     telnet = net.createConnection(telnet_port, telnet_host)
     if user? and passwd? and telnet?
       if telnet.writable
@@ -78,3 +83,5 @@ io.sockets.on('connection', (io) =>
   )
 
 )
+# run sudo setcap 'cap_net_bind_service=+ep' /usr/local/bin/node
+app.listen(80)

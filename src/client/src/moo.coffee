@@ -19,7 +19,7 @@ settings_modal) -> \
 		initialize: ->
 			console.log 'moo'
 
-			@socket = io.connect('http://127.0.0.1:8080' || location.host)
+			@socket = io.connect("http://127.0.0.1:8080" || location.host)
 			@socket.on 'connect', () -> console.log 'connected to socket'
 			@socket.on 'disconnect', @disconnect
 			@socket.on 'error', @error
@@ -60,6 +60,7 @@ settings_modal) -> \
 			@socket.emit('close')
 
 		telnet_line_in: (line) =>
+			console.log 'recvd a line'
 			App.Views.text_handler.insert(line)
 
 		telnet_line_out: (line) =>
