@@ -74,6 +74,9 @@ else
 	exit 1
 fi
 
+cd ${INSTALLDIR}/..
+chown -R moo moo
+
 # Restart the enCore server
 cd ${INSTALLDIR}/bin
 chmod +x restart

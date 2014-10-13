@@ -83,5 +83,14 @@ io.sockets.on('connection', (io) =>
   )
 
 )
-# run sudo setcap 'cap_net_bind_service=+ep' /usr/local/bin/node
-app.listen(80)
+
+app.listen(80, (err) ->
+  return cb(err)  if err
+
+  # Find out which user used sudo through the environment variable
+  uid = parseInt(process.env.SUDO_UID)
+
+  # Set our server's uid to that user
+  process.setuid uid  if uid
+  console.log "Server's UID is now " + process.getuid()
+)
