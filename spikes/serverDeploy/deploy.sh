@@ -78,6 +78,7 @@ cd ${INSTALLDIR}/..
 chown -R moo moo
 
 # Restart the enCore server
+su moo
 cd ${INSTALLDIR}/bin
 chmod +x restart
 ./restart enCore
