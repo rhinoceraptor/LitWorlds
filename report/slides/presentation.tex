@@ -13,16 +13,31 @@
 \begin{itemize}
   \item Literary Worlds is an multiuser text based game used for English education at WMU.
   \item These games are known as MOOs (Multiuser Object Oriented), or MUDs (Multi User Domains)
-  \item Most of these games provide a telnet interface for playing, Literary Worlds uses enCore with MOOTcan, a Java applet.
+  \item Most of these games provide a telnet interface for playing, Literary Worlds uses enCore with MOOtcan, a Java applet.
   \item The aim of this project is to provide a drop-in replacement user interface in Javascript.
 \end{itemize}
 }
 
-\frame{\frametitle{Telnet MUD}
+\frame{\frametitle{enCore Xpress interface}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{classUsage.png}
+  \end{centering}
+}
+
+\frame{\frametitle{Client}
+\begin{itemize}
+  \item Client: Allen Webb
+  \item Professor of Comparative Literature and Postcolonial Studies at Western Michigan University's Department of English
+  \item In 2003, Robert Rozema, a PhD student under Allen Webb created the prototype Literary World.
+  \item Several virtual worlds were created that form the Literary Worlds project.
+  \item The Literary Worlds project was one of seven projects to receive funding from the Western Michigan University President's Innovation Fund.
+\end{itemize}
+}
+
+\frame{\frametitle{Telnet MUD Example}
   \begin{centering}
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{MudExample.png}
   \end{centering}
-
 }
 
 % - Title Page
@@ -43,20 +58,25 @@
 % - Glossary
 
 \section{Introduction}
-\frame{\frametitle{Introduction}
+\frame{\frametitle{Technical Introduction}
   \begin{itemize}
-    \item LambdaMOO is distributed as a source tarball, deploying it on a new sever entails compiling it, and running it using the enCore database.
-
-    \item enCore is an graphical interface and MUD database package that works with a LambdaMOO server to provide a browser based text client as well as a graphical, mouse driven interface.
-    \item The Java applet is the text interface, it makes a telnet to LambdaMOO, as though the user were using a command line telnet client.
+    \item LambdaMOO is a MUD server software package(as well as a particular MUD), Literary Worlds uses the server software.
+    %\item LambdaMOO is distributed as a source tarball, deploying it on a new sever entails compiling it, and running it using the enCore database, and configuring Apache to work with enCore.
+    \item enCore Xpress is an graphical interface and MUD database package that works with the LambdaMOO server to provide a browser based text client using a Java applet as well as a graphical, mouse driven interface.
+    %\item The Java applet is the text interface, it makes a telnet to LambdaMOO, as though the user were using a command line telnet client.
+    \item Literary Worlds uses version 4 of enCore, there is a version 5 of enCore that attempts to provide a web interface without a Java applet, however it is beta software and hasn't been actively developed since 2006.
   \end{itemize}
 }
 
-
-\section{Xpress interface}
-\frame{\frametitle{enCore Xpress interface}
+\frame{\frametitle{Plugin Missing}
   \begin{centering}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{classUsage.png}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{PlugInNeeded.png}
+  \end{centering}
+}
+
+\frame{\frametitle{Client-Server Diagram}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{TelnetDiagram.png}
   \end{centering}
 }
 
@@ -72,6 +92,9 @@
 }
 
 \frame{\frametitle{Client-Server Diagram}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{NodeDiagram.png}
+  \end{centering}
 }
 
 \frame{\frametitle{Client Technology}
@@ -96,6 +119,11 @@
   \end{itemize}
 }
 
+\frame{\frametitle{Basic Text Interface}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{litworlds.png}
+  \end{centering}
+}
 \frame{\frametitle{Server Technology}
   % Node.JS here
   \begin{itemize}
@@ -107,7 +135,9 @@
   \item Express
     \begin{itemize}
       \item Express is a web app framework for Node.js
+      \item In provides tools such as easy interfaces for REST, URL routing, cookies, etc. similar to what Ruby on Rails does for the Ruby language.
     \end{itemize}
+    \item Socket.io
   \end{itemize}
 }
 
@@ -117,11 +147,13 @@
   \begin{itemize}
   \item Text Mode
     \begin{itemize}
-      \item Text
+      \item Client side Javascript MUD client
+      \item This is reason an intermediary server is needed, to handle the telnet connection on behalf of each client.
     \end{itemize}
   \item Graphical Mode
     \begin{itemize}
-      \item Serving enCore GUI
+      \item This work is already done in enCore Xpress, there is no need to reinvent it.
+      \item The new web application will simply need to serve the existing enCore Xpress interface in a coherent way.
     \end{itemize}
   \end{itemize}
 }
@@ -136,7 +168,13 @@
     \item This helps to improve the quality of the software and reduce the time to deliver it.
     \item The end goal of this process is to be able to automatically build and deploy the software whenever all of the tests are passing
   \end{itemize}
-  \item Tools
+  \item Possible Tools
+  \begin{itemize}
+  	\item Jenkins
+  	\item CICircle
+	\item TeamCity
+	\item Hudson
+  \end{itemize}
 \end{itemize}
 }
 
@@ -169,9 +207,11 @@
 \section{Security}
 \frame{\frametitle{Security}
   \begin{itemize}
-    \item Telnet is plain text TCP, so it is inherently insecure to eavesdropping.
-    \item In the future, the telnet server can be protected from external network using containerization such as docker
+    \item Telnet is plain text in transport, so it is inherently vulnerable to eavesdropping.
+    \item For the initial work on the project, security is not a main concern.
+    \item In the future, the telnet server can be protected from external network connections using containerization such as docker
     \item This way only the Node.js server can connect via telnet, and user data can be protected with SSL in transport.
+    \item This strategy would disable the legacy enCore Xpress interface
   \end{itemize}
 }
 
