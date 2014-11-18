@@ -5,30 +5,30 @@
 ###############################################################################
 
 define ->
-	class @disconnect_modal extends Backbone.View
-		el: "#disconnect-modal"
-		events:
-			"click #btn-ok": "ok"
+  class @disconnect_modal extends Backbone.View
+    el: "#disconnect-modal"
+    events:
+      "click #btn-ok": "ok"
 
-		initialize: (opts) ->
-			@$okBtn = @$el.find("#btn-ok")
+    initialize: (opts) ->
+      @$okBtn = @$el.find("#btn-ok")
 
-			$(document).on("keyup checkout", (e) =>
-				if e.keyCode is 13
-					e.preventDefault()
-					@ok()
-				if e.keyCode is 27
-					e.preventDefault()
-					@cancel())
+      $(document).on("keyup checkout", (e) =>
+        if e.keyCode is 13
+          e.preventDefault()
+          @ok()
+        if e.keyCode is 27
+          e.preventDefault()
+          @cancel())
 
-		render: ->
-			@$el.modal()
-			this
+    render: ->
+      @$el.modal()
+      this
 
-		ok: () =>
-			@cleanup()
+    ok: () =>
+      @cleanup()
 
-		cleanup: ->
-			$(document).off("keyup checkout")
-			@$el.off("click", "#btn-ok")
-			@$el.modal("hide")
+    cleanup: ->
+      $(document).off("keyup checkout")
+      @$el.off("click", "#btn-ok")
+      @$el.modal("hide")
