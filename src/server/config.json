@@ -1,0 +1,6 @@
+{
+	"server_name": "Literary Worlds",
+	"telnet_server": "literaryworlds.me",
+	"enCore_base_URL": ":7000/62",
+	"socket_port": "8080"
+}

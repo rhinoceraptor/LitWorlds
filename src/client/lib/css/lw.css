@@ -29,13 +29,7 @@ body {
   background-color: #D1D1D1;
 }
 
-.main-body {
-  float: none !important;
-  margin: 0 auto !important;
-  float: none !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
+
 
 .navbar {
   overflow: visible;
@@ -59,8 +53,8 @@ body {
 
 .btn-group {
   position: absolute;
-  padding-top: 7px;
-  padding-right: 7px;
+  margin-top: 7px;
+  margin-right: 7px;
 }
 
 .btn {
@@ -106,7 +100,7 @@ body {
 }
 
 .text-mode {
-  width: 80%;
+  width: 100%;
   resize: none;
   color: #F8F8F2;
   background-color: #272822;
@@ -116,7 +110,12 @@ body {
 }
 
 #text-wrapper {
-  margin: 0 auto !important;
+  height: calc(100% - 70px);
+}
+
+.graphic-wrapper {
+  background-color: #272822;
+  height: 80%;
 }
 
 .text-mode-ul {
@@ -129,7 +128,7 @@ body {
 }
 
 #text-mode-backlog {
-  height: calc(80% - 70px);
+  height: 80%;
 }
 
 #text-mode-input {

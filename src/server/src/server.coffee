@@ -1,6 +1,6 @@
 # Literary Worlds
 # Node.JS interchange server
-# Interchanges data between a client with socket.io and a LambdaMOO server, 
+# Interchanges data between a client with socket.io and a LambdaMOO server,
 # over telnet.
 
 # Dependancy imports
@@ -10,12 +10,27 @@ http = require 'http'
 socket_io = require 'socket.io'
 express = require 'express'
 http = require 'http'
+fs = require 'fs'
 ###############################################################################
+
+# Read config.json
+config = fs.readFileSync('./config.json')
+try
+  obj = JSON.parse(config)
+  server_name = obj.server_name
+  socket_port = obj.socket_port
+  telnet_server = obj.telnet_server
+  enCore_base_URL = obj.enCore_URL
+catch err
+  console.log 'Error reading config.json!'
+  process.exit(1)
+
+
 
 # Networking variables
 ###############################################################################
 telnet_port = 7777
-telnet_host = '127.0.0.1'
+telnet_host = 'literaryworlds.me'
 socket_port = 8080
 ###############################################################################
 
@@ -25,10 +40,11 @@ app = express()
 io = socket_io.listen(socket_port)
 app.use('/', express.static('../client/'))
 
+###############################################################################
 # Main data interchange logic.
 # The data is lines between the client and the telnet server.
 # When a line of data comes from the telnet server, send it to the client.
-# When a line of data comes from the socket.io client, sent it to the telnet server.
+# When a line of data comes from the socket.io client, sent it out on telnet.
 ###############################################################################
 io.sockets.on('connection', (io) =>
   process.stdout.write('Incoming socket.io connection\n')
@@ -36,7 +52,7 @@ io.sockets.on('connection', (io) =>
     user = authData.user
     passwd = authData.passwd
   )
-  io.on('ready', () -> 
+  io.on('ready', () ->
     process.stdout.write('connection is ready')
     telnet = net.createConnection(telnet_port, telnet_host)
     if user? and passwd? and telnet?

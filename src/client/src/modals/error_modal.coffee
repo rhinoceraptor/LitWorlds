@@ -1,7 +1,7 @@
 ###############################################################################
 # error modal dialog
-# When the TCP connection on the server side has an issue, this modal dialog
-# will alert the user to this fact.
+# When the TCP/telnet connection on the server side has an issue, this modal
+# dialog will alert the user to this fact.
 ###############################################################################
 
 define ->
