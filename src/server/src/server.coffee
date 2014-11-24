@@ -11,28 +11,28 @@ socket_io = require 'socket.io'
 express = require 'express'
 http = require 'http'
 fs = require 'fs'
-###############################################################################
+scrape = require './scrape'
 
-# Read config.json
+# Read config.json, set parameters accordingly
+###############################################################################
 config = fs.readFileSync('./config.json')
 try
   obj = JSON.parse(config)
   server_name = obj.server_name
+  console.log 'server_name: ' + server_name
   socket_port = obj.socket_port
+  console.log 'socket_port: ' + socket_port
   telnet_server = obj.telnet_server
-  enCore_base_URL = obj.enCore_URL
+  console.log 'telnet_server: ' + telnet_server
+  telnet_port = obj.telnet_port
+  console.log 'telnet_port: ' + telnet_port
+  enCore_port = obj.enCore_port
+  console.log 'enCore_port: ' + enCore_port
+  enCore_init = obj.enCore_init
+  console.log 'enCore_init: ' + enCore_init
 catch err
   console.log 'Error reading config.json!'
   process.exit(1)
-
-
-
-# Networking variables
-###############################################################################
-telnet_port = 7777
-telnet_host = 'literaryworlds.me'
-socket_port = 8080
-###############################################################################
 
 # Set up express to serve the client and socket.io to listen to the socket_port
 ###############################################################################
@@ -54,7 +54,7 @@ io.sockets.on('connection', (io) =>
   )
   io.on('ready', () ->
     process.stdout.write('connection is ready')
-    telnet = net.createConnection(telnet_port, telnet_host)
+    telnet = net.createConnection(telnet_port, telnet_server)
     if user? and passwd? and telnet?
       if telnet.writable
         telnet.write('CO ' + user + '\n')

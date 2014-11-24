@@ -1,6 +1,8 @@
 {
 	"server_name": "Literary Worlds",
-	"telnet_server": "literaryworlds.me",
-	"enCore_base_URL": ":7000/62",
-	"socket_port": "8080"
+	"socket_port": "8080",
+	"telnet_server": "brn227.brown.wmich.edu",
+	"telnet_port": "7777",
+	"enCore_port": "7000",
+	"enCore_init": "62"
 }
