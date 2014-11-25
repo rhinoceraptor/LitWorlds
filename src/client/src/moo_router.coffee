@@ -20,6 +20,10 @@ define ["moo"], (moo) ->
       if not App.Views.mainView?
         App.Views.mainView = new moo
         App.Views.mainView.render()
+
+      # param for #encore/123 will be encore/123
+      if param? and param.indexOf("encore") > 0
+        console.log ">>>>>" + param
       # The *other route will pick up the "*-license" series of
       # hash URLs used for the licenses. If the hash URL contains
       # license, show the license modal.
