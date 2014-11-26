@@ -7,25 +7,20 @@ request = require('request');
 cheerio = require('cheerio');
 
 scrape = (function() {
-  scrape.base_url;
-
-  scrape.new_domain;
-
-  scrape.done = false;
-
   function scrape(domain, port, new_domain) {
     this.domain = domain;
     this.port = port;
     this.new_domain = new_domain;
-    this.change_links = __bind(this.change_links, this);
+    this.get_html = __bind(this.get_html, this);
     this.base_url = "http://" + this.domain + ":" + port + "/";
     this.new_domain = "http://" + this.new_domain;
+    this.new_html = null;
   }
 
-  scrape.prototype.change_links = function(req) {
+  scrape.prototype.get_html = function(req, callback) {
     req = this.base_url + req;
-    this.new_html = null;
-    request(req, (function(_this) {
+    console.log("scraping " + req);
+    return request(req, (function(_this) {
       return function(err, res, body) {
         var $, links;
         if (!err && res.statusCode === 200) {
@@ -36,16 +31,19 @@ scrape = (function() {
             old_url = $(link).attr('href');
             ident = old_url.substring(_this.base_url.length, old_url.length - 1);
             new_url = _this.new_domain + "#encore/" + ident;
-            return $(link).attr('href', new_url);
+            $(link).attr('href', new_url);
+            return console.log(new_url);
           });
           _this.new_html = String($('body').html());
-          return _this.new_html;
+          console.log("new_html:\n" + _this.new_html);
+          return callback(_this.new_html);
         }
       };
     })(this));
-    return this.new_html;
   };
 
   return scrape;
 
 })();
+
+module.exports = scrape;

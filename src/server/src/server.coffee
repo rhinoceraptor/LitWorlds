@@ -22,6 +22,8 @@ try
   console.log 'server_name: ' + server_name
   socket_port = obj.socket_port
   console.log 'socket_port: ' + socket_port
+  node_domain = obj.node_domain
+  console.log 'node_domain: ' + node_domain
   telnet_server = obj.telnet_server
   console.log 'telnet_server: ' + telnet_server
   telnet_port = obj.telnet_port
@@ -47,14 +49,23 @@ app.use('/', express.static('../client/'))
 # When a line of data comes from the socket.io client, sent it out on telnet.
 ###############################################################################
 io.sockets.on('connection', (io) =>
-  process.stdout.write('Incoming socket.io connection\n')
+  console.log('Incoming socket.io connection\n')
   io.on('auth', (authData) ->
     user = authData.user
     passwd = authData.passwd
   )
+
   io.on('ready', () ->
-    process.stdout.write('connection is ready')
+    console.log('connection is ready')
     telnet = net.createConnection(telnet_port, telnet_server)
+    s = new scrape(telnet_server, telnet_port, node_domain)
+
+    emit_html: (html) =>
+      console.log 'emitting:\n\n\n' + html
+      io.emit('markup', html)
+
+    s.get_html('62', @emit_html)
+
     if user? and passwd? and telnet?
       if telnet.writable
         telnet.write('CO ' + user + '\n')
@@ -62,8 +73,8 @@ io.sockets.on('connection', (io) =>
         io.emit('authenticated')
 
     telnet.on('data', (telnetData) ->
-      process.stdout.write('Recieved from server: ' + telnetData + '\n')
-      process.stdout.write('emitting to client\n')
+      console.log('Recieved from server: ' + telnetData + '\n')
+      console.log('emitting to client\n')
       io.emit('tcp_line', telnetData)
     ).on('error', () ->
       io.emit('error')
@@ -72,25 +83,25 @@ io.sockets.on('connection', (io) =>
     )
 
     io.on('io_line', (socketData) ->
-      process.stdout.write('Recieved from client:\n>>>' + socketData + '\n')
+      console.log('Recieved from client:\n>>>' + socketData + '\n')
       if telnet?
         if telnet.writable
           telnet.write(socketData + "\n")
         else
           io.emit('error', 'timeout')
     ).on('error', () ->
-      process.stdout.write('Error writing to telnet!')
+      console.log('Error writing to telnet!')
     )
 
     io.on('disconnect', () ->
-      process.stdout.write('disconnect the telnet connection!\n')
+      console.log('disconnect the telnet connection!\n')
       if telnet?
         telnet.destroy()
         telnet = null
     )
 
     io.on('close', () ->
-      process.stdout.write('close the telnet connection!\n')
+      console.log('close the telnet connection!\n')
       if telnet?
         telnet.destroy()
         telnet = null

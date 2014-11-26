@@ -27,7 +27,7 @@ define(["moo"], function(moo) {
         App.Views.mainView.render();
       }
       if ((param != null) && param.indexOf("encore") > 0) {
-        console.log(param);
+        console.log(">>>>>" + param);
       }
       if ((param != null) && param.indexOf("license") > 0) {
         return this.license();

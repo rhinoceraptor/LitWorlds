@@ -4,5 +4,8 @@ define ->
     initialize: ->
       @$el.on "click", "a", @link_handler
 
+    # Get identifier for page, call mainView.request_markup
+    link_handler: (e) ->
 
-     link_handler: (e) ->
+    # Remove all the HTML from .html-wrapper, then insert the html parameter
+    insert_markup: (html) ->

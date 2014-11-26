@@ -1,6 +1,7 @@
 {
 	"server_name": "Literary Worlds",
 	"socket_port": "8080",
+	"node_domain": "127.0.0.1",
 	"telnet_server": "brn227.brown.wmich.edu",
 	"telnet_port": "7777",
 	"enCore_port": "7000",

@@ -24,6 +24,7 @@ settings_modal) -> \
       @socket.on 'disconnect', @disconnect
       @socket.on 'error', @error
       @socket.on 'tcp_line', @telnet_line_in
+      @socket.on 'markup', @handle_markup
 
     render: ->
       console.log 'rendering!'
@@ -65,3 +66,9 @@ settings_modal) -> \
 
     telnet_line_out: (line) =>
       @socket.emit('io_line', line)
+
+    handle_markup: (html) =>
+      App.Views.html_handler.insert_markup(html)
+
+    request_markup: (ident) =>
+      @socket.emit('req_markup', ident)

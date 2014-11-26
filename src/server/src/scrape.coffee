@@ -15,16 +15,14 @@ request = require 'request'
 cheerio = require 'cheerio'
 
 class scrape
-  @base_url
-  @new_domain
-  @done = false
   constructor: (@domain, @port, @new_domain) ->
     @base_url = "http://" + @domain + ":" + port + "/"
     @new_domain = "http://" + @new_domain
-
-  change_links: (req) =>
-    req = @base_url + req
     @new_html = null
+
+  get_html: (req, callback) =>
+    req = @base_url + req
+    console.log "scraping " + req
     request(req, (err, res, body) =>
       if (!err and res.statusCode is 200)
         $ = cheerio.load(body)
@@ -34,9 +32,12 @@ class scrape
           ident = old_url.substring(@base_url.length, old_url.length - 1)
           new_url = @new_domain + "#encore/" + ident
           $(link).attr('href', new_url)
+          console.log new_url
         )
 
         @new_html = String($('body').html())
-        return @new_html
+        console.log "new_html:\n" + @new_html
+        callback(@new_html)
     )
-    return @new_html
+
+module.exports = scrape
