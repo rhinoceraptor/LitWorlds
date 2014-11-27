@@ -19,19 +19,20 @@ config = fs.readFileSync('./config.json')
 try
   obj = JSON.parse(config)
   server_name = obj.server_name
-  console.log 'server_name: ' + server_name
   socket_port = obj.socket_port
-  console.log 'socket_port: ' + socket_port
   node_domain = obj.node_domain
-  console.log 'node_domain: ' + node_domain
   telnet_server = obj.telnet_server
-  console.log 'telnet_server: ' + telnet_server
   telnet_port = obj.telnet_port
-  console.log 'telnet_port: ' + telnet_port
   enCore_port = obj.enCore_port
-  console.log 'enCore_port: ' + enCore_port
   enCore_init = obj.enCore_init
-  console.log 'enCore_init: ' + enCore_init
+  console.log 'server configuration:\n---------------------'
+  console.log '\tserver_name: ' + server_name
+  console.log '\tsocket_port: ' + socket_port
+  console.log '\tnode_domain: ' + node_domain
+  console.log '\ttelnet_server: ' + telnet_server
+  console.log '\ttelnet_port: ' + telnet_port
+  console.log '\tenCore_port: ' + enCore_port
+  console.log '\tenCore_init: ' + enCore_init
 catch err
   console.log 'Error reading config.json!'
   process.exit(1)
@@ -107,17 +108,21 @@ io.sockets.on('connection', (io) =>
         telnet = null
     )
 
+    io.on('req_markup', (ident) =>
+      # ident is the identifer for the encore URL to return
+      s.get_html(ident, (html) =>
+        console.log 'sending html to client'
+        io.emit('markup', html)
+      )
+    )
   )
-
 )
 
 app.listen(80, (err) ->
-  return cb(err)  if err
-
+  return cb(err) if err
   # Find out which user used sudo through the environment variable
   uid = parseInt(process.env.SUDO_UID)
-
   # Set our server's uid to that user
-  process.setuid uid  if uid
+  process.setuid uid if uid
   console.log "Server's UID is now " + process.getuid()
 )

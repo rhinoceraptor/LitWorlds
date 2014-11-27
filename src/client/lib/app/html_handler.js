@@ -12,9 +12,7 @@ define(function() {
 
     html_handler.prototype.el = ".html-wrapper";
 
-    html_handler.prototype.initialize = function() {
-      return this.$el.on("click", "a", this.link_handler);
-    };
+    html_handler.prototype.initialize = function() {};
 
     html_handler.prototype.link_handler = function(e) {};
 

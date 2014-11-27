@@ -20,19 +20,20 @@ config = fs.readFileSync('./config.json');
 try {
   obj = JSON.parse(config);
   server_name = obj.server_name;
-  console.log('server_name: ' + server_name);
   socket_port = obj.socket_port;
-  console.log('socket_port: ' + socket_port);
   node_domain = obj.node_domain;
-  console.log('node_domain: ' + node_domain);
   telnet_server = obj.telnet_server;
-  console.log('telnet_server: ' + telnet_server);
   telnet_port = obj.telnet_port;
-  console.log('telnet_port: ' + telnet_port);
   enCore_port = obj.enCore_port;
-  console.log('enCore_port: ' + enCore_port);
   enCore_init = obj.enCore_init;
-  console.log('enCore_init: ' + enCore_init);
+  console.log('server configuration:\n---------------------');
+  console.log('\tserver_name: ' + server_name);
+  console.log('\tsocket_port: ' + socket_port);
+  console.log('\tnode_domain: ' + node_domain);
+  console.log('\ttelnet_server: ' + telnet_server);
+  console.log('\ttelnet_port: ' + telnet_port);
+  console.log('\tenCore_port: ' + enCore_port);
+  console.log('\tenCore_init: ' + enCore_init);
 } catch (_error) {
   err = _error;
   console.log('Error reading config.json!');

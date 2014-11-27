@@ -18,6 +18,7 @@ define(["moo"], function(moo) {
       "graphic": "graphic_mode",
       "login": "login",
       "settings": "settings",
+      "encore": "encore",
       "*other": "moo"
     };
 
@@ -26,10 +27,11 @@ define(["moo"], function(moo) {
         App.Views.mainView = new moo;
         App.Views.mainView.render();
       }
-      if ((param != null) && param.indexOf("encore") > 0) {
-        console.log(">>>>>" + param);
+      if ((param != null) && param.indexOf("encore") > -1) {
+        console.log(param.substring("encore/".length, param.length));
+        console.log(parseInt(param.substring("encore/".length, param.length)));
       }
-      if ((param != null) && param.indexOf("license") > 0) {
+      if ((param != null) && param.indexOf("license") > -1) {
         return this.license();
       }
     };
