@@ -58,13 +58,13 @@ io.sockets.on('connection', (io) =>
   io.on('ready', () ->
     console.log('connection is ready')
     telnet = net.createConnection(telnet_port, telnet_server)
-    s = new scrape(telnet_server, telnet_port, node_domain)
+    s = new scrape(telnet_server, enCore_port, node_domain)
 
-    emit_html: (html) =>
-      console.log 'emitting:\n\n\n' + html
+    # Initial landing page is 62
+    s.get_html(enCore_init, (html) =>
+      console.log 'sending html to client'
       io.emit('markup', html)
-
-    s.get_html('62', @emit_html)
+    )
 
     if user? and passwd? and telnet?
       if telnet.writable

@@ -18,6 +18,14 @@ define(function() {
 
     html_handler.prototype.link_handler = function(e) {};
 
+    html_handler.prototype.insert_markup = function(html) {
+      return this.$el.html(html);
+    };
+
+    html_handler.prototype.remove_markup = function() {
+      return this.$el.empty();
+    };
+
     return html_handler;
 
   })(Backbone.View);

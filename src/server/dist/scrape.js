@@ -14,12 +14,13 @@ scrape = (function() {
     this.get_html = __bind(this.get_html, this);
     this.base_url = "http://" + this.domain + ":" + port + "/";
     this.new_domain = "http://" + this.new_domain;
-    this.new_html = null;
   }
 
   scrape.prototype.get_html = function(req, callback) {
+    var new_html;
     req = this.base_url + req;
     console.log("scraping " + req);
+    new_html = null;
     return request(req, (function(_this) {
       return function(err, res, body) {
         var $, links;
@@ -30,13 +31,12 @@ scrape = (function() {
             var ident, new_url, old_url;
             old_url = $(link).attr('href');
             ident = old_url.substring(_this.base_url.length, old_url.length - 1);
-            new_url = _this.new_domain + "#encore/" + ident;
+            new_url = "#encore/" + ident;
             $(link).attr('href', new_url);
             return console.log(new_url);
           });
-          _this.new_html = String($('body').html());
-          console.log("new_html:\n" + _this.new_html);
-          return callback(_this.new_html);
+          new_html = String($('body').html());
+          return callback(new_html);
         }
       };
     })(this));

@@ -32,16 +32,13 @@ define ["moo"], (moo) ->
 
     text_mode: ->
       @moo()
-      console.log "text_mode"
-      App.Views.mainView.text_mode()
+      App.Views.navbar.text_mode()
     mixed_mode: ->
       @moo()
-      console.log "mixed_mode"
-      App.Views.mainView.mixed_mode()
+      App.Views.navbar.mixed_mode()
     graphic_mode: ->
       @moo()
-      console.log "graphic_mode"
-      App.Views.mainView.graphic_mode()
+      App.Views.navbar.graphic_mode()
     license: ->
       console.log "license"
       App.Views.navbar.show_license_modal()

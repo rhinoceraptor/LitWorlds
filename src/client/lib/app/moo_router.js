@@ -36,20 +36,17 @@ define(["moo"], function(moo) {
 
     moo_router.prototype.text_mode = function() {
       this.moo();
-      console.log("text_mode");
-      return App.Views.mainView.text_mode();
+      return App.Views.navbar.text_mode();
     };
 
     moo_router.prototype.mixed_mode = function() {
       this.moo();
-      console.log("mixed_mode");
-      return App.Views.mainView.mixed_mode();
+      return App.Views.navbar.mixed_mode();
     };
 
     moo_router.prototype.graphic_mode = function() {
       this.moo();
-      console.log("graphic_mode");
-      return App.Views.mainView.graphic_mode();
+      return App.Views.navbar.graphic_mode();
     };
 
     moo_router.prototype.license = function() {

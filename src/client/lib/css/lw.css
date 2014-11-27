@@ -29,8 +29,6 @@ body {
   background-color: #D1D1D1;
 }
 
-
-
 .navbar {
   overflow: visible;
   background-image: none;
@@ -116,6 +114,7 @@ body {
 .html-wrapper {
   background-color: #272822;
   height: 80%;
+  overflow: auto;
 }
 
 .text-mode-ul {
@@ -133,6 +132,7 @@ body {
 
 #text-mode-input {
 }
+
 
 .login-body {
   margin-left: 20px;

@@ -7,5 +7,11 @@ define ->
     # Get identifier for page, call mainView.request_markup
     link_handler: (e) ->
 
-    # Remove all the HTML from .html-wrapper, then insert the html parameter
+
+    # Insert the markup recieved in the html parameter
     insert_markup: (html) ->
+      @$el.html(html)
+
+    # Remove all markup within el
+    remove_markup: () ->
+      @$el.empty()

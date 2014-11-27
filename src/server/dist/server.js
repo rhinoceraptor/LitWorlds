@@ -57,16 +57,13 @@ io.sockets.on('connection', (function(_this) {
       var s, telnet;
       console.log('connection is ready');
       telnet = net.createConnection(telnet_port, telnet_server);
-      s = new scrape(telnet_server, telnet_port, node_domain);
-      ({
-        emit_html: (function(_this) {
-          return function(html) {
-            console.log('emitting:\n\n\n' + html);
-            return io.emit('markup', html);
-          };
-        })(this)
-      });
-      s.get_html('62', this.emit_html);
+      s = new scrape(telnet_server, enCore_port, node_domain);
+      s.get_html(enCore_init, (function(_this) {
+        return function(html) {
+          console.log('sending html to client');
+          return io.emit('markup', html);
+        };
+      })(this));
       if ((typeof user !== "undefined" && user !== null) && (typeof passwd !== "undefined" && passwd !== null) && (telnet != null)) {
         if (telnet.writable) {
           telnet.write('CO ' + user + '\n');
