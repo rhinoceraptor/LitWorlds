@@ -40,13 +40,14 @@ license_modal) ->
     ready: =>
       $connect_btn = @$el.find("#connect-btn")
       connect = $.trim($connect_btn.html())
-      if connect is "Connect"
+      if connect is "Connect as guest"
         $connect_btn.attr("id", "disconnect-btn")
         $connect_btn.html("Disconnect")
 
 
       App.Views.mainView.ready()
       App.Views.text_handler.insert("\n\n\n")
+      App.Views.mainView.telnet_line_out("co guest")
 
     close: () ->
       $disconnect_btn = @$el.find("#disconnect-btn")
@@ -54,9 +55,10 @@ license_modal) ->
       if disconnect is "Disconnect"
         App.Views.mainView.close()
         $disconnect_btn.attr("id", "connect-btn")
-        $disconnect_btn.html("Connect")
+        $disconnect_btn.html("Connect as guest")
         App.Views.text_handler.clear_backlog()
         App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n")
+      App.Views.html_handler.remove_markup()
 
     # When a mode is selected, we want to add a small black indicator box
     # in the dropdown, and remove the others

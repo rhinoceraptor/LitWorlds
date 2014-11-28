@@ -8,6 +8,9 @@ define(function() {
     __extends(text_handler, _super);
 
     function text_handler() {
+      this.move_cmp = __bind(this.move_cmp, this);
+      this.room_parser = __bind(this.room_parser, this);
+      this.clear_rooms = __bind(this.clear_rooms, this);
       this.set_line_buffer = __bind(this.set_line_buffer, this);
       this.clear_backlog = __bind(this.clear_backlog, this);
       this.input_handler = __bind(this.input_handler, this);
@@ -23,7 +26,9 @@ define(function() {
       this.line_buf_length = 50;
       this.scroll_buf_index = 0;
       this.line_buf_index = 0;
-      return this.line_buf = new Array();
+      this.line_buf = new Array();
+      this.rooms = new Array();
+      return this.links = new Array();
     };
 
     text_handler.prototype.insert = function(line) {
@@ -37,7 +42,8 @@ define(function() {
       } else {
         $log_output.val(line);
       }
-      return this.scroll_backlog();
+      this.scroll_backlog();
+      return this.room_parser(line);
     };
 
     text_handler.prototype.input_handler = function(e) {
@@ -66,7 +72,7 @@ define(function() {
       } else if (e.keyCode === 13) {
         e.preventDefault();
         if (input === "") {
-          return;
+          input = "\n";
         }
         if (this.line_buf_index < this.line_buf_length) {
           this.line_buf.push(input);
@@ -102,12 +108,24 @@ define(function() {
       return this.line_buf_length = length;
     };
 
-    text_handler.prototype.arraybuf_to_string = function(buf) {
-      return String.fromCharCode.apply(null, new Uint8Array(buf));
+    text_handler.prototype.clear_rooms = function() {
+      return this.rooms = new Array();
     };
 
-    text_handler.prototype.socket = function() {
-      return App.Views.main_view.socket;
+    text_handler.prototype.room_parser = function(input) {
+      var input_rooms;
+      input_rooms = input.match(/\[(.*?)\]/);
+      return console.log(input_rooms);
+    };
+
+    text_handler.prototype.move_room = function(room) {
+      return App.Views.mainView.telnet_line_out('go ');
+    };
+
+    text_handler.prototype.move_cmp = function() {};
+
+    text_handler.prototype.arraybuf_to_string = function(buf) {
+      return String.fromCharCode.apply(null, new Uint8Array(buf));
     };
 
     return text_handler;

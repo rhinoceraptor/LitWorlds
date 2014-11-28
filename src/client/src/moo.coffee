@@ -1,24 +1,19 @@
-###############################################################################
 # Central class for the Literate Worlds project.
 # moo.coffee handles all of the socket.io logic, other classes call functions
 # here when they need to do something with the socket.
-###############################################################################
-
 
 define ["modals/disconnect_modal", \
 "modals/error_modal", \
 "modals/login_modal", \
 "modals/settings_modal"],
-(disconnect_modal,\
-error_modal,\
-login_modal,\
+(disconnect_modal, \
+error_modal, \
+login_modal, \
 settings_modal) -> \
   class moo extends Backbone.View
     el: ".main-body"
 
     initialize: ->
-      console.log 'moo'
-
       @socket = io.connect("http://127.0.0.1:8080" || location.host)
       @socket.on 'connect', () -> console.log 'connected to socket'
       @socket.on 'disconnect', @disconnect
@@ -41,20 +36,46 @@ settings_modal) -> \
     reconnect: ->
       @connect.hide()
 
+    # Set .text-wrapper to display: inline, .html-wrapper to display: none
+    # Set the appropriate bootstrap class to .text-wrapper
     text_mode: ->
       console.log 'text_mode'
+      $(".text-wrapper").css "display": "inline"
+      $(".text-wrapper").removeClass("col-xs-6")
+      $(".text-wrapper").addClass("col-xs-12")
+      $(".html-wrapper").css "display": "none"
+      $(".html-nav-bar").css "display": "none"
+      $(".html-wrapper").removeClass("col-xs-6")
+      $(".html-wrapper").removeClass("col-xs-12")
 
+    # Set .html-wrapper to display: inline, .text-wrapper to display: none
+    # Set the appropriate bootstrap class to .html-wrapper
     graphic_mode: ->
       console.log 'graphic_mode'
+      $(".html-wrapper").css "display": "inline"
+      $(".html-nav-bar").css "display": "block"
+      $(".html-wrapper").removeClass("col-xs-6")
+      $(".html-wrapper").addClass("col-xs-12")
+      $(".text-wrapper").css "display": "none"
+      $(".text-wrapper").removeClass("col-xs-6")
+      $(".text-wrapper").removeClass("col-xs-12")
 
+    # Set both .text-wrapper and .html-wrapper to display: inline
+    #
     mixed_mode: ->
       console.log 'mixed_mode'
+      $(".html-wrapper").css "display": "inline"
+      $(".text-wrapper").css "display": "inline"
+      $(".html-nav-bar").css "display": "block"
+      $(".html-wrapper").removeClass("col-xs-12")
+      $(".html-wrapper").addClass("col-xs-6")
+      $(".text-wrapper").removeClass("col-xs-12")
+      $(".text-wrapper").addClass("col-xs-6")
 
     auth: (user, passwd) =>
       @ready()
       # In the future, we could use a db to store user settings and that sort
       # of thing. For now, we'll just manually write 'CO user passwd' as normal.
-      #@socket.emit('auth', {'user' : user, 'passwd': passwd})
       @socket.emit('io_line', 'CO ' + user + ' ' + passwd)
 
     close: () =>

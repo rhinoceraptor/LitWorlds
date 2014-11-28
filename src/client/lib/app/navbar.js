@@ -57,12 +57,13 @@ define(["modals/login_modal", "modals/settings_modal", "modals/license_modal"], 
       var $connect_btn, connect;
       $connect_btn = this.$el.find("#connect-btn");
       connect = $.trim($connect_btn.html());
-      if (connect === "Connect") {
+      if (connect === "Connect as guest") {
         $connect_btn.attr("id", "disconnect-btn");
         $connect_btn.html("Disconnect");
       }
       App.Views.mainView.ready();
-      return App.Views.text_handler.insert("\n\n\n");
+      App.Views.text_handler.insert("\n\n\n");
+      return App.Views.mainView.telnet_line_out("co guest");
     };
 
     navbar.prototype.close = function() {
@@ -72,10 +73,11 @@ define(["modals/login_modal", "modals/settings_modal", "modals/license_modal"], 
       if (disconnect === "Disconnect") {
         App.Views.mainView.close();
         $disconnect_btn.attr("id", "connect-btn");
-        $disconnect_btn.html("Connect");
+        $disconnect_btn.html("Connect as guest");
         App.Views.text_handler.clear_backlog();
-        return App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n");
+        App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n");
       }
+      return App.Views.html_handler.remove_markup();
     };
 
     navbar.prototype.set_check_mark = function(mode) {

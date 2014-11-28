@@ -100,13 +100,21 @@ io.sockets.on('connection', (function(_this) {
           return telnet = null;
         }
       });
-      return io.on('close', function() {
+      io.on('close', function() {
         console.log('close the telnet connection!\n');
         if (telnet != null) {
           telnet.destroy();
           return telnet = null;
         }
       });
+      return io.on('req_markup', (function(_this) {
+        return function(ident) {
+          return s.get_html(ident, function(html) {
+            console.log('sending html to client');
+            return io.emit('markup', html);
+          });
+        };
+      })(this));
     });
   };
 })(this));

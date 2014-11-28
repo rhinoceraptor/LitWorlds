@@ -18,18 +18,18 @@ define(["moo"], function(moo) {
       "graphic": "graphic_mode",
       "login": "login",
       "settings": "settings",
-      "encore": "encore",
       "*other": "moo"
     };
 
     moo_router.prototype.moo = function(param) {
+      var ident;
       if (App.Views.mainView == null) {
         App.Views.mainView = new moo;
         App.Views.mainView.render();
       }
       if ((param != null) && param.indexOf("encore") > -1) {
-        console.log(param.substring("encore/".length, param.length));
-        console.log(parseInt(param.substring("encore/".length, param.length)));
+        ident = parseInt(param.substring("encore/".length, param.length));
+        App.Views.html_handler.link_handler(ident);
       }
       if ((param != null) && param.indexOf("license") > -1) {
         return this.license();

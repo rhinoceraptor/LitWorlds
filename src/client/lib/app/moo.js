@@ -21,7 +21,6 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     moo.prototype.el = ".main-body";
 
     moo.prototype.initialize = function() {
-      console.log('moo');
       this.socket = io.connect("http://127.0.0.1:8080" || location.host);
       this.socket.on('connect', function() {
         return console.log('connected to socket');
@@ -53,15 +52,54 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     };
 
     moo.prototype.text_mode = function() {
-      return console.log('text_mode');
+      console.log('text_mode');
+      $(".text-wrapper").css({
+        "display": "inline"
+      });
+      $(".text-wrapper").removeClass("col-xs-6");
+      $(".text-wrapper").addClass("col-xs-12");
+      $(".html-wrapper").css({
+        "display": "none"
+      });
+      $(".html-nav-bar").css({
+        "display": "none"
+      });
+      $(".html-wrapper").removeClass("col-xs-6");
+      return $(".html-wrapper").removeClass("col-xs-12");
     };
 
     moo.prototype.graphic_mode = function() {
-      return console.log('graphic_mode');
+      console.log('graphic_mode');
+      $(".html-wrapper").css({
+        "display": "inline"
+      });
+      $(".html-nav-bar").css({
+        "display": "block"
+      });
+      $(".html-wrapper").removeClass("col-xs-6");
+      $(".html-wrapper").addClass("col-xs-12");
+      $(".text-wrapper").css({
+        "display": "none"
+      });
+      $(".text-wrapper").removeClass("col-xs-6");
+      return $(".text-wrapper").removeClass("col-xs-12");
     };
 
     moo.prototype.mixed_mode = function() {
-      return console.log('mixed_mode');
+      console.log('mixed_mode');
+      $(".html-wrapper").css({
+        "display": "inline"
+      });
+      $(".text-wrapper").css({
+        "display": "inline"
+      });
+      $(".html-nav-bar").css({
+        "display": "block"
+      });
+      $(".html-wrapper").removeClass("col-xs-12");
+      $(".html-wrapper").addClass("col-xs-6");
+      $(".text-wrapper").removeClass("col-xs-12");
+      return $(".text-wrapper").addClass("col-xs-6");
     };
 
     moo.prototype.auth = function(user, passwd) {

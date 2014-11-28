@@ -22,15 +22,17 @@ define ->
           "Options --> Licenses.\n\tTo connect the MUD, use the " +
           "Login button or manually log in by pressing Connect.\n")
 
-      @line_buf_length = 50   # programatic limit to backlog
-      @scroll_buf_index = 0   # input log scroll index
-      @line_buf_index = 0     # line_buf's number of stored lines
-      @line_buf = new Array()   # array to store previous entered lines
+      @line_buf_length = 50      # programatic limit to backlog
+      @scroll_buf_index = 0      # input log scroll index
+      @line_buf_index = 0        # line_buf's number of stored lines
+      @line_buf = new Array()    # array to store previous entered lines
+      @rooms = new Array()       # array to store the possible rooms to move to
+      @links = new Array()       # array to store the possible links to click
 
     insert: (line) =>
       # socket.io returns text as an ArrayBuffer object
       if typeof line is "object"
-        line= @arraybuf_to_string(line)
+        line = @arraybuf_to_string(line)
       $log_output = $("#text-mode-backlog")
       # Append to backlog, then erase console
       # If there is no text already, don't add a newline.
@@ -39,12 +41,13 @@ define ->
       else
         $log_output.val(line)
       @scroll_backlog()
+      @room_parser(line)
 
     input_handler: (e) =>
       $text_input = $("#text-mode-input")
       input = $text_input.val()
 
-      # Handle ctrl-l clearing
+      # Handle ctrl-l, clear the screen
       if e.ctrlKey and e.keyCode is 76
         e.preventDefault()
         @clear_backlog()
@@ -74,7 +77,7 @@ define ->
         e.preventDefault()
         # do nothing if blank string entered
         if input is ""
-          return
+          input = "\n"
 
         # If limit on the line buffer is not reached, push the input
         if @line_buf_index < @line_buf_length
@@ -107,17 +110,34 @@ define ->
       num_newlines = $log_output[0].value.split(/\r\n|\r|\n/).length
       height = parseInt($log_output.height() / parseInt($log_output.css("line-height")))
       # Add one extra newline just to be sure.
-      # The text areas don't align in scale to line height
+      # The text areas don't align in scale exactly to line height
       newlines = Array(height + 1).join("\n")
       @insert(newlines)
 
     set_line_buffer: (length) =>
       @line_buf_length = length
 
+    # Reset the rooms array
+    clear_rooms: () =>
+      @rooms = new Array()
+
+    # Tokenize each part of the input string that contains '[*]', push each
+    # inner text on to the rooms array
+    room_parser: (input) =>
+      input_rooms = input.match(/\[(.*?)\]/)
+      console.log input_rooms
+
+    # room is the text from the link that was clicked, we need to move to the
+    # corresponding room in the text. The correct text to move to is somewhere
+    # in the rooms array
+    move_room: (room) ->
+      App.Views.mainView.telnet_line_out('go ')
+
+
+    # Compare the available rooms in the rooms array to the links array
+    move_cmp: () =>
 
     # socket.io data comes in ArrayBuffer format. We want to convert
     # it to UTF-8 text.
     arraybuf_to_string: (buf) ->
       return String.fromCharCode.apply(null, new Uint8Array(buf))
-
-    socket: -> App.Views.main_view.socket

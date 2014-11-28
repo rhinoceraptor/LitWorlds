@@ -15,7 +15,7 @@
 
 @font-face {
   font-family: inconsolata;
-  src: url(../font/Inconsolata-Regular.ttf);
+  src: url(../font/Incocolumnsnsolata-Regular.ttf);
 }
 
 * {
@@ -97,6 +97,14 @@ body {
   background-color: #7BA6C4;
 }
 
+#back-btn {
+  background: url(../font/glyphicons/glyphicons-225-chevron-left.png);
+}
+
+#forward-btn {
+  background: url(../font/glyphicons/glyphicons-224-chevron-right.png);
+}
+
 .text-mode {
   width: 100%;
   resize: none;
@@ -107,12 +115,19 @@ body {
   border-style: solid;
 }
 
-#text-wrapper {
+.content-wrapper {
   height: calc(100% - 70px);
 }
 
-.html-wrapper {
-  background-color: #272822;
+.html-nav-bar {
+  background-color: #333333;
+}
+
+.html-container {
+  background-color: #F3F3F3;
+  border-width: 1px;
+  border-color: #3E3D32;
+  border-style: solid;
   height: 80%;
   overflow: auto;
 }

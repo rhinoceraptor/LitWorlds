@@ -2,7 +2,7 @@
 #
 # scrape is instantiated for a user session, and is used to modify all encore
 # URLs so that the resulting HTML can be AJAXed to the user. The links are
-# modified from http://domain.tld:port/int to http://new_domain.tld#encore/int
+# modified from http://domain.tld:port/int to #encore/int.
 # This way, the Backbone.js router can handle those links, and the client app
 # will make a call back to the Node.js server for a new page.
 #
@@ -35,8 +35,7 @@ class scrape
           console.log new_url
         )
 
-        new_html = String($('body').html())
-        callback(new_html)
+        callback($.html())
     )
 
 module.exports = scrape
