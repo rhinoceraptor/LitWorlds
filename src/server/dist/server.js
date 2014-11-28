@@ -59,12 +59,6 @@ io.sockets.on('connection', (function(_this) {
       console.log('connection is ready');
       telnet = net.createConnection(telnet_port, telnet_server);
       s = new scrape(telnet_server, enCore_port, node_domain);
-      s.get_html(enCore_init, (function(_this) {
-        return function(html) {
-          console.log('sending html to client');
-          return io.emit('markup', html);
-        };
-      })(this));
       if ((typeof user !== "undefined" && user !== null) && (typeof passwd !== "undefined" && passwd !== null) && (telnet != null)) {
         if (telnet.writable) {
           telnet.write('CO ' + user + '\n');
@@ -73,7 +67,6 @@ io.sockets.on('connection', (function(_this) {
         }
       }
       telnet.on('data', function(telnetData) {
-        console.log('Recieved from server: ' + telnetData + '\n');
         console.log('emitting to client\n');
         return io.emit('tcp_line', telnetData);
       }).on('error', function() {
@@ -82,7 +75,6 @@ io.sockets.on('connection', (function(_this) {
         return io.emit('disconnect');
       });
       io.on('io_line', function(socketData) {
-        console.log('Recieved from client:\n>>>' + socketData + '\n');
         if (telnet != null) {
           if (telnet.writable) {
             return telnet.write(socketData + "\n");
@@ -109,8 +101,9 @@ io.sockets.on('connection', (function(_this) {
       });
       return io.on('req_markup', (function(_this) {
         return function(ident) {
+          console.log('client requested ' + ident);
           return s.get_html(ident, function(html) {
-            console.log('sending html to client');
+            console.log('sending ' + ident + ' html to client');
             return io.emit('markup', html);
           });
         };

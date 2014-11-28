@@ -63,7 +63,8 @@ define(["modals/login_modal", "modals/settings_modal", "modals/license_modal"], 
       }
       App.Views.mainView.ready();
       App.Views.text_handler.insert("\n\n\n");
-      return App.Views.mainView.telnet_line_out("co guest");
+      App.Views.mainView.telnet_line_out("co guest");
+      return App.Views.html_handler.ready();
     };
 
     navbar.prototype.close = function() {

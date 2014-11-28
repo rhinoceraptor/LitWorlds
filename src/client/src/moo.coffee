@@ -92,4 +92,5 @@ settings_modal) -> \
       App.Views.html_handler.insert_markup(html)
 
     request_markup: (ident) =>
+      console.log 'requesting markup: ' + ident
       @socket.emit('req_markup', ident)

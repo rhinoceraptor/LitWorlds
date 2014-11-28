@@ -131,7 +131,7 @@ define ->
     # corresponding room in the text. The correct text to move to is somewhere
     # in the rooms array
     move_room: (room) ->
-      App.Views.mainView.telnet_line_out('go ')
+      App.Views.mainView.telnet_line_out('go #{room}#')
 
 
     # Compare the available rooms in the rooms array to the links array

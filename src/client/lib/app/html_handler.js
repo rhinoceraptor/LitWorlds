@@ -9,25 +9,74 @@ define(function() {
 
     function html_handler() {
       this.parse_links = __bind(this.parse_links, this);
+      this.forward = __bind(this.forward, this);
+      this.back = __bind(this.back, this);
+      this.initialize = __bind(this.initialize, this);
       return html_handler.__super__.constructor.apply(this, arguments);
     }
 
-    html_handler.prototype.el = ".html-container";
+    html_handler.prototype.el = ".html-wrapper";
+
+    html_handler.prototype.events = {
+      "click #btn-back": "back",
+      "click #btn-forward": "forward"
+    };
+
+    html_handler.link_idents = null;
+
+    html_handler.link_text = null;
+
+    html_handler.prev_links = null;
+
+    html_handler.next_links = null;
+
+    html_handler.cur_ident = 62;
 
     html_handler.prototype.initialize = function() {
-      this.link_idents = new Array();
-      return this.link_text = new Array();
+      this.link_idents = [];
+      this.link_text = [];
+      this.prev_links = [];
+      return this.next_links = [];
+    };
+
+    html_handler.prototype.ready = function() {
+      return this.link_handler('62');
+    };
+
+    html_handler.prototype.back = function() {
+      var ident;
+      if (this.prev_links.length > 0) {
+        ident = this.prev_links.pop();
+        this.link_handler(ident);
+        console.log("back, moving to " + ident + ", pushing " + this.cur_ident + " to next_links");
+        this.next_links.push(this.cur_ident);
+        return this.cur_ident = ident;
+      }
+    };
+
+    html_handler.prototype.forward = function() {
+      var ident;
+      if (this.next_links.length > 0) {
+        ident = this.next_links.pop();
+        this.link_handler(ident);
+        console.log("forward, moving to " + ident + ", pushing " + this.cur_ident + " to prev_links");
+        this.prev_links.push(this.cur_ident);
+        return this.cur_ident = ident;
+      }
     };
 
     html_handler.prototype.link_handler = function(ident) {
       console.log('requesting ' + ident);
       App.Views.mainView.request_markup(ident);
-      this.link_array = new Array();
-      return this.link_idents = new Array();
+      this.link_array = [];
+      this.link_idents = [];
+      this.prev_links.push(this.cur_ident);
+      this.cur_ident = ident;
+      return console.log("cur_ident is " + this.cur_ident);
     };
 
     html_handler.prototype.insert_markup = function(html) {
-      return this.$el.html(html);
+      return $('.html-container').html(html);
     };
 
     html_handler.prototype.parse_links = function(html) {
@@ -40,8 +89,14 @@ define(function() {
       });
     };
 
+    html_handler.prototype.scroll_window = function() {
+      var $html_out;
+      $html_out = $(".html-container");
+      return $html_out.scrollTop(0);
+    };
+
     html_handler.prototype.remove_markup = function() {
-      return this.$el.empty();
+      return $('.html-container').empty();
     };
 
     return html_handler;

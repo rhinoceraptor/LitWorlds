@@ -35,7 +35,7 @@ class scrape
           console.log new_url
         )
 
-        callback($.html())
+        callback($('body').html())
     )
 
 module.exports = scrape

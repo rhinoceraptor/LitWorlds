@@ -61,12 +61,6 @@ io.sockets.on('connection', (io) =>
     telnet = net.createConnection(telnet_port, telnet_server)
     s = new scrape(telnet_server, enCore_port, node_domain)
 
-    # Initial landing page is 62
-    s.get_html(enCore_init, (html) =>
-      console.log 'sending html to client'
-      io.emit('markup', html)
-    )
-
     if user? and passwd? and telnet?
       if telnet.writable
         telnet.write('CO ' + user + '\n')
@@ -74,7 +68,7 @@ io.sockets.on('connection', (io) =>
         io.emit('authenticated')
 
     telnet.on('data', (telnetData) ->
-      console.log('Recieved from server: ' + telnetData + '\n')
+      #console.log('Recieved from server: ' + telnetData + '\n')
       console.log('emitting to client\n')
       io.emit('tcp_line', telnetData)
     ).on('error', () ->
@@ -84,7 +78,7 @@ io.sockets.on('connection', (io) =>
     )
 
     io.on('io_line', (socketData) ->
-      console.log('Recieved from client:\n>>>' + socketData + '\n')
+      #console.log('Recieved from client:\n>>>' + socketData + '\n')
       if telnet?
         if telnet.writable
           telnet.write(socketData + "\n")
@@ -109,9 +103,10 @@ io.sockets.on('connection', (io) =>
     )
 
     io.on('req_markup', (ident) =>
+      console.log 'client requested ' + ident
       # ident is the identifer for the encore URL to return
       s.get_html(ident, (html) =>
-        console.log 'sending html to client'
+        console.log 'sending ' + ident + ' html to client'
         io.emit('markup', html)
       )
     )

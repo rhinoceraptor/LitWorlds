@@ -119,7 +119,7 @@ define(function() {
     };
 
     text_handler.prototype.move_room = function(room) {
-      return App.Views.mainView.telnet_line_out('go ');
+      return App.Views.mainView.telnet_line_out('go #{room}#');
     };
 
     text_handler.prototype.move_cmp = function() {};

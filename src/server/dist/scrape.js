@@ -35,7 +35,7 @@ scrape = (function() {
             $(link).attr('href', new_url);
             return console.log(new_url);
           });
-          return callback($.html());
+          return callback($('body').html());
         }
       };
     })(this));

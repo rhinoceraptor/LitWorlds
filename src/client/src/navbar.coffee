@@ -48,6 +48,7 @@ license_modal) ->
       App.Views.mainView.ready()
       App.Views.text_handler.insert("\n\n\n")
       App.Views.mainView.telnet_line_out("co guest")
+      App.Views.html_handler.ready()
 
     close: () ->
       $disconnect_btn = @$el.find("#disconnect-btn")

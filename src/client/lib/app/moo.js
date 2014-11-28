@@ -125,6 +125,7 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     };
 
     moo.prototype.request_markup = function(ident) {
+      console.log('requesting markup: ' + ident);
       return this.socket.emit('req_markup', ident);
     };
 
