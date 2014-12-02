@@ -3,8 +3,10 @@
   "author": "Jack Lewis",
   "license": "BSD 2 Clause",
   "dependencies": {
+    "cheerio": "^0.18.0",
     "express": "^4.9.5",
     "mocha": "~1.21.4",
+    "request": "^2.49.0",
     "socket.io": "~1.0.6"
   }
 }

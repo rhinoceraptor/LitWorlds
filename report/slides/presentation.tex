@@ -13,21 +13,36 @@
 
 \frame{\frametitle{Terms and Definitions}
 \begin{itemize}
-\item MUD - A generic term for a networked, shared virtual environment
-\item Server - The MUD "world". A network service which implements the MUD's shared space
-\item Client - A program used to connect to a MUD server.
-\item Java applet - A small application which is written in Java and can be executed in a web browser
-\item Telnet - A network protocol used on the Internet or local area networks to provide an interactive text-oriented communication
+\item MUD (Multi User Domain)
+  \begin{itemize}
+    \item a networked, shared virtual environment
+    \item provides a text based game for multiple users over the network
+    \item Users move around rooms defined in the world
+  \end{itemize}
+\item MOO (MUD, Object Oriented)
+  \begin{itemize}
+    \item A MUD with objects that the user can interact with, create, and extend
+  \end{itemize}
+\item Client
+  \begin{itemize}
+    \item A program used to connect to a MUD server.
+  \end{itemize}
+\item Java applet
+  \begin{itemize}
+   \item A small application which is written in Java and can be executed in a web browser
+  \end{itemize}
+\item Telnet
+  \begin{itemize}
+    \item A network protocol used to provide an interactive text-oriented communication
+  \end{itemize}
 \end{itemize}
 }
 
 \frame{\frametitle{Background}
 \begin{itemize}
-  \item Literary Worlds is an MUD used for English education at grade schools
-  \item These games are known as MOOs (Multiuser Object Oriented), or MUDs (Multi User Domains)
-  \item Many comparable MUDs are text only, and users connect using a telnet client
-  \item Literary Worlds uses enCore Xpress which allows the user to browse by clicking links, or by text.
-  \item The aim of this project is to provide a drop-in replacement user interface in Javascript
+  \item Literary Worlds is an MOO used for English education at many schools
+  \item Many worlds have been created by students, teachers and professors based on various source material
+  \item \textit{1984}, \textit{Brave New World}, \textit{Of Mice and Men}
 \end{itemize}
 }
 
@@ -40,12 +55,22 @@
 \end{itemize}
 }
 
+\frame{\frametitle{Goal of Project}
+\begin{itemize}
+  \item Existing interface is a Java applet
+  \item Provide a new interface for Literary Worlds that works in modern browsers
+  \begin{itemize}
+    \item Google Chrome
+    \item Firefox
+    \item Internet Explorer
+  \end{itemize}
+  \item Use existing technology, unmodified
+
+\end{itemize}
+}
+
 \frame{\frametitle{Literary Worlds}
   \begin{centering}
-  What is a literary world?
-  \begin{itemize}
-    \item A computer based simulated environment interpreting a literary source text
-  \end{itemize}
   \centerline{
   \includegraphics[width=0.75\textwidth,height=\textheight,keepaspectratio]{00_Great_Gatsby_Example.png}}
   \end{centering}
@@ -178,7 +203,6 @@
 
 \frame{\frametitle{Only The Basics}
   \begin{centering}
-  Literary Worlds can also be used for more than one user
   \begin{itemize}
     \item Entire classrooms with many users
     \item Log on a characters from the text
@@ -188,9 +212,9 @@
   \end{centering}
 }
 
-\frame{\frametitle{More Literary World Examples}
+\frame{\frametitle{Village of Umuofia}
 \begin{centering}
-Village of Umuofia 
+
 \begin{itemize}
 \item Users may use this environment in a variety of ways
 \begin{itemize}
@@ -201,9 +225,9 @@ Village of Umuofia
 \end{centering}
 }
 
-\frame{\frametitle{More Literary World Examples}
+\frame{\frametitle{Village of Umuofia}
 \begin{centering}
-Village of Umuofia
+
 \begin{itemize}
 \item Literary Worlds allows users to further understand the novel's characters, environments, and themes
 \end{itemize}
@@ -215,96 +239,56 @@ Village of Umuofia
 
 \frame{\frametitle{Current Technology}
   \begin{itemize}
-    \item LambdaMOO - A MUD server software package
-    %\item LambdaMOO is distributed as a source tarball, deploying it on a new sever entails compiling it, and running it using the enCore database, and configuring Apache to work with enCore.
-    \item enCore Xpress is an graphical interface and MUD database package that works with the LambdaMOO server to provide a browser based text client using a Java applet as well as a graphical, mouse driven interface.
-    %\item The Java applet is the text interface, it makes a telnet to LambdaMOO, as though the user were using a command line telnet client.
-    \item Literary Worlds uses version 4 of enCore
+    \item LambdaMOO 
+      \begin{itemize}
+      \item A MUD server software package
+      \item Provides telnet interface
+      \end{itemize}
+    \item enCore Xpress
+      \begin{itemize}
+      \item A MOO database and interface
+      \item provides HTML interface
+      \end{itemize}
   \end{itemize}
 }
 
-\frame{\frametitle{Current Technology}
-  \centerline{
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{Xpress_Model.png}}
 
-}
-
-\frame{\frametitle{Problems}
+\frame{\frametitle{enCore Client-Server Diagram}
   \begin{centering}
-  The current Literary Worlds portal requires:
-  \begin{itemize}
-  \item Pop-up windows to be allowed
-  \includegraphics[width=0.8\textwidth,height=\textheight,keepaspectratio]{popupban.png}
-  \item Java Runtime Environment (JRE)
-  \end{itemize}
-  \centerline{
-  \includegraphics[width=0.1\textwidth,height=\textheight,keepaspectratio]{Java_logo.png}}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{TelnetDiagram.png}
   \end{centering}
 }
 
+
 \frame{\frametitle{Problems - Java}
   \begin{centering}
-  Java Runtime Environment
-  \begin{itemize}
-  \item It requires the JRE to be installed on all client computers
-  \end{itemize}
+
   \centerline{
   \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{PlugInNeeded.png}}
   \end{centering}
 }
 
-\frame{\frametitle{Problems - Java}
-  \begin{centering}
-  Java applets in browsers can be difficult
-  \begin{itemize}
-  \item Java is beginning to be blocked by default in the browser
-  \end{itemize}
-  \centerline{
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{activatejava.jpg}}
-  \end{centering}
-}
-
-\frame{\frametitle{Problems - Java}
-  \begin{centering}
-  Java permissions
-  \begin{itemize}
-  \item All Java applets do not run without permission from the user
-  \item Java requires constant updates due to security concerns
-  \end{itemize}
-  \centerline{
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{javasecr.png}}
-  \end{centering}
-}
 
 \frame{\frametitle{Things to Keep in Mind}
   \begin{centering}
-  Over 20 virtual worlds currently make up Literary Worlds
   \begin{itemize}
+  \item Over 20 virtual worlds currently make up Literary Worlds
   \item Any replacement interface needs to keep the virtual worlds functioning, as they are.
     \begin{itemize}
     \item No change to the current server
     \end{itemize}
   \item Need to remove the Java dependency
-  \item Need to remove the use of pop ups
   \end{itemize}
-  \end{centering}
-}
-
-\frame{\frametitle{Current Client-Server Diagram}
-  \begin{centering}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{TelnetDiagram.png}
   \end{centering}
 }
 
 \section{Design Decisions}
 \frame{\frametitle{New Client-Server Design}
   \begin{itemize}
-    \item It is not possible to initiate a raw TCP connection in clientside Javascript, unlike Java applets.
-
-    \item Therefore, we need an intermediary server to connect over TCP, as well as to the browser client, and send data back and forth between the two.
-
-    \item This server must also support multiple concurrent users and handle asynchronous tasks and events.
-    \item The new interface must also keep the graphical and text modes in sync as the user moves.
+    \item Not possible for javascript in browser to use Telnet
+    \item Therefore, we need an intermediate server to handle Telnet
+    \item Must support concurrent users and handle asynchronous events
+    \item Must keep the graphical and text modes in sync as the user moves in the world
   \end{itemize}
 }
 
@@ -329,26 +313,22 @@ Village of Umuofia
   \begin{itemize}
   \item Socket.io
     \begin{itemize}
-      \item Allows realtime communication between a server program and browser clients.
+      \item A websocket library for realtime communication
     \end{itemize}
   \item Backbone
     \begin{itemize}
-      \item Backbone is a templating library for Javascript web applications
+      \item A templating library for Javascript web applications
     \end{itemize}
   \item Bootstrap
     \begin{itemize}
-    \item Bootstrap is a frontend layout toolkit
+    \item A popular frontend layout toolkit
+    \item Provides grid system for responsive design
     \end{itemize}
   \item Coffeescript
     \begin{itemize}
-      \item Coffeescript is a simple language that translates to Javascript
+      \item A simple language that translates to Javascript
     \end{itemize}
   \end{itemize}
-}
-
-\frame{\frametitle{New Client Alternatives}
-%What didn't we use and why - Client
-TBD - List of other technologies we did not use.
 }
 
 \frame{\frametitle{Intermediate Server Technology}
@@ -357,21 +337,37 @@ TBD - List of other technologies we did not use.
   \begin{itemize}
   \item Node.js
     \begin{itemize}
-      \item Node.js is a server side runtime that uses the asynchronous features of Javascript to build web application servers. It provides a rich set of networking libraries, and uses the Google Chrome Javascript engine, V8.
-      \item It is the first class citizen for socket.io, so it was natural to choose it for the server.
+      \item server side runtime for Javascript built on Google's V8
     \end{itemize}
   \item Express
     \begin{itemize}
-      \item Express is a web app framework for Node.js
-      \item In provides tools such as easy interfaces for REST, URL routing, cookies, etc. similar to what Ruby on Rails does for the Ruby language.
+      \item Web app framework for Node.js
+      \item provides simple tools for REST, URL routing, cookies, etc.
     \end{itemize}
     \item Socket.io
+      \begin{itemize}
+        \item Websocket server
+      \end{itemize}
+    \item Request
+      \begin{itemize}
+      \item simple HTTP request library
+      \end{itemize}
+    \item Cheerio
+      \begin{itemize}
+      \item provides a subset of jQuery on a server
+      \end{itemize}
+    \item CoffeeScript
+    
   \end{itemize}
 }
 
-\frame{\frametitle{Intermediate Server Alternatives}
-%What didn't we use and why - Server
-TBD - More things we didn't use and why.
+\frame{\frametitle{Syncing User Experience}
+\begin{itemize}
+  \item enCore uses a cookie system to sync graphical and text interfaces
+  \item New graphical and text interfaces work independently
+  \item New client has to hook into old sync system
+
+\end{itemize}
 }
 
 \frame{\frametitle{New Client-Server Diagram}
@@ -380,53 +376,78 @@ TBD - More things we didn't use and why.
   \end{centering}
 }
 
-\section{Testing}
-\frame{\frametitle{Testing}
-  \begin{itemize}
-    \item Unit Testing - Is a testing method where individual pieces of code or modules are tested in a controlled environment to make sure that the expected behaviour of the code occurs.
-  \end{itemize}
+\section{Implementation}
+\frame{\frametitle{New Client Text Interface}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{litworlds_nov_28_text.png}
+  \end{centering}
 }
 
-\frame{\frametitle{Testing - Considerations}
+\frame{\frametitle{New Client Graphical Interface}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{litworlds_nov_28_graphic.png}
+  \end{centering}
+}
+
+\frame{\frametitle{New Client Mixed Interface}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{litworlds_nov_28_mixed.png}
+  \end{centering}
+}
+
+\frame{\frametitle{Future of the New Client}
+\begin{itemize}
+  \item Source code is hosted on Github
   \begin{itemize}
-    \item The structure of our code
-    \begin{itemize}
-      \item Our code is split up into different modules
-    \end{itemize}
-    \item The dependencies the code has
-    \begin{itemize}
-      \item RequireJs
-      \begin{itemize}
-        \item RequireJs is a modular script loader 
-      \end{itemize}
-      \item BackboneJs
-      \begin{itemize}
-        \item Backbone is what gives our code its structure, splitting it up into models, collections, and views
-      \end{itemize}
-    \end{itemize}
-    \item What we want to do with it
-    \begin{itemize}
-    \item Continous Integration
-    \end{itemize}
+    \item Git is popular
+    \item Github has a large community
   \end{itemize}
+  \item Documentation will be created using Docco
+  \begin{itemize}
+  	\item HTML documentation is created
+  	\item Comments displayed alongside code
+  	\item Comments written in markdown
+  \end{itemize}
+  \item Grant may be obtained for updating Literary Worlds
+\end{itemize}
+}
+
+\section{Testing}
+\frame{\frametitle{Testing}
+\begin{itemize}
+    \item Unit Testing
+    \begin{itemize}
+      \item Each individual piece of code is tested
+      \item This proves that the tested behaviour works
+    \end{itemize}
+    \item Functional Testing
+      \begin{itemize}
+        \item Test each world to compare functionality
+      \end{itemize}
+    \item Considerations
+      \begin{itemize}
+        \item Require.js is used to load client code
+        \item Testing this is difficult
+        \item Code structure provided by Backbone.js
+      \end{itemize}
+\end{itemize}
 }
 
 \frame{\frametitle{Testing - Jasmine}
 \begin{centering}
 \includegraphics[width=0.2\textwidth, height=\textheight,keepaspectratio,center]{jasmine.png}
 \begin{itemize}
-\item Jasmine - A Behavior Driven Development testing framework for javascript
+\item Jasmine - A testing framework for Javascript
 \item Pros
 \begin{itemize}
-  \item Simple setup for node through jasmine-node
-  \item Large community, well supported with lots of documentation
-  \item Nice fluent syntax for assertions built-in, and supports other assertion libraries
-  \item Supported by many CI servers
-  \item Descriptive syntax for BDD paradigm
+  \item Works with Node.js or browser code
+  \item Large community
+  \item Good documentation
+  \item Readable, descriptive syntax
 \end{itemize}
 \item Cons
 \begin{itemize}
-  \item Asynchronous testing can be a bit of a headache
+  \item Loading code, dependancies and tests is difficult
 \end{itemize}
 \end{itemize}
 \end{centering}
@@ -435,52 +456,18 @@ TBD - More things we didn't use and why.
 \section{Security}
 \frame{\frametitle{Security}
   \begin{itemize}
-    \item Telnet is plain text in transport, so it is inherently vulnerable to eavesdropping.
-    \item For the initial work on the project, security is not a main concern.
-    \item In the future, the telnet server can be protected from external network connections using containerization such as docker
-    \item This way only the Node.js server can connect via telnet, and user data can be protected with SSL in transport.
-    \item This strategy would disable the legacy enCore Xpress interface
+    \item Security is not a main concern
+    \item Telnet is vulnerable to eavesdropping
+    \item Future project could implement SSL
   \end{itemize}
-}
-\section{Implementation}
-\frame{\frametitle{New Client Text Interface}
-  \begin{centering}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{litworlds_nov_28_text.png}
-  \end{centering}
-}
-
-
-\frame{\frametitle{New Client Graphical Interface}
-  \begin{centering}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{litworlds_nov_28_graphic.png}
-  \end{centering}
-}
-
-
-\frame{\frametitle{New Client Mixed Interface}
-  \begin{centering}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{litworlds_nov_28_mixed.png}
-  \end{centering}
-}
-
-\frame{\frametitle{New Client Interface}
-  \begin{centering}
-    TBD - Repeat mixed mode example of getting pizza from the soma bar and Village example
-  \end{centering}
-}
-
-\frame{\frametitle{Future of the New Client}
-TBD - Who will get the code repo (likely Kevin)? Should mention we used Github for version control somewhere in presentation
-Mention documentation and scripts we have writen???
-Also mention future enchancements to back end...
 }
 
 \frame{\frametitle{Summary}
   \begin{itemize}
-  \item Literary Worlds uses enCore Xpress to deliever text as well as other multimedia (music, picgtures, etc.) to users based on literary texts
-  \item Used Backbone, Socket.io, Node.js, Express, and Bootstrap to create a new client interface
-  \item Did not change the users experience or existing virtual worlds
-  \item Successfully removed the need for Java and popups
+  \item Literary Worlds uses a Java applet
+  \item Used modern web technology to build new interface
+  \item Did not change the users experience
+  \item Removed the need for Java in browsers
   \end{itemize}
 }
 

@@ -40,9 +40,10 @@ settings_modal) -> \
     # Set the appropriate bootstrap class to .text-wrapper
     text_mode: ->
       console.log 'text_mode'
-      $(".text-wrapper").css "display": "inline"
-      $(".text-wrapper").removeClass("col-xs-6")
-      $(".text-wrapper").addClass("col-xs-12")
+      $text = $(".text-wrapper")
+      $text.css "display": "inline"
+      $text.removeClass("col-xs-6")
+      $text.addClass("col-xs-12")
       $(".html-wrapper").css "display": "none"
       $(".html-nav-bar").css "display": "none"
       $(".html-wrapper").removeClass("col-xs-6")
