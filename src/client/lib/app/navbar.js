@@ -9,7 +9,7 @@ define(["modals/login_modal", "modals/settings_modal", "modals/license_modal"], 
     __extends(navbar, _super);
 
     function navbar() {
-      this.ready = __bind(this.ready, this);
+      this.conn_guest = __bind(this.conn_guest, this);
       return navbar.__super__.constructor.apply(this, arguments);
     }
 
@@ -21,8 +21,8 @@ define(["modals/login_modal", "modals/settings_modal", "modals/license_modal"], 
       "click .text-select": "text_mode",
       "click .graphic-select": "graphic_mode",
       "click .mixed-select": "mixed_mode",
-      "click #connect-btn": "ready",
-      "click #disconnect-btn": "close",
+      "click #connect-guest": "conn_guest",
+      "click #disconnect-btn": "disconnect",
       "click .license": "show_license_modal"
     };
 
@@ -53,27 +53,25 @@ define(["modals/login_modal", "modals/settings_modal", "modals/license_modal"], 
       return App.Views.mainView.mixed_mode();
     };
 
-    navbar.prototype.ready = function() {
+    navbar.prototype.conn_guest = function() {
       var $connect_btn, connect;
-      $connect_btn = this.$el.find("#connect-btn");
+      $connect_btn = this.$el.find("#connect-guest");
       connect = $.trim($connect_btn.html());
       if (connect === "Connect as guest") {
         $connect_btn.attr("id", "disconnect-btn");
         $connect_btn.html("Disconnect");
       }
-      App.Views.mainView.ready();
       App.Views.text_handler.insert("\n\n\n");
-      App.Views.mainView.telnet_line_out("co guest");
-      return App.Views.html_handler.ready();
+      return App.Views.mainView.auth("guest", "");
     };
 
-    navbar.prototype.close = function() {
+    navbar.prototype.disconnect = function() {
       var $disconnect_btn, disconnect;
       $disconnect_btn = this.$el.find("#disconnect-btn");
       disconnect = $.trim($disconnect_btn.html());
       if (disconnect === "Disconnect") {
         App.Views.mainView.close();
-        $disconnect_btn.attr("id", "connect-btn");
+        $disconnect_btn.attr("id", "connect-guest");
         $disconnect_btn.html("Connect as guest");
         App.Views.text_handler.clear_backlog();
         App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n");

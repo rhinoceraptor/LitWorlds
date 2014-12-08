@@ -12,8 +12,8 @@ license_modal) ->
       "click .text-select": "text_mode"
       "click .graphic-select": "graphic_mode"
       "click .mixed-select": "mixed_mode"
-      "click #connect-btn": "ready"
-      "click #disconnect-btn": "close"
+      "click #connect-guest": "conn_guest"
+      "click #disconnect-btn": "disconnect"
       "click .license": "show_license_modal"
 
     show_login_modal: ->
@@ -37,25 +37,27 @@ license_modal) ->
       @set_check_mark("mixed")
       App.Views.mainView.mixed_mode()
 
-    ready: =>
-      $connect_btn = @$el.find("#connect-btn")
+    # Connect as a guest to the MOO.
+    # Change the ID of the "Connect as guest" button to "Disconnect".
+    conn_guest: =>
+      $connect_btn = @$el.find("#connect-guest")
       connect = $.trim($connect_btn.html())
       if connect is "Connect as guest"
         $connect_btn.attr("id", "disconnect-btn")
         $connect_btn.html("Disconnect")
 
-
-      App.Views.mainView.ready()
+      # Tell mainView to connect to tell server it's ready
       App.Views.text_handler.insert("\n\n\n")
-      App.Views.mainView.telnet_line_out("co guest")
-      App.Views.html_handler.ready()
+      App.Views.mainView.auth("guest", "")
 
-    close: () ->
+    # Disconnect from the MOO. This function also changes the disconnect button
+    # back to the "Connect as guest" button.
+    disconnect: () ->
       $disconnect_btn = @$el.find("#disconnect-btn")
       disconnect = $.trim($disconnect_btn.html())
       if disconnect is "Disconnect"
         App.Views.mainView.close()
-        $disconnect_btn.attr("id", "connect-btn")
+        $disconnect_btn.attr("id", "connect-guest")
         $disconnect_btn.html("Connect as guest")
         App.Views.text_handler.clear_backlog()
         App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n")

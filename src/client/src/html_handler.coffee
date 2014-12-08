@@ -1,6 +1,6 @@
 define ->
   class @html_handler extends Backbone.View
-    el: ".html-wrapper"
+    el: ".html-container"
     events:
       "click #btn-back": "back"
       "click #btn-forward": "forward"
@@ -15,9 +15,6 @@ define ->
       @link_text = []
       @prev_links = []
       @next_links = []
-
-    ready: () ->
-      @link_handler('62')               # Request the landing page, which is 62
 
     # When the user clicks the back button, we want to pop an identifier from
     # prev_links, and load it. Then, push the cur_ident onto next_links, and
@@ -43,7 +40,6 @@ define ->
 
     # Get identifier for page, call mainView.request_markup
     link_handler: (ident) ->
-      console.log 'requesting ' + ident
       App.Views.mainView.request_markup(ident)
       # Reset the link arrays for the new markup that will be loaded
       @link_array = []

@@ -19,11 +19,24 @@ class scrape
     @base_url = "http://" + @domain + ":" + port + "/"
     @new_domain = "http://" + @new_domain
 
-  get_html: (req, callback) =>
-    req = @base_url + req
-    console.log "scraping " + req
+  get_html: (url, access_code, callback) =>
+    console.log "scraping " + url
     new_html = null
-    request(req, (err, res, body) =>
+
+    # If we have an access code, use it
+    if access_code != null
+      options = {
+        method: 'GET',
+        url: url,
+        headers: {'Cookie: ': access_code}
+      }
+    else
+      options = {
+        method: 'GET',
+        url: url
+      }
+
+    request(options, (err, res, body) =>
       if (!err and res.statusCode is 200)
         $ = cheerio.load(body)
         links = $('a')
@@ -32,7 +45,6 @@ class scrape
           ident = old_url.substring(@base_url.length, old_url.length - 1)
           new_url = "#encore/" + ident
           $(link).attr('href', new_url)
-          console.log new_url
         )
 
         callback($('body').html())

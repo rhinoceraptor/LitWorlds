@@ -8,9 +8,6 @@ define(function() {
     __extends(text_handler, _super);
 
     function text_handler() {
-      this.move_cmp = __bind(this.move_cmp, this);
-      this.room_parser = __bind(this.room_parser, this);
-      this.clear_rooms = __bind(this.clear_rooms, this);
       this.set_line_buffer = __bind(this.set_line_buffer, this);
       this.clear_backlog = __bind(this.clear_backlog, this);
       this.input_handler = __bind(this.input_handler, this);
@@ -42,8 +39,7 @@ define(function() {
       } else {
         $log_output.val(line);
       }
-      this.scroll_backlog();
-      return this.room_parser(line);
+      return this.scroll_backlog();
     };
 
     text_handler.prototype.input_handler = function(e) {
@@ -107,22 +103,6 @@ define(function() {
     text_handler.prototype.set_line_buffer = function(length) {
       return this.line_buf_length = length;
     };
-
-    text_handler.prototype.clear_rooms = function() {
-      return this.rooms = new Array();
-    };
-
-    text_handler.prototype.room_parser = function(input) {
-      var input_rooms;
-      input_rooms = input.match(/\[(.*?)\]/);
-      return console.log(input_rooms);
-    };
-
-    text_handler.prototype.move_room = function(room) {
-      return App.Views.mainView.telnet_line_out('go #{room}#');
-    };
-
-    text_handler.prototype.move_cmp = function() {};
 
     text_handler.prototype.arraybuf_to_string = function(buf) {
       return String.fromCharCode.apply(null, new Uint8Array(buf));

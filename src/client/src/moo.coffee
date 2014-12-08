@@ -2,14 +2,7 @@
 # moo.coffee handles all of the socket.io logic, other classes call functions
 # here when they need to do something with the socket.
 
-define ["modals/disconnect_modal", \
-"modals/error_modal", \
-"modals/login_modal", \
-"modals/settings_modal"],
-(disconnect_modal, \
-error_modal, \
-login_modal, \
-settings_modal) -> \
+define ["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "modals/settings_modal"], (disconnect_modal, error_modal, login_modal, settings_modal) ->
   class moo extends Backbone.View
     el: ".main-body"
 
@@ -41,43 +34,52 @@ settings_modal) -> \
     text_mode: ->
       console.log 'text_mode'
       $text = $(".text-wrapper")
+      $html_wrapper = $(".html-wrapper")
+      $html_nav = $(".html-nav-bar")
+
       $text.css "display": "inline"
       $text.removeClass("col-xs-6")
       $text.addClass("col-xs-12")
-      $(".html-wrapper").css "display": "none"
-      $(".html-nav-bar").css "display": "none"
-      $(".html-wrapper").removeClass("col-xs-6")
-      $(".html-wrapper").removeClass("col-xs-12")
+      $html_wrapper.css "display": "none"
+      $html_nav.css "display": "none"
+      $html_wrapper.removeClass("col-xs-6")
+      $html_wrapper.removeClass("col-xs-12")
 
     # Set .html-wrapper to display: inline, .text-wrapper to display: none
     # Set the appropriate bootstrap class to .html-wrapper
     graphic_mode: ->
       console.log 'graphic_mode'
-      $(".html-wrapper").css "display": "inline"
-      $(".html-nav-bar").css "display": "block"
-      $(".html-wrapper").removeClass("col-xs-6")
-      $(".html-wrapper").addClass("col-xs-12")
-      $(".text-wrapper").css "display": "none"
-      $(".text-wrapper").removeClass("col-xs-6")
-      $(".text-wrapper").removeClass("col-xs-12")
+      $text = $(".text-wrapper")
+      $html_wrapper = $(".html-wrapper")
+      $html_nav = $(".html-nav-bar")
+
+      $html_wrapper.css "display": "inline"
+      $html_nav.css "display": "block"
+      $html_wrapper.removeClass("col-xs-6")
+      $html_wrapper.addClass("col-xs-12")
+      $text.css "display": "none"
+      $text.removeClass("col-xs-6")
+      $text.removeClass("col-xs-12")
 
     # Set both .text-wrapper and .html-wrapper to display: inline
-    #
     mixed_mode: ->
       console.log 'mixed_mode'
-      $(".html-wrapper").css "display": "inline"
-      $(".text-wrapper").css "display": "inline"
-      $(".html-nav-bar").css "display": "block"
-      $(".html-wrapper").removeClass("col-xs-12")
-      $(".html-wrapper").addClass("col-xs-6")
-      $(".text-wrapper").removeClass("col-xs-12")
-      $(".text-wrapper").addClass("col-xs-6")
+      $text = $(".text-wrapper")
+      $html_wrapper = $(".html-wrapper")
+      $html_nav = $(".html-nav-bar")
 
-    auth: (user, passwd) =>
+      $html_wrapper.css "display": "inline"
+      $text.css "display": "inline"
+      $html_nav.css "display": "block"
+      $html_wrapper.removeClass("col-xs-12")
+      $html_wrapper.addClass("col-xs-6")
+      $text.removeClass("col-xs-12")
+      $text.addClass("col-xs-6")
+
+    # The server needs to POST this data to enCore to get the system rolling
+    auth: (username, password) =>
       @ready()
-      # In the future, we could use a db to store user settings and that sort
-      # of thing. For now, we'll just manually write 'CO user passwd' as normal.
-      @socket.emit('io_line', 'CO ' + user + ' ' + passwd)
+      @socket.emit('auth', {user: username, passwd: password})
 
     close: () =>
       @socket.emit('close')

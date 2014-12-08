@@ -15,7 +15,7 @@ define(function() {
       return html_handler.__super__.constructor.apply(this, arguments);
     }
 
-    html_handler.prototype.el = ".html-wrapper";
+    html_handler.prototype.el = ".html-container";
 
     html_handler.prototype.events = {
       "click #btn-back": "back",
@@ -37,10 +37,6 @@ define(function() {
       this.link_text = [];
       this.prev_links = [];
       return this.next_links = [];
-    };
-
-    html_handler.prototype.ready = function() {
-      return this.link_handler('62');
     };
 
     html_handler.prototype.back = function() {
@@ -66,7 +62,6 @@ define(function() {
     };
 
     html_handler.prototype.link_handler = function(ident) {
-      console.log('requesting ' + ident);
       App.Views.mainView.request_markup(ident);
       this.link_array = [];
       this.link_idents = [];

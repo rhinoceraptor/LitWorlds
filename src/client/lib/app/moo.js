@@ -52,59 +52,74 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     };
 
     moo.prototype.text_mode = function() {
+      var $html_nav, $html_wrapper, $text;
       console.log('text_mode');
-      $(".text-wrapper").css({
+      $text = $(".text-wrapper");
+      $html_wrapper = $(".html-wrapper");
+      $html_nav = $(".html-nav-bar");
+      $text.css({
         "display": "inline"
       });
-      $(".text-wrapper").removeClass("col-xs-6");
-      $(".text-wrapper").addClass("col-xs-12");
-      $(".html-wrapper").css({
+      $text.removeClass("col-xs-6");
+      $text.addClass("col-xs-12");
+      $html_wrapper.css({
         "display": "none"
       });
-      $(".html-nav-bar").css({
+      $html_nav.css({
         "display": "none"
       });
-      $(".html-wrapper").removeClass("col-xs-6");
-      return $(".html-wrapper").removeClass("col-xs-12");
+      $html_wrapper.removeClass("col-xs-6");
+      return $html_wrapper.removeClass("col-xs-12");
     };
 
     moo.prototype.graphic_mode = function() {
+      var $html_nav, $html_wrapper, $text;
       console.log('graphic_mode');
-      $(".html-wrapper").css({
+      $text = $(".text-wrapper");
+      $html_wrapper = $(".html-wrapper");
+      $html_nav = $(".html-nav-bar");
+      $html_wrapper.css({
         "display": "inline"
       });
-      $(".html-nav-bar").css({
+      $html_nav.css({
         "display": "block"
       });
-      $(".html-wrapper").removeClass("col-xs-6");
-      $(".html-wrapper").addClass("col-xs-12");
-      $(".text-wrapper").css({
+      $html_wrapper.removeClass("col-xs-6");
+      $html_wrapper.addClass("col-xs-12");
+      $text.css({
         "display": "none"
       });
-      $(".text-wrapper").removeClass("col-xs-6");
-      return $(".text-wrapper").removeClass("col-xs-12");
+      $text.removeClass("col-xs-6");
+      return $text.removeClass("col-xs-12");
     };
 
     moo.prototype.mixed_mode = function() {
+      var $html_nav, $html_wrapper, $text;
       console.log('mixed_mode');
-      $(".html-wrapper").css({
+      $text = $(".text-wrapper");
+      $html_wrapper = $(".html-wrapper");
+      $html_nav = $(".html-nav-bar");
+      $html_wrapper.css({
         "display": "inline"
       });
-      $(".text-wrapper").css({
+      $text.css({
         "display": "inline"
       });
-      $(".html-nav-bar").css({
+      $html_nav.css({
         "display": "block"
       });
-      $(".html-wrapper").removeClass("col-xs-12");
-      $(".html-wrapper").addClass("col-xs-6");
-      $(".text-wrapper").removeClass("col-xs-12");
-      return $(".text-wrapper").addClass("col-xs-6");
+      $html_wrapper.removeClass("col-xs-12");
+      $html_wrapper.addClass("col-xs-6");
+      $text.removeClass("col-xs-12");
+      return $text.addClass("col-xs-6");
     };
 
-    moo.prototype.auth = function(user, passwd) {
+    moo.prototype.auth = function(username, password) {
       this.ready();
-      return this.socket.emit('io_line', 'CO ' + user + ' ' + passwd);
+      return this.socket.emit('auth', {
+        user: username,
+        passwd: password
+      });
     };
 
     moo.prototype.close = function() {

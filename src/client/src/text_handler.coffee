@@ -41,7 +41,6 @@ define ->
       else
         $log_output.val(line)
       @scroll_backlog()
-      @room_parser(line)
 
     input_handler: (e) =>
       $text_input = $("#text-mode-input")
@@ -116,26 +115,6 @@ define ->
 
     set_line_buffer: (length) =>
       @line_buf_length = length
-
-    # Reset the rooms array
-    clear_rooms: () =>
-      @rooms = new Array()
-
-    # Tokenize each part of the input string that contains '[*]', push each
-    # inner text on to the rooms array
-    room_parser: (input) =>
-      input_rooms = input.match(/\[(.*?)\]/)
-      console.log input_rooms
-
-    # room is the text from the link that was clicked, we need to move to the
-    # corresponding room in the text. The correct text to move to is somewhere
-    # in the rooms array
-    move_room: (room) ->
-      App.Views.mainView.telnet_line_out('go #{room}#')
-
-
-    # Compare the available rooms in the rooms array to the links array
-    move_cmp: () =>
 
     # socket.io data comes in ArrayBuffer format. We want to convert
     # it to UTF-8 text.

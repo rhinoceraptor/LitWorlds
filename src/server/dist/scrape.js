@@ -16,12 +16,25 @@ scrape = (function() {
     this.new_domain = "http://" + this.new_domain;
   }
 
-  scrape.prototype.get_html = function(req, callback) {
-    var new_html;
-    req = this.base_url + req;
-    console.log("scraping " + req);
+  scrape.prototype.get_html = function(url, access_code, callback) {
+    var new_html, options;
+    console.log("scraping " + url);
     new_html = null;
-    return request(req, (function(_this) {
+    if (access_code !== null) {
+      options = {
+        method: 'GET',
+        url: url,
+        headers: {
+          'Cookie: ': access_code
+        }
+      };
+    } else {
+      options = {
+        method: 'GET',
+        url: url
+      };
+    }
+    return request(options, (function(_this) {
       return function(err, res, body) {
         var $, links;
         if (!err && res.statusCode === 200) {
@@ -32,8 +45,7 @@ scrape = (function() {
             old_url = $(link).attr('href');
             ident = old_url.substring(_this.base_url.length, old_url.length - 1);
             new_url = "#encore/" + ident;
-            $(link).attr('href', new_url);
-            return console.log(new_url);
+            return $(link).attr('href', new_url);
           });
           return callback($('body').html());
         }
