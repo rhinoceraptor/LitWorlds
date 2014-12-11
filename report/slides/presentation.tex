@@ -292,20 +292,21 @@
   \end{itemize}
 }
 
-\frame{\frametitle{Design Decisions}
-  \begin{itemize}
-  \item Text Mode
-    \begin{itemize}
-      \item Client side Javascript MUD client
-      \item This is reason an intermediary server is needed, to handle the telnet connection on behalf of each client.
-    \end{itemize}
-  \item Graphical Mode
-    \begin{itemize}
-      \item This work is already done in enCore Xpress, there is no need to reinvent it.
-      \item The new web application will simply need to serve the existing enCore Xpress interface in a coherent way.
-    \end{itemize}
-  \end{itemize}
-}
+%
+%\frame{\frametitle{Design Decisions}
+%  \begin{itemize}
+%  \item Text Mode
+%    \begin{itemize}
+%      \item Client side Javascript MUD client
+%      \item This is reason an intermediary server is needed, to handle the telnet connection on behalf of each client.
+%    \end{itemize}
+%  \item Graphical Mode
+%    \begin{itemize}
+%      \item This work is already done in enCore Xpress, there is no need to reinvent it.
+%      \item The new web application will simply need to serve the existing enCore Xpress interface in a coherent way.
+%    \end{itemize}
+%  \end{itemize}
+%}
 
 \frame{\frametitle{New Client Technology}
   % Backbone, Bootstrap, Socket.io, Coffeescript
@@ -315,7 +316,7 @@
     \begin{itemize}
       \item A websocket library for realtime communication
     \end{itemize}
-  \item Backbone
+  \item Backbone.js
     \begin{itemize}
       \item A templating library for Javascript web applications
     \end{itemize}
@@ -342,7 +343,7 @@
   \item Express
     \begin{itemize}
       \item Web app framework for Node.js
-      \item provides simple tools for REST, URL routing, cookies, etc.
+      \item provides tools for REST, URL routing, cookies, etc.
     \end{itemize}
     \item Socket.io
       \begin{itemize}
@@ -394,6 +395,37 @@
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{litworlds_nov_28_mixed.png}
   \end{centering}
 }
+
+\frame{\frametitle{Choosing Layout}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{bootstrap_dropdown.png}
+  \end{centering}
+}
+
+\frame{\frametitle{HTML sequence}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{NodeDiagram_1.png}
+  \end{centering}
+}
+
+\frame{\frametitle{HTML sequence}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{NodeDiagram_2.png}
+  \end{centering}
+}
+
+\frame{\frametitle{HTML sequence}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{NodeDiagram_3.png}
+  \end{centering}
+}
+
+\frame{\frametitle{HTML sequence}
+  \begin{centering}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{NodeDiagram_4.png}
+  \end{centering}
+}
+
 
 \frame{\frametitle{Future of the New Client}
 \begin{itemize}
