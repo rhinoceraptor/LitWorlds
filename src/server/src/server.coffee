@@ -122,7 +122,7 @@ handle_session = (io, access_code, autologin) =>
     url = "http://" + server + ":" + enCore_port + "/" + ident
     s.get_html(url, access_code, (html) =>
       console.log 'sending ' + url + ' html to client'
-      io.emit('markup', html)
+      io.emit('markup', html, ident)
 
       xpress = "http://" + server + ":" + enCore_port + "/Xpress_client/menu.html"
       s.get_html(xpress, access_code, (html) =>
@@ -132,14 +132,22 @@ handle_session = (io, access_code, autologin) =>
 
   # Used when the client requests a URL based on what comes over telnet
   io.on('req_url', (url) =>
-    console.log 'client requested page ' + url
     s.get_html(url, access_code, (html) =>
-      console.log 'sending ' + url + ' html to client'
-      io.emit('markup', html)
+
+      if url.charAt(url.length - 1) is '/'
+        end = url.length - 1
+      else
+        end = url.length
+
+      start = url.indexOf(":" + enCore_port) + enCore_port.length + 2
+      ident = url.substring(start, end)
+
+      io.emit('markup', html, ident)
 
       xpress = "http://" + server + ":" + enCore_port + "/Xpress_client/menu.html"
       s.get_html(xpress, access_code, (html) =>
-        io.emit('xpress', html))
+        io.emit('xpress', html)
+      )
     )
   )
 

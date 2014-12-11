@@ -142,8 +142,8 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       return this.socket.emit('io_line', line);
     };
 
-    moo.prototype.handle_markup = function(html) {
-      return App.Views.html_handler.insert_markup(html);
+    moo.prototype.handle_markup = function(html, ident) {
+      return App.Views.html_handler.insert_markup(html, ident);
     };
 
     moo.prototype.handle_toolbar = function(html) {

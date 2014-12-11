@@ -95,11 +95,12 @@ define ["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     telnet_line_out: (line) =>
       @socket.emit('io_line', line)
 
-    handle_markup: (html) =>
-      App.Views.html_handler.insert_markup(html)
+    handle_markup: (html, ident) =>
+      App.Views.html_handler.insert_markup(html, ident)
 
     handle_toolbar: (html) =>
       App.Views.html_handler.insert_toolbar(html)
+
     request_markup: (ident) =>
       @socket.emit('req_markup', ident)
 
