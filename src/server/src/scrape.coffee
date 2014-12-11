@@ -42,7 +42,7 @@ class scrape
           new_url = "#encore/" + ident
           $(link).attr('href', new_url)
         )
-        callback($.html())
+        callback($('body').html())
     )
 
 module.exports = scrape

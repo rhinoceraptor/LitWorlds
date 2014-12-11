@@ -42,7 +42,7 @@ scrape = (function() {
             new_url = "#encore/" + ident;
             return $(link).attr('href', new_url);
           });
-          return callback($.html());
+          return callback($('body').html());
         }
       };
     })(this));

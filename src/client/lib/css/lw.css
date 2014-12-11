@@ -129,6 +129,7 @@ body {
   border-color: #3E3D32;
   border-style: solid;
   height: 80%;
+  width: 100%;
   overflow: auto;
 }
 

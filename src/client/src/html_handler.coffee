@@ -53,21 +53,9 @@ define ->
 
     # Insert the markup recieved in the html parameter
     insert_markup: (html) ->
+      console.log 'placing html in html container'
       $('.html-container').html(html)
 
-    # When a new page loads, we need to parse each link in the given markup,
-    # and store the integer identifier in the link_idents array, and the link
-    # text for late comparison in the link_text array.
-    parse_links: (html) =>
-      $(html).each('a').each((i, link) ->
-        # link is the href from the a tag
-        ident = parseInt(link.substring("encore/".length, link.length))
-        @link_idents.push(ident)
-
-        # text is the inner text for the a tag
-        text = link.innerText
-        @link_text.push(text)
-      )
 
     # Keep the scroll position at the bottom of the scroll buffer when new
     # text is added to it.

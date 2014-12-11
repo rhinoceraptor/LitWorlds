@@ -54,10 +54,6 @@ define ->
         line = line.substring(line.indexOf(end) + 2, line.length)
         App.Views.mainView.request_url(url)
 
-      # Did our login fail?
-      if line.indexOf(login_failed) > -1
-        App.Views.login-modal.fail()
-
       $log_output = $("#text-mode-backlog")
       # Append to backlog, then erase console
       # If there is no text already, don't add a newline.

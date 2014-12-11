@@ -4,6 +4,5 @@
 	"node_domain": "127.0.0.1",
 	"server": "brn227.brown.wmich.edu",
 	"telnet_port": "7777",
-	"enCore_port": "7000",
-	"enCore_init": "62"
+	"enCore_port": "7000"
 }

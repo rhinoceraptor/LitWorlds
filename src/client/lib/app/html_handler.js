@@ -8,7 +8,6 @@ define(function() {
     __extends(html_handler, _super);
 
     function html_handler() {
-      this.parse_links = __bind(this.parse_links, this);
       this.forward = __bind(this.forward, this);
       this.back = __bind(this.back, this);
       this.initialize = __bind(this.initialize, this);
@@ -71,17 +70,8 @@ define(function() {
     };
 
     html_handler.prototype.insert_markup = function(html) {
+      console.log('placing html in html container');
       return $('.html-container').html(html);
-    };
-
-    html_handler.prototype.parse_links = function(html) {
-      return $(html).each('a').each(function(i, link) {
-        var ident, text;
-        ident = parseInt(link.substring("encore/".length, link.length));
-        this.link_idents.push(ident);
-        text = link.innerText;
-        return this.link_text.push(text);
-      });
     };
 
     html_handler.prototype.scroll_window = function() {
