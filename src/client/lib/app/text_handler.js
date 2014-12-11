@@ -46,9 +46,6 @@ define(function() {
         line = line.substring(line.indexOf(end) + 2, line.length);
         App.Views.mainView.request_url(url);
       }
-      if (line.indexOf(login_failed) > -1) {
-        App.Views.login - modal.fail();
-      }
       $log_output = $("#text-mode-backlog");
       if ($log_output.val() !== '') {
         $log_output.val($log_output.val() + line);

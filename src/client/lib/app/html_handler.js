@@ -74,6 +74,11 @@ define(function() {
       return $('.html-container').html(html);
     };
 
+    html_handler.prototype.insert_toolbar = function(html) {
+      console.log('reloading the xpress toolbar');
+      return $('.xpress-toolbar').html(html);
+    };
+
     html_handler.prototype.scroll_window = function() {
       var $html_out;
       $html_out = $(".html-container");
@@ -81,7 +86,8 @@ define(function() {
     };
 
     html_handler.prototype.remove_markup = function() {
-      return $('.html-container').empty();
+      $('.html-container').empty();
+      return $('.xpress-toolbar').empty();
     };
 
     return html_handler;

@@ -149,7 +149,14 @@ body {
 #text-mode-input {
 }
 
-
 .login-body {
   margin-left: 20px;
+}
+
+.xpress-toolbar {
+  background-color: #F3F3F3;
+  border-width: 1px;
+  border-color: #3E3D32;
+  border-style: solid;
+  height: 65px;
 }

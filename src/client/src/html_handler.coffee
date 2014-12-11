@@ -56,6 +56,10 @@ define ->
       console.log 'placing html in html container'
       $('.html-container').html(html)
 
+    # Insert the menu frame
+    insert_toolbar: (html) ->
+      console.log 'reloading the xpress toolbar'
+      $('.xpress-toolbar').html(html)
 
     # Keep the scroll position at the bottom of the scroll buffer when new
     # text is added to it.
@@ -66,3 +70,4 @@ define ->
     # Remove all markup within el
     remove_markup: () ->
       $('.html-container').empty()
+      $('.xpress-toolbar').empty()

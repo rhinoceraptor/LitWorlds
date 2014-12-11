@@ -123,6 +123,10 @@ handle_session = (io, access_code, autologin) =>
     s.get_html(url, access_code, (html) =>
       console.log 'sending ' + url + ' html to client'
       io.emit('markup', html)
+
+      xpress = "http://" + server + ":" + enCore_port + "/Xpress_client/menu.html"
+      s.get_html(xpress, access_code, (html) =>
+        io.emit('xpress', html))
     )
   )
 
@@ -132,6 +136,10 @@ handle_session = (io, access_code, autologin) =>
     s.get_html(url, access_code, (html) =>
       console.log 'sending ' + url + ' html to client'
       io.emit('markup', html)
+
+      xpress = "http://" + server + ":" + enCore_port + "/Xpress_client/menu.html"
+      s.get_html(xpress, access_code, (html) =>
+        io.emit('xpress', html))
     )
   )
 

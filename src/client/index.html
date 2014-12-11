@@ -129,7 +129,7 @@
           </div>
           <div class="modal-body">
 
-          </div>
+            </div>
           <div class="modal-footer">
             <button class="btn btn-primary" id="btn-ok" data-dismiss="modal" aria-hidden="true">ok</button>
           </div>
@@ -163,6 +163,9 @@
             <li class="mode-select mixed-select dropdown-selected">
               <a href="#mixed">Mixed Mode</a>
             </li>
+            <li class="xpress-toggle">
+              <a href="#xpress">Toggle Toolbar</a>
+            </li>
             <li class="divider"></li>
             <li class="settings">
               <a href="#settings">Settings</a>
@@ -177,6 +180,12 @@
     </nav>
 
     <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4 xpress-toolbar">
+        </div>
+        <div class="col-4"></div>
+      </div>
       <div class="row">
         <ul class="col-xs-6 text-wrapper text-mode-ul">
         <li><textarea readonly rows="20" class="text-mode" id="text-mode-backlog" type="text"></textarea></li>

@@ -81,7 +81,6 @@ handle_session = (function(_this) {
     var s, telnet;
     telnet = net.createConnection(telnet_port, server);
     s = new scrape(server, enCore_port, node_domain);
-    console.log("auto logging in: " + autologin);
     telnet.write(autologin + "\r\n");
     telnet.on('data', function(telnetData) {
       return io.emit('tcp_line', telnetData);
@@ -120,15 +119,25 @@ handle_session = (function(_this) {
       console.log('client requested hash URL ' + ident);
       url = "http://" + server + ":" + enCore_port + "/" + ident;
       return s.get_html(url, access_code, function(html) {
+        var xpress;
         console.log('sending ' + url + ' html to client');
-        return io.emit('markup', html);
+        io.emit('markup', html);
+        xpress = "http://" + server + ":" + enCore_port + "/Xpress_client/menu.html";
+        return s.get_html(xpress, access_code, function(html) {
+          return io.emit('xpress', html);
+        });
       });
     });
     return io.on('req_url', function(url) {
       console.log('client requested page ' + url);
       return s.get_html(url, access_code, function(html) {
+        var xpress;
         console.log('sending ' + url + ' html to client');
-        return io.emit('markup', html);
+        io.emit('markup', html);
+        xpress = "http://" + server + ":" + enCore_port + "/Xpress_client/menu.html";
+        return s.get_html(xpress, access_code, function(html) {
+          return io.emit('xpress', html);
+        });
       });
     });
   };

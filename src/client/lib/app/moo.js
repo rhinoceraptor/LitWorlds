@@ -11,6 +11,7 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     function moo() {
       this.request_url = __bind(this.request_url, this);
       this.request_markup = __bind(this.request_markup, this);
+      this.handle_toolbar = __bind(this.handle_toolbar, this);
       this.handle_markup = __bind(this.handle_markup, this);
       this.telnet_line_out = __bind(this.telnet_line_out, this);
       this.telnet_line_in = __bind(this.telnet_line_in, this);
@@ -30,6 +31,7 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       this.socket.on('error', this.error);
       this.socket.on('tcp_line', this.telnet_line_in);
       this.socket.on('markup', this.handle_markup);
+      this.socket.on('xpress', this.handle_toolbar);
       return this.socket.on('auth_fail', this.auth_fail);
     };
 
@@ -142,6 +144,10 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
 
     moo.prototype.handle_markup = function(html) {
       return App.Views.html_handler.insert_markup(html);
+    };
+
+    moo.prototype.handle_toolbar = function(html) {
+      return App.Views.html_handler.insert_toolbar(html);
     };
 
     moo.prototype.request_markup = function(ident) {

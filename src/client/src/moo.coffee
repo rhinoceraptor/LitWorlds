@@ -13,6 +13,7 @@ define ["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       @socket.on 'error', @error
       @socket.on 'tcp_line', @telnet_line_in
       @socket.on 'markup', @handle_markup
+      @socket.on 'xpress', @handle_toolbar
       @socket.on 'auth_fail', @auth_fail
 
     render: ->
@@ -97,6 +98,8 @@ define ["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     handle_markup: (html) =>
       App.Views.html_handler.insert_markup(html)
 
+    handle_toolbar: (html) =>
+      App.Views.html_handler.insert_toolbar(html)
     request_markup: (ident) =>
       @socket.emit('req_markup', ident)
 
