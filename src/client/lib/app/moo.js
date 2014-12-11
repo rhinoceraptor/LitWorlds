@@ -9,6 +9,7 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     __extends(moo, _super);
 
     function moo() {
+      this.request_url = __bind(this.request_url, this);
       this.request_markup = __bind(this.request_markup, this);
       this.handle_markup = __bind(this.handle_markup, this);
       this.telnet_line_out = __bind(this.telnet_line_out, this);
@@ -28,7 +29,8 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       this.socket.on('disconnect', this.disconnect);
       this.socket.on('error', this.error);
       this.socket.on('tcp_line', this.telnet_line_in);
-      return this.socket.on('markup', this.handle_markup);
+      this.socket.on('markup', this.handle_markup);
+      return this.socket.on('auth_fail', this.auth_fail);
     };
 
     moo.prototype.render = function() {
@@ -122,12 +124,15 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       });
     };
 
+    moo.prototype.auth_fail = function() {
+      return new login_modal().render("fail");
+    };
+
     moo.prototype.close = function() {
       return this.socket.emit('close');
     };
 
     moo.prototype.telnet_line_in = function(line) {
-      console.log('recvd a line');
       return App.Views.text_handler.insert(line);
     };
 
@@ -140,8 +145,11 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     };
 
     moo.prototype.request_markup = function(ident) {
-      console.log('requesting markup: ' + ident);
       return this.socket.emit('req_markup', ident);
+    };
+
+    moo.prototype.request_url = function(url) {
+      return this.socket.emit('req_url', url);
     };
 
     return moo;

@@ -29,9 +29,25 @@ define(function() {
     };
 
     text_handler.prototype.insert = function(line) {
-      var $log_output;
+      var $log_output, end, end_index, login_failed, start, start_index, url;
       if (typeof line === "object") {
         line = this.arraybuf_to_string(line);
+      }
+      start = "<http://";
+      end = ">.";
+      login_failed = "Either that player does not exist, or has a different password.";
+      if (line.indexOf(start) > -1) {
+        start_index = line.indexOf(start) + 1;
+        end_index = line.indexOf(end);
+        if (start_index > end_index) {
+          end_index = line.lastIndexOf(end);
+        }
+        url = line.substring(start_index, end_index);
+        line = line.substring(line.indexOf(end) + 2, line.length);
+        App.Views.mainView.request_url(url);
+      }
+      if (line.indexOf(login_failed) > -1) {
+        App.Views.login - modal.fail();
       }
       $log_output = $("#text-mode-backlog");
       if ($log_output.val() !== '') {
@@ -86,16 +102,16 @@ define(function() {
     };
 
     text_handler.prototype.scroll_backlog = function() {
-      var $log_output;
-      $log_output = $("#text-mode-backlog");
-      return $log_output.scrollTop($log_output[0].scrollHeight - $log_output.height());
+      var $log;
+      $log = $("#text-mode-backlog");
+      return $log.scrollTop($log[0].scrollHeight - $log.height());
     };
 
     text_handler.prototype.clear_backlog = function() {
-      var $log_output, height, newlines, num_newlines;
-      $log_output = $("#text-mode-backlog");
-      num_newlines = $log_output[0].value.split(/\r\n|\r|\n/).length;
-      height = parseInt($log_output.height() / parseInt($log_output.css("line-height")));
+      var $log, height, newlines, num_newlines;
+      $log = $("#text-mode-backlog");
+      num_newlines = $log[0].value.split(/\r\n|\r|\n/).length;
+      height = parseInt($log.height() / parseInt($log.css("line-height")));
       newlines = Array(height + 1).join("\n");
       return this.insert(newlines);
     };

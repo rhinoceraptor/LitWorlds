@@ -29,28 +29,27 @@ define ["moo"], (moo) ->
         @license()
 
     text_mode: ->
-
       @moo()
       App.Views.navbar.text_mode()
-    mixed_mode: ->
 
+    mixed_mode: ->
       @moo()
       App.Views.navbar.mixed_mode()
-    graphic_mode: ->
 
+    graphic_mode: ->
       @moo()
       App.Views.navbar.graphic_mode()
-    license: ->
 
+    license: ->
       console.log "license"
       App.Views.navbar.show_license_modal()
-    login: ->
 
+    login: ->
       @moo()
       console.log "login"
       App.Views.navbar.show_login_modal()
-    settings: ->
 
+    settings: ->
       @moo()
       console.log "settings"
       App.Views.navbar.show_settings_modal()

@@ -13,6 +13,7 @@ define ["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       @socket.on 'error', @error
       @socket.on 'tcp_line', @telnet_line_in
       @socket.on 'markup', @handle_markup
+      @socket.on 'auth_fail', @auth_fail
 
     render: ->
       console.log 'rendering!'
@@ -81,11 +82,13 @@ define ["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       @ready()
       @socket.emit('auth', {user: username, passwd: password})
 
+    auth_fail: () ->
+      new login_modal().render("fail")
+
     close: () =>
       @socket.emit('close')
 
     telnet_line_in: (line) =>
-      console.log 'recvd a line'
       App.Views.text_handler.insert(line)
 
     telnet_line_out: (line) =>
@@ -95,5 +98,7 @@ define ["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       App.Views.html_handler.insert_markup(html)
 
     request_markup: (ident) =>
-      console.log 'requesting markup: ' + ident
       @socket.emit('req_markup', ident)
+
+    request_url: (url) =>
+      @socket.emit('req_url', url)

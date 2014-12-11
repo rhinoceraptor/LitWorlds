@@ -20,18 +20,13 @@ scrape = (function() {
     var new_html, options;
     console.log("scraping " + url);
     new_html = null;
+    options = {
+      method: 'GET',
+      url: url
+    };
     if (access_code !== null) {
-      options = {
-        method: 'GET',
-        url: url,
-        headers: {
-          'Cookie: ': access_code
-        }
-      };
-    } else {
-      options = {
-        method: 'GET',
-        url: url
+      options.headers = {
+        'Cookie: ': access_code
       };
     }
     return request(options, (function(_this) {
@@ -47,7 +42,7 @@ scrape = (function() {
             new_url = "#encore/" + ident;
             return $(link).attr('href', new_url);
           });
-          return callback($('body').html());
+          return callback($.html());
         }
       };
     })(this));

@@ -24,22 +24,27 @@ define ->
       @$el.on("shown.bs.modal", () =>
         @$user.focus())
 
-    render: ->
+    render: (param)->
       @$el.modal("show")
+      if param is "fail"
+        @fail()
       this
 
     ok: (e) =>
       console.log 'login ok'
-      if @$el.find(".login-user").val() is "" or @$el.find(".login-passwd").val() is ""
+      if @$el.find(".login-user").val() is ""
         @wiggle()
-        return
       else
         App.Views.mainView.auth(@$user.val(), @$passwd.val())
+        App.Views.navbar.set_btn_disconnect()
         @cleanup()
 
     guest: () =>
       App.Views.mainView.auth("guest", "")
       @cleanup()
+
+    fail: ->
+      $("#login-modal h3").html("Login Failed!")
 
     cancel: =>
       @cleanup()
@@ -48,7 +53,7 @@ define ->
       len = 20
       i = 0
       while (i < 4)
-        @$el.animate({'margin-left': "+=" + (len = -len) + 'px'}, 50)
+        @$el.animate({'margin-left': "+=" + (len = -len) + 'px'}, 75)
         i++
 
     # Remove backbone event handlers from el and hide modal

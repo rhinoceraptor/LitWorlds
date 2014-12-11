@@ -33,6 +33,31 @@ define ->
       # socket.io returns text as an ArrayBuffer object
       if typeof line is "object"
         line = @arraybuf_to_string(line)
+
+      start = "<http://"         # Start of a URL
+      end = ">."                 # end of a URL
+      login_failed = "Either that player does not exist, or has a different password."
+
+      # Did we get a URL with the telnet data?
+      # They come in the form <http://domain.tld:7000/123/>.
+      if line.indexOf(start) > -1
+        # We got a url, so load it for the user
+        start_index = line.indexOf(start) + 1
+        end_index = line.indexOf(end)
+
+        # Sometimes URLs are the last part of a text segment
+        if start_index > end_index
+          end_index = line.lastIndexOf(end)
+        url = line.substring(start_index, end_index)
+
+        # Kindly remove the URL from the user's text data stream
+        line = line.substring(line.indexOf(end) + 2, line.length)
+        App.Views.mainView.request_url(url)
+
+      # Did our login fail?
+      if line.indexOf(login_failed) > -1
+        App.Views.login-modal.fail()
+
       $log_output = $("#text-mode-backlog")
       # Append to backlog, then erase console
       # If there is no text already, don't add a newline.
@@ -100,14 +125,14 @@ define ->
     # Keep the scroll position at the bottom of the scroll buffer when new
     # text is added to it.
     scroll_backlog: () ->
-      $log_output = $("#text-mode-backlog")
-      $log_output.scrollTop($log_output[0].scrollHeight - $log_output.height())
+      $log = $("#text-mode-backlog")
+      $log.scrollTop($log[0].scrollHeight - $log.height())
 
     # Scroll the backlog such that the backlog is cleared.
     clear_backlog: () =>
-      $log_output = $("#text-mode-backlog")
-      num_newlines = $log_output[0].value.split(/\r\n|\r|\n/).length
-      height = parseInt($log_output.height() / parseInt($log_output.css("line-height")))
+      $log = $("#text-mode-backlog")
+      num_newlines = $log[0].value.split(/\r\n|\r|\n/).length
+      height = parseInt($log.height() / parseInt($log.css("line-height")))
       # Add one extra newline just to be sure.
       # The text areas don't align in scale exactly to line height
       newlines = Array(height + 1).join("\n")
@@ -116,7 +141,7 @@ define ->
     set_line_buffer: (length) =>
       @line_buf_length = length
 
-    # socket.io data comes in ArrayBuffer format. We want to convert
-    # it to UTF-8 text.
+    # socket.io text data comes in ArrayBuffer format. We want to
+    # convert it to UTF-8 text.
     arraybuf_to_string: (buf) ->
       return String.fromCharCode.apply(null, new Uint8Array(buf))

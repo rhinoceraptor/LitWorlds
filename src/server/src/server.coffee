@@ -51,7 +51,6 @@ app.use('/', express.static('../client/'))
 # When a user connects, wait for the auth event
 io.sockets.on('connection', (io) =>
   console.log('Incoming socket.io connection\n')
-  _this = @
   # On auth event, kick off getting access code and autologin string
   io.on('auth', (authData) =>
 
@@ -62,78 +61,71 @@ io.sockets.on('connection', (io) =>
     # Using that access code, get an autologin string for our user and password
     auth.get_access_code(authData.user, authData.passwd, (access_code) =>
       console.log 'access code is ' + access_code
-      auth.get_autologin_string(access_code, (autologin) =>
-        console.log 'autologin is ' + autologin
+      if access_code is "failed"
+        io.emit("auth_fail")
+      else
+        auth.get_autologin_string(access_code, (autologin) =>
+          console.log 'autologin is ' + autologin
 
-        telnet = net.createConnection(telnet_port, server)
-        s = new scrape(server, enCore_port, node_domain)
+          telnet = net.createConnection(telnet_port, server)
+          s = new scrape(server, enCore_port, node_domain)
 
-        telnet.write(autologin + "\r\n")
+          console.log "auto logging in: " + autologin
+          telnet.write(autologin + "\r\n")
 
-        telnet.on('data', (telnetData) ->
-          data = String.fromCharCode.apply(null, new Uint8Array(telnetData))
+          telnet.on('data', (telnetData) ->
+            io.emit('tcp_line', telnetData)
+          ).on('error', () ->
+            io.emit('error')
+          ).on('close', () ->
+            io.emit('disconnect')
+          )
 
-          start = "<http://" + server
-          end = ">."
+          io.on('io_line', (socketData) ->
+            if telnet?
+              if telnet.writable
+                telnet.write(socketData + "\r\n")
+              else
+                io.emit('error', 'timeout')
+          ).on('error', () ->
+            console.log('Error writing to telnet!')
+          )
 
-          # Did we get a URL with the telnet data?
-          # They come in the form <http://domain.tld:7000/123/>.
-          if data.indexOf(start) > -1
-            url = data.substring(data.indexOf(start) + 1, data.indexOf(end))
-            # Using our new URL, load it for the client
+          io.on('disconnect', () ->
+            console.log('disconnect the telnet connection!\n')
+            if telnet?
+              telnet.destroy()
+              telnet = null
+          )
 
+          io.on('close', () ->
+            console.log('close the telnet connection!\n')
+            if telnet?
+              telnet.destroy()
+              telnet = null
+          )
+
+          # Used when the client requested an identifer based on the hash URLs
+          io.on('req_markup', (ident) =>
+            console.log 'client requested hash URL ' + ident
+            # ident is the identifer for the encore URL to return
+            url = "http://" + server + ":" + enCore_port + "/" + ident
             s.get_html(url, access_code, (html) =>
               console.log 'sending ' + url + ' html to client'
               io.emit('markup', html)
             )
-            # Kindly remove the URL from the user's data stream
-            data = data.substring(data.indexOf(end) + 2, data.length)
-
-          io.emit('tcp_line', data)
-        ).on('error', () ->
-          io.emit('error')
-        ).on('close', () ->
-          io.emit('disconnect')
-        )
-
-        io.on('io_line', (socketData) ->
-          if telnet?
-            if telnet.writable
-              telnet.write(socketData + "\n")
-            else
-              io.emit('error', 'timeout')
-        ).on('error', () ->
-          console.log('Error writing to telnet!')
-        )
-
-        io.on('disconnect', () ->
-          console.log('disconnect the telnet connection!\n')
-          if telnet?
-            telnet.destroy()
-            telnet = null
-        )
-
-        io.on('close', () ->
-          console.log('close the telnet connection!\n')
-          if telnet?
-            telnet.destroy()
-            telnet = null
-        )
-
-        io.on('req_markup', (ident) =>
-          console.log 'client requested ' + ident
-          # ident is the identifer for the encore URL to return
-          url = "http://" + server + ":" + enCore_port + "/" + ident
-          s.get_html(url, access_code, (html) =>
-            console.log 'sending ' + url + ' html to client'
-            io.emit('markup', html)
           )
+
+          # Used when the client requests a URL based on what comes over telnet
+          io.on('req_url', (url) =>
+            console.log 'client requested page ' + url
+            s.get_html(url, access_code, (html) =>
+              console.log 'sending ' + url + ' html to client'
+              io.emit('markup', html)
+            )
+          )
+
         )
-
-
-
-
-      )
     )
   )
 

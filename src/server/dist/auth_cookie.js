@@ -60,7 +60,7 @@ auth_cookie = (function() {
             login = document.location._window.window._java_client_param_pairs[6][1];
             return callback(login);
           } else {
-            return callback('failed!');
+            return callback('failed');
           }
         } else {
           return console.log(err);

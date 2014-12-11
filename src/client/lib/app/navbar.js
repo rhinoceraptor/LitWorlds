@@ -54,29 +54,31 @@ define(["modals/login_modal", "modals/settings_modal", "modals/license_modal"], 
     };
 
     navbar.prototype.conn_guest = function() {
-      var $connect_btn, connect;
-      $connect_btn = this.$el.find("#connect-guest");
-      connect = $.trim($connect_btn.html());
-      if (connect === "Connect as guest") {
-        $connect_btn.attr("id", "disconnect-btn");
-        $connect_btn.html("Disconnect");
-      }
       App.Views.text_handler.insert("\n\n\n");
-      return App.Views.mainView.auth("guest", "");
+      App.Views.mainView.auth("guest", "");
+      return this.set_btn_disconnect();
+    };
+
+    navbar.prototype.set_btn_disconnect = function() {
+      var $btn;
+      $btn = this.$el.find("#connect-guest");
+      $btn.attr("id", "disconnect-btn");
+      return $btn.html("Disconnect");
+    };
+
+    navbar.prototype.set_btn_connect = function() {
+      var $btn;
+      $btn = this.$el.find("#disconnect-btn");
+      $btn.attr("id", "connect-guest");
+      return $btn.html("Connect as guest");
     };
 
     navbar.prototype.disconnect = function() {
-      var $disconnect_btn, disconnect;
-      $disconnect_btn = this.$el.find("#disconnect-btn");
-      disconnect = $.trim($disconnect_btn.html());
-      if (disconnect === "Disconnect") {
-        App.Views.mainView.close();
-        $disconnect_btn.attr("id", "connect-guest");
-        $disconnect_btn.html("Connect as guest");
-        App.Views.text_handler.clear_backlog();
-        App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n");
-      }
-      return App.Views.html_handler.remove_markup();
+      App.Views.text_handler.clear_backlog();
+      App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n");
+      App.Views.mainView.close();
+      App.Views.html_handler.remove_markup();
+      return this.set_btn_connect();
     };
 
     navbar.prototype.set_check_mark = function(mode) {

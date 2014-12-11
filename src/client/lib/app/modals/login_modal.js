@@ -48,17 +48,21 @@ define(function() {
       })(this));
     };
 
-    login_modal.prototype.render = function() {
+    login_modal.prototype.render = function(param) {
       this.$el.modal("show");
+      if (param === "fail") {
+        this.fail();
+      }
       return this;
     };
 
     login_modal.prototype.ok = function(e) {
       console.log('login ok');
-      if (this.$el.find(".login-user").val() === "" || this.$el.find(".login-passwd").val() === "") {
-        this.wiggle();
+      if (this.$el.find(".login-user").val() === "") {
+        return this.wiggle();
       } else {
         App.Views.mainView.auth(this.$user.val(), this.$passwd.val());
+        App.Views.navbar.set_btn_disconnect();
         return this.cleanup();
       }
     };
@@ -66,6 +70,10 @@ define(function() {
     login_modal.prototype.guest = function() {
       App.Views.mainView.auth("guest", "");
       return this.cleanup();
+    };
+
+    login_modal.prototype.fail = function() {
+      return $("#login-modal h3").html("Login Failed!");
     };
 
     login_modal.prototype.cancel = function() {
@@ -80,7 +88,7 @@ define(function() {
       while (i < 4) {
         this.$el.animate({
           'margin-left': "+=" + (len = -len) + 'px'
-        }, 50);
+        }, 75);
         _results.push(i++);
       }
       return _results;

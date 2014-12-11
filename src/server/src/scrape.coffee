@@ -23,18 +23,14 @@ class scrape
     console.log "scraping " + url
     new_html = null
 
+    options = {
+      method: 'GET',
+      url: url
+    }
+
     # If we have an access code, use it
     if access_code != null
-      options = {
-        method: 'GET',
-        url: url,
-        headers: {'Cookie: ': access_code}
-      }
-    else
-      options = {
-        method: 'GET',
-        url: url
-      }
+      options.headers = {'Cookie: ': access_code}
 
     request(options, (err, res, body) =>
       if (!err and res.statusCode is 200)
@@ -46,8 +42,7 @@ class scrape
           new_url = "#encore/" + ident
           $(link).attr('href', new_url)
         )
-
-        callback($('body').html())
+        callback($.html())
     )
 
 module.exports = scrape

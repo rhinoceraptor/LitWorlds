@@ -60,7 +60,7 @@ class auth_cookie
           login = document.location._window.window._java_client_param_pairs[6][1]
           callback(login)
         else
-          callback('failed!')
+          callback('failed')
       else
         console.log err
     )

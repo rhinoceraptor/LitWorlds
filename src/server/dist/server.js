@@ -51,75 +51,73 @@ app.use('/', express["static"]('../client/'));
 io.sockets.on('connection', (function(_this) {
   return function(io) {
     console.log('Incoming socket.io connection\n');
-    _this = _this;
     return io.on('auth', function(authData) {
       var auth;
       console.log('auth ' + authData.user + ":" + authData.passwd);
       auth = new auth_cookie(server, enCore_port);
       return auth.get_access_code(authData.user, authData.passwd, function(access_code) {
         console.log('access code is ' + access_code);
-        return auth.get_autologin_string(access_code, function(autologin) {
-          var s, telnet;
-          console.log('autologin is ' + autologin);
-          telnet = net.createConnection(telnet_port, server);
-          s = new scrape(server, enCore_port, node_domain);
-          telnet.write(autologin + "\r\n");
-          telnet.on('data', function(telnetData) {
-            var data, end, start, url;
-            data = String.fromCharCode.apply(null, new Uint8Array(telnetData));
-            start = "<http://" + server;
-            end = ">.";
-            if (data.indexOf(start) > -1) {
-              url = data.substring(data.indexOf(start) + 1, data.indexOf(end));
-              s.get_html(url, access_code, (function(_this) {
-                return function(html) {
-                  console.log('sending ' + url + ' html to client');
-                  return io.emit('markup', html);
-                };
-              })(this));
-              data = data.substring(data.indexOf(end) + 2, data.length);
-            }
-            return io.emit('tcp_line', data);
-          }).on('error', function() {
-            return io.emit('error');
-          }).on('close', function() {
-            return io.emit('disconnect');
-          });
-          io.on('io_line', function(socketData) {
-            if (telnet != null) {
-              if (telnet.writable) {
-                return telnet.write(socketData + "\n");
-              } else {
-                return io.emit('error', 'timeout');
+        if (access_code === "failed") {
+          console.log("oh snap");
+          return io.emit("auth_fail");
+        } else {
+          return auth.get_autologin_string(access_code, function(autologin) {
+            var s, telnet;
+            console.log('autologin is ' + autologin);
+            telnet = net.createConnection(telnet_port, server);
+            s = new scrape(server, enCore_port, node_domain);
+            console.log("auto logging in: " + autologin);
+            telnet.write(autologin + "\r\n");
+            telnet.on('data', function(telnetData) {
+              return io.emit('tcp_line', telnetData);
+            }).on('error', function() {
+              return io.emit('error');
+            }).on('close', function() {
+              return io.emit('disconnect');
+            });
+            io.on('io_line', function(socketData) {
+              if (telnet != null) {
+                if (telnet.writable) {
+                  return telnet.write(socketData + "\r\n");
+                } else {
+                  return io.emit('error', 'timeout');
+                }
               }
-            }
-          }).on('error', function() {
-            return console.log('Error writing to telnet!');
-          });
-          io.on('disconnect', function() {
-            console.log('disconnect the telnet connection!\n');
-            if (telnet != null) {
-              telnet.destroy();
-              return telnet = null;
-            }
-          });
-          io.on('close', function() {
-            console.log('close the telnet connection!\n');
-            if (telnet != null) {
-              telnet.destroy();
-              return telnet = null;
-            }
-          });
-          return io.on('req_markup', function(ident) {
-            var url;
-            console.log('client requested ' + ident);
-            url = "http://" + server + ":" + enCore_port + "/" + ident;
-            return s.get_html(url, access_code, function(html) {
-              console.log('sending ' + url + ' html to client');
-              return io.emit('markup', html);
+            }).on('error', function() {
+              return console.log('Error writing to telnet!');
+            });
+            io.on('disconnect', function() {
+              console.log('disconnect the telnet connection!\n');
+              if (telnet != null) {
+                telnet.destroy();
+                return telnet = null;
+              }
+            });
+            io.on('close', function() {
+              console.log('close the telnet connection!\n');
+              if (telnet != null) {
+                telnet.destroy();
+                return telnet = null;
+              }
+            });
+            io.on('req_markup', function(ident) {
+              var url;
+              console.log('client requested hash URL ' + ident);
+              url = "http://" + server + ":" + enCore_port + "/" + ident;
+              return s.get_html(url, access_code, function(html) {
+                console.log('sending ' + url + ' html to client');
+                return io.emit('markup', html);
+              });
+            });
+            return io.on('req_url', function(url) {
+              console.log('client requested page ' + url);
+              return s.get_html(url, access_code, function(html) {
+                console.log('sending ' + url + ' html to client');
+                return io.emit('markup', html);
+              });
             });
           });
-        });
+        }
       });
     });
   };

@@ -25,43 +25,52 @@ license_modal) ->
     show_license_modal: () ->
       new license_modal().render()
 
+    # Add the highlight in the dropdown for text mode
     text_mode: ->
       @set_check_mark("text")
       App.Views.mainView.text_mode()
 
+    # Add the highlight in the dropdown for graphic mode
     graphic_mode: ->
       @set_check_mark("graphic")
       App.Views.mainView.graphic_mode()
 
+    # Add the highlight in the dropdown for mixed mode
     mixed_mode: ->
       @set_check_mark("mixed")
       App.Views.mainView.mixed_mode()
 
     # Connect as a guest to the MOO.
-    # Change the ID of the "Connect as guest" button to "Disconnect".
     conn_guest: =>
-      $connect_btn = @$el.find("#connect-guest")
-      connect = $.trim($connect_btn.html())
-      if connect is "Connect as guest"
-        $connect_btn.attr("id", "disconnect-btn")
-        $connect_btn.html("Disconnect")
-
       # Tell mainView to connect to tell server it's ready
       App.Views.text_handler.insert("\n\n\n")
       App.Views.mainView.auth("guest", "")
+      # Toggle the connect button
+      @set_btn_disconnect()
+
+    # Change the text of the "Connect as guest" button to "Disconnect".
+    # Change the ID from "connect-guest" to "diconnect-btn"
+    set_btn_disconnect: ->
+      $btn = @$el.find("#connect-guest")
+      $btn.attr("id", "disconnect-btn")
+      $btn.html("Disconnect")
+
+    # Change the text of the "Disconnect" button to "Connect as guest".
+    # Change the ID from "diconnect-btn" to "connect-guest"
+    set_btn_connect: () ->
+      $btn = @$el.find("#disconnect-btn")
+      $btn.attr("id", "connect-guest")
+      $btn.html("Connect as guest")
 
     # Disconnect from the MOO. This function also changes the disconnect button
     # back to the "Connect as guest" button.
     disconnect: () ->
-      $disconnect_btn = @$el.find("#disconnect-btn")
-      disconnect = $.trim($disconnect_btn.html())
-      if disconnect is "Disconnect"
-        App.Views.mainView.close()
-        $disconnect_btn.attr("id", "connect-guest")
-        $disconnect_btn.html("Connect as guest")
-        App.Views.text_handler.clear_backlog()
-        App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n")
+      App.Views.text_handler.clear_backlog()
+      App.Views.text_handler.insert("\t\tYou have disconnected from the MUD.\n")
+      App.Views.mainView.close()
       App.Views.html_handler.remove_markup()
+      # Toggle the connect button
+      @set_btn_connect()
 
     # When a mode is selected, we want to add a small black indicator box
     # in the dropdown, and remove the others
