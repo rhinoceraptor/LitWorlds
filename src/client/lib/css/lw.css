@@ -35,6 +35,7 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  height: 65px !important;
 }
 
 .navbar-custom {
@@ -51,7 +52,7 @@ body {
 
 .btn-group {
   position: absolute;
-  margin-top: 7px;
+  margin-top: 13px;
   margin-right: 7px;
 }
 
@@ -128,7 +129,7 @@ body {
   border-width: 1px;
   border-color: #3E3D32;
   border-style: solid;
-  height: 80%;
+  height: 79.75%;
   width: 100%;
   overflow: auto;
 }
@@ -154,9 +155,9 @@ body {
 }
 
 .xpress-toolbar {
-  background-color: #F3F3F3;
-  border-width: 1px;
-  border-color: #3E3D32;
-  border-style: solid;
-  height: 65px;
+  float: none;
+  margin: 0 auto !important;
+  background-color: #333333;
+  height: 50px;
+  width: 384px;
 }

@@ -129,18 +129,15 @@ handle_session = (function(_this) {
       });
     });
     return io.on('req_url', function(url) {
-      console.log('\tclient requested page url ' + url);
       return s.get_html(url, access_code, function(html) {
         var end, ident, start, xpress;
         if (url.charAt(url.length - 1) === '/') {
-          console.log('\tslash on end');
           end = url.length - 1;
         } else {
           end = url.length;
         }
         start = url.indexOf(":" + enCore_port) + enCore_port.length + 2;
         ident = url.substring(start, end);
-        console.log('\tsending ident ' + ident + ' to client');
         io.emit('markup', html, ident);
         xpress = "http://" + server + ":" + enCore_port + "/Xpress_client/menu.html";
         return s.get_html(xpress, access_code, function(html) {
