@@ -27,7 +27,9 @@ define(["moo"], function(moo) {
         App.Views.mainView = new moo;
         App.Views.mainView.render();
       }
+      console.log('param is ' + param);
       if ((param != null) && param.indexOf("encore") > -1) {
+        console.log("hello world! from router");
         ident = parseInt(param.substring("encore/".length, param.length));
         App.Views.html_handler.link_handler(ident);
       }

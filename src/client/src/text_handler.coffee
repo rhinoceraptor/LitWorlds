@@ -36,7 +36,6 @@ define ->
 
       start = "<http://"         # Start of a URL
       end = ">."                 # end of a URL
-      login_failed = "Either that player does not exist, or has a different password."
 
       # Did we get a URL with the telnet data?
       # They come in the form <http://domain.tld:7000/123/>.
@@ -48,10 +47,13 @@ define ->
         # Sometimes URLs are the last part of a text segment
         if start_index > end_index
           end_index = line.lastIndexOf(end)
-        url = line.substring(start_index, end_index)
-
-        # Kindly remove the URL from the user's text data stream
-        line = line.substring(line.indexOf(end) + 2, line.length)
+          url = line.substring(start_index, end_index)
+          # Kindly remove the URL from the user's text data stream
+          line = line.substring(0, start_index - 1)
+        else
+          url = line.substring(start_index, end_index)
+          # Kindly remove the URL from the user's text data stream
+          line = line.substring(line.indexOf(end) + 2, line.length)
         App.Views.mainView.request_url(url)
 
       $log_output = $("#text-mode-backlog")

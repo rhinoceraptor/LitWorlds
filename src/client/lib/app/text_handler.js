@@ -40,10 +40,16 @@ define(function() {
         start_index = line.indexOf(start) + 1;
         end_index = line.indexOf(end);
         if (start_index > end_index) {
+          console.log('\tdo the thing with the other thing!');
           end_index = line.lastIndexOf(end);
+          url = line.substring(start_index, end_index);
+          console.log("the url is " + url + ", start_index: " + start_index + ", end_index : " + end_index);
+          line = line.substring(0, start_index - 1);
+        } else {
+          url = line.substring(start_index, end_index);
+          console.log("the url is " + url + ", start_index: " + start_index + ", end_index : " + end_index);
+          line = line.substring(line.indexOf(end) + 2, line.length);
         }
-        url = line.substring(start_index, end_index);
-        line = line.substring(line.indexOf(end) + 2, line.length);
         App.Views.mainView.request_url(url);
       }
       $log_output = $("#text-mode-backlog");
