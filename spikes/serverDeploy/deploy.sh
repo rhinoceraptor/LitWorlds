@@ -7,7 +7,7 @@
 #########################################################
 # URLs for server and db
 ENCORE_URL=http://downloads.sourceforge.net/project/ele/enCore%20Database/enCore%204.0.1/enCore-4.0.1.tar.gz
-LAMBDA_MOO_URL=http://lingo.uib.no/v5/downloads/LambdaMOO-1.8.1-unicode.tar.gz
+LAMBDA_MOO_URL=http://downloads.sourceforge.net/project/lambdamoo/lambdamoo/1.8.1/LambdaMOO-1.8.1.tar.gz
 # Directories for installation
 INSTALLDIR=/usr/local/moo
 APACHEDIR=/etc/apache2
