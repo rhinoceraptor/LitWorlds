@@ -54,7 +54,7 @@ define ->
           url = line.substring(start_index, end_index)
           # Kindly remove the URL from the user's text data stream
           line = line.substring(line.indexOf(end) + 2, line.length)
-        App.Views.mainView.request_url(url)
+        # Code to open in iframe here!!!
 
       $log_output = $("#text-mode-backlog")
       # Append to backlog, then erase console
@@ -143,3 +143,9 @@ define ->
     # convert it to UTF-8 text.
     arraybuf_to_string: (buf) ->
       return String.fromCharCode.apply(null, new Uint8Array(buf))
+
+    error: () ->
+      # Insert error message here!
+
+    disconnect: () ->
+      # Insert disconnect error message here!

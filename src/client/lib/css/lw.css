@@ -18,123 +18,14 @@
   src: url(../font/Incocolumnsnsolata-Regular.ttf);
 }
 
-* {
-  -webkit-border-radius: 0 !important;
-  -moz-border-radius: 0 !important;
-  border-radius: 0 !important;
-}
-
 body {
   font-family: ubuntu;
   background-color: #D1D1D1;
 }
 
-.navbar {
-  overflow: visible;
-  background-image: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  height: 65px !important;
-}
-
-.navbar-custom {
-  background-color: #333333;
-}
-
-.navbar-brand {
-  color: #F3F3F3 !important;
-}
-
-.navbar-brand:hover {
-  color: #969696 !important;
-}
-
-.btn-group {
-  position: absolute;
-  margin-top: 13px;
-  margin-right: 7px;
-}
-
-.btn {
-  background-color: #F3F3F3;
-  right: 7px;
-  border: 1px solid #333333;
-}
-
-.btn:hover {
-  background-color: #969696 !important;
-}
-
-#modeButton {
-  background-color: #F3F3F3;
-}
-
-.modal-label {
-  text-align: center;
-}
-
-.dropdown-menu {
-  white-space: normal;
-}
-
-.dropdown-menu a:hover {
-  color: #969696 !important;
-}
-
-.dropdown-selected {
-  background-color: #272822 !important;
-}
-
-.dropdown-selected a {
-  color: #F8F8F2 !important;
-}
-
-.btn-primary {
-  background-color: #5F8199;
-}
-
-.btn-primary:hover {
-  background-color: #7BA6C4;
-}
-
-#back-btn {
-  background: url(../font/glyphicons/glyphicons-225-chevron-left.png);
-}
-
-#forward-btn {
-  background: url(../font/glyphicons/glyphicons-224-chevron-right.png);
-}
-
-.text-mode {
-  width: 100%;
-  resize: none;
-  color: #F8F8F2;
-  background-color: #272822;
-  border-width: 3px;
-  border-color: #3E3D32;
-  border-style: solid;
-}
-
-.content-wrapper {
-  height: calc(100% - 70px);
-}
-
-.html-nav-bar {
-  background-color: #333333;
-}
-
-.html-container {
-  background-color: #F3F3F3;
-  border-width: 1px;
-  border-color: #3E3D32;
-  border-style: solid;
-  height: 79.75%;
-  width: 100%;
-  overflow: auto;
-}
-
 .text-mode-ul {
+  width: 100%;
+  padding: 0px;
   font-family: ubuntu-mono;
   font-size: 15;
 }
@@ -144,20 +35,12 @@ body {
 }
 
 #text-mode-backlog {
-  height: 80%;
+  height: calc(98% - 20px);
+  width: 100%;
+  resize: none;
 }
 
 #text-mode-input {
-}
-
-.login-body {
-  margin-left: 20px;
-}
-
-.xpress-toolbar {
-  float: none;
-  margin: 0 auto !important;
-  background-color: #333333;
-  height: 50px;
-  width: 384px;
+  width: 100%;
+  resize: none;
 }

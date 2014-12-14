@@ -12,62 +12,15 @@ define(["moo"], function(moo) {
     }
 
     moo_router.prototype.routes = {
-      "": "moo",
-      "text": "text_mode",
-      "mixed": "mixed_mode",
-      "graphic": "graphic_mode",
-      "login": "login",
-      "settings": "settings",
       "*other": "moo"
     };
 
     moo_router.prototype.moo = function(param) {
-      var ident;
       if (App.Views.mainView == null) {
+        console.log('hi');
         App.Views.mainView = new moo;
-        App.Views.mainView.render();
+        return App.Views.mainView.render();
       }
-      console.log('param is ' + param);
-      if ((param != null) && param.indexOf("encore") > -1) {
-        console.log("hello world! from router");
-        ident = parseInt(param.substring("encore/".length, param.length));
-        App.Views.html_handler.link_handler(ident);
-      }
-      if ((param != null) && param.indexOf("license") > -1) {
-        return this.license();
-      }
-    };
-
-    moo_router.prototype.text_mode = function() {
-      this.moo();
-      return App.Views.navbar.text_mode();
-    };
-
-    moo_router.prototype.mixed_mode = function() {
-      this.moo();
-      return App.Views.navbar.mixed_mode();
-    };
-
-    moo_router.prototype.graphic_mode = function() {
-      this.moo();
-      return App.Views.navbar.graphic_mode();
-    };
-
-    moo_router.prototype.license = function() {
-      console.log("license");
-      return App.Views.navbar.show_license_modal();
-    };
-
-    moo_router.prototype.login = function() {
-      this.moo();
-      console.log("login");
-      return App.Views.navbar.show_login_modal();
-    };
-
-    moo_router.prototype.settings = function() {
-      this.moo();
-      console.log("settings");
-      return App.Views.navbar.show_settings_modal();
     };
 
     return moo_router;

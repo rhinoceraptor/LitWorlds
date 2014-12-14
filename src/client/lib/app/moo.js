@@ -3,20 +3,14 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "modals/settings_modal"], function(disconnect_modal, error_modal, login_modal, settings_modal) {
+define([], function() {
   var moo;
   return moo = (function(_super) {
     __extends(moo, _super);
 
     function moo() {
-      this.request_url = __bind(this.request_url, this);
-      this.request_markup = __bind(this.request_markup, this);
-      this.handle_toolbar = __bind(this.handle_toolbar, this);
-      this.handle_markup = __bind(this.handle_markup, this);
       this.telnet_line_out = __bind(this.telnet_line_out, this);
       this.telnet_line_in = __bind(this.telnet_line_in, this);
-      this.close = __bind(this.close, this);
-      this.auth = __bind(this.auth, this);
       return moo.__super__.constructor.apply(this, arguments);
     }
 
@@ -29,10 +23,7 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
       });
       this.socket.on('disconnect', this.disconnect);
       this.socket.on('error', this.error);
-      this.socket.on('tcp_line', this.telnet_line_in);
-      this.socket.on('markup', this.handle_markup);
-      this.socket.on('xpress', this.handle_toolbar);
-      return this.socket.on('auth_fail', this.auth_fail);
+      return this.socket.on('tcp_line', this.telnet_line_in);
     };
 
     moo.prototype.render = function() {
@@ -40,98 +31,15 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
     };
 
     moo.prototype.disconnect = function() {
-      return new disconnect_modal().render();
+      return App.Views.text_handler.disconnect();
     };
 
-    moo.prototype.error = function(e) {
-      return new error_modal().render(e);
+    moo.prototype.error = function() {
+      return App.Views.text_handler.error();
     };
 
     moo.prototype.ready = function() {
       return this.socket.emit('ready');
-    };
-
-    moo.prototype.reconnect = function() {
-      return this.connect.hide();
-    };
-
-    moo.prototype.text_mode = function() {
-      var $html_nav, $html_wrapper, $text;
-      console.log('text_mode');
-      $text = $(".text-wrapper");
-      $html_wrapper = $(".html-wrapper");
-      $html_nav = $(".html-nav-bar");
-      $text.css({
-        "display": "inline"
-      });
-      $text.removeClass("col-xs-6");
-      $text.addClass("col-xs-12");
-      $html_wrapper.css({
-        "display": "none"
-      });
-      $html_nav.css({
-        "display": "none"
-      });
-      $html_wrapper.removeClass("col-xs-6");
-      return $html_wrapper.removeClass("col-xs-12");
-    };
-
-    moo.prototype.graphic_mode = function() {
-      var $html_nav, $html_wrapper, $text;
-      console.log('graphic_mode');
-      $text = $(".text-wrapper");
-      $html_wrapper = $(".html-wrapper");
-      $html_nav = $(".html-nav-bar");
-      $html_wrapper.css({
-        "display": "inline"
-      });
-      $html_nav.css({
-        "display": "block"
-      });
-      $html_wrapper.removeClass("col-xs-6");
-      $html_wrapper.addClass("col-xs-12");
-      $text.css({
-        "display": "none"
-      });
-      $text.removeClass("col-xs-6");
-      return $text.removeClass("col-xs-12");
-    };
-
-    moo.prototype.mixed_mode = function() {
-      var $html_nav, $html_wrapper, $text;
-      console.log('mixed_mode');
-      $text = $(".text-wrapper");
-      $html_wrapper = $(".html-wrapper");
-      $html_nav = $(".html-nav-bar");
-      $html_wrapper.css({
-        "display": "inline"
-      });
-      $text.css({
-        "display": "inline"
-      });
-      $html_nav.css({
-        "display": "block"
-      });
-      $html_wrapper.removeClass("col-xs-12");
-      $html_wrapper.addClass("col-xs-6");
-      $text.removeClass("col-xs-12");
-      return $text.addClass("col-xs-6");
-    };
-
-    moo.prototype.auth = function(username, password) {
-      this.ready();
-      return this.socket.emit('auth', {
-        user: username,
-        passwd: password
-      });
-    };
-
-    moo.prototype.auth_fail = function() {
-      return new login_modal().render("fail");
-    };
-
-    moo.prototype.close = function() {
-      return this.socket.emit('close');
     };
 
     moo.prototype.telnet_line_in = function(line) {
@@ -140,22 +48,6 @@ define(["modals/disconnect_modal", "modals/error_modal", "modals/login_modal", "
 
     moo.prototype.telnet_line_out = function(line) {
       return this.socket.emit('io_line', line);
-    };
-
-    moo.prototype.handle_markup = function(html, ident) {
-      return App.Views.html_handler.insert_markup(html, ident);
-    };
-
-    moo.prototype.handle_toolbar = function(html) {
-      return App.Views.html_handler.insert_toolbar(html);
-    };
-
-    moo.prototype.request_markup = function(ident) {
-      return this.socket.emit('req_markup', ident);
-    };
-
-    moo.prototype.request_url = function(url) {
-      return this.socket.emit('req_url', url);
     };
 
     return moo;
