@@ -54,7 +54,7 @@ cp MOO-1.8.1/restart bin/
 
 # go to the apache install directory and create an alias for Xpress
 cd ${APACHEDIR}
-echo -n "Alias /encore \"/usr/local/moo/encore\"\n<Directory /usr/local/moo/encore>\n\tRequire all granted\n</Directory>\n" >> apache2.conf
+echo -e "Alias /encore \"/usr/local/moo/encore\"\n<Directory /usr/local/moo/encore>\n\tRequire all granted\n</Directory>\n" >> apache2.conf
 
 # Add enCore.db, moo, and restart to the bin directory
 cd ${INSTALLDIR}/bin
