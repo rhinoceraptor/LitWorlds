@@ -26,8 +26,9 @@ define([], function() {
       return this.socket.on('tcp_line', this.telnet_line_in);
     };
 
-    moo.prototype.render = function() {
-      return console.log('rendering!');
+    moo.prototype.render = function(autologin) {
+      console.log(autologin);
+      return this.socket.emit('init', autologin);
     };
 
     moo.prototype.disconnect = function() {
@@ -36,10 +37,6 @@ define([], function() {
 
     moo.prototype.error = function() {
       return App.Views.text_handler.error();
-    };
-
-    moo.prototype.ready = function() {
-      return this.socket.emit('ready');
     };
 
     moo.prototype.telnet_line_in = function(line) {

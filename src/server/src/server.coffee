@@ -1,7 +1,6 @@
 # Literary Worlds
 # Node.JS interchange server
-# Interchanges data between a client with socket.io and a LambdaMOO server,
-# over telnet.
+# Interchanges data between a client with socket.io and a LambdaMOO server
 
 # Dependancy imports
 ###############################################################################
@@ -53,8 +52,9 @@ handle_session = (io, autologin) =>
   # Create the telnet session
   telnet = net.createConnection(telnet_port, server)
 
-  # Use our autologin string for the telnet session
-  telnet.write(autologin + "\r\n")
+  if autologin isnt "" and autologin isnt null
+    # Use our autologin string for the telnet session if it's not null
+    telnet.write(autologin + "\r\n")
 
   telnet.on('data', (telnetData) ->
     io.emit('tcp_line', telnetData)
@@ -71,6 +71,7 @@ handle_session = (io, autologin) =>
       else
         io.emit('error', 'timeout')
   ).on('error', () ->
+    io.emit('error', 'timeout')
     console.log('Error writing to telnet!')
   )
 
@@ -88,6 +89,7 @@ handle_session = (io, autologin) =>
       telnet = null
   )
 
+# Serve the client application on client_port
 app.listen(client_port, (err) ->
   if err
     console.log err

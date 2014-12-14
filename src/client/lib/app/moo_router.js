@@ -17,9 +17,8 @@ define(["moo"], function(moo) {
 
     moo_router.prototype.moo = function(param) {
       if (App.Views.mainView == null) {
-        console.log('hi');
         App.Views.mainView = new moo;
-        return App.Views.mainView.render();
+        return App.Views.mainView.render(param);
       }
     };
 

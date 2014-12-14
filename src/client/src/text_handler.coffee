@@ -6,7 +6,7 @@
 
 define ->
   class @text_handler extends Backbone.View
-    el: ".text-wrapper"
+    el: ".text-mode-ul"
     initialize: ->
       @$el.on "keydown", "#text-mode-input", @input_handler
       # We have to escape the backslashes, that's why it looks goofy
@@ -55,7 +55,12 @@ define ->
           # Kindly remove the URL from the user's text data stream
           line = line.substring(line.indexOf(end) + 2, line.length)
         # Code to open in iframe here!!!
+        if document.getElementsByName('web_frame')?
+          console.log "reload web_frame to " + url
+          document.getElementsByName('web_frame').src = url
+      @user_output(line)
 
+    user_output: (line) =>
       $log_output = $("#text-mode-backlog")
       # Append to backlog, then erase console
       # If there is no text already, don't add a newline.
@@ -145,7 +150,7 @@ define ->
       return String.fromCharCode.apply(null, new Uint8Array(buf))
 
     error: () ->
-      # Insert error message here!
+      @user_output("\n\n\n\nAn error occured, please try reloading your browser.\n")
 
     disconnect: () ->
-      # Insert disconnect error message here!
+      @user_output("\n\n\n\nYou have been disconnected from the MUD, please try reloading your browser.\n")

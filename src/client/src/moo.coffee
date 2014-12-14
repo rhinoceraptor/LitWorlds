@@ -17,6 +17,7 @@ define [], () ->
     # for enCore. We send it over the socket, which prompts the server to
     # connect to telnet for us, and it sends the autologin string.
     render: (autologin) ->
+      console.log autologin
       @socket.emit('init', autologin)
 
     disconnect: ->

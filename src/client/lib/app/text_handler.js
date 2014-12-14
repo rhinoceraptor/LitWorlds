@@ -11,11 +11,12 @@ define(function() {
       this.set_line_buffer = __bind(this.set_line_buffer, this);
       this.clear_backlog = __bind(this.clear_backlog, this);
       this.input_handler = __bind(this.input_handler, this);
+      this.user_output = __bind(this.user_output, this);
       this.insert = __bind(this.insert, this);
       return text_handler.__super__.constructor.apply(this, arguments);
     }
 
-    text_handler.prototype.el = ".text-wrapper";
+    text_handler.prototype.el = ".text-mode-ul";
 
     text_handler.prototype.initialize = function() {
       this.$el.on("keydown", "#text-mode-input", this.input_handler);
@@ -29,7 +30,7 @@ define(function() {
     };
 
     text_handler.prototype.insert = function(line) {
-      var $log_output, end, end_index, start, start_index, url;
+      var end, end_index, start, start_index, url;
       if (typeof line === "object") {
         line = this.arraybuf_to_string(line);
       }
@@ -46,7 +47,16 @@ define(function() {
           url = line.substring(start_index, end_index);
           line = line.substring(line.indexOf(end) + 2, line.length);
         }
+        if (document.getElementsByName('web_frame') != null) {
+          console.log("reload web_frame to " + url);
+          document.getElementsByName('web_frame').src = url;
+        }
       }
+      return this.user_output(line);
+    };
+
+    text_handler.prototype.user_output = function(line) {
+      var $log_output;
       $log_output = $("#text-mode-backlog");
       if ($log_output.val() !== '') {
         $log_output.val($log_output.val() + line);
@@ -122,9 +132,13 @@ define(function() {
       return String.fromCharCode.apply(null, new Uint8Array(buf));
     };
 
-    text_handler.prototype.error = function() {};
+    text_handler.prototype.error = function() {
+      return this.user_output("\n\n\n\nAn error occured, please try reloading your browser.\n");
+    };
 
-    text_handler.prototype.disconnect = function() {};
+    text_handler.prototype.disconnect = function() {
+      return this.user_output("\n\n\n\nYou have been disconnected from the MUD, please try reloading your browser.\n");
+    };
 
     return text_handler;
 
