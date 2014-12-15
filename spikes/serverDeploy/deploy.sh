@@ -7,7 +7,7 @@
 #########################################################
 # URLs for server and db
 ENCORE_URL=http://downloads.sourceforge.net/project/ele/enCore%20Database/enCore%204.0.1/enCore-4.0.1.tar.gz
-LAMBDA_MOO_URL=http://downloads.sourceforge.net/project/lambdamoo/lambdamoo/1.8.1/LambdaMOO-1.8.1.tar.gz
+LAMBDA_MOO_URL=https://github.com/rhinoceraptor/lambdamoo.git
 # Directories for installation
 INSTALLDIR=/usr/local/moo
 APACHEDIR=/etc/apache2
@@ -21,19 +21,18 @@ apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
 apt-get -q -y install sudo apache2 gcc make bison vim csh
 
-# create a moo user, with sudo group, 
+# create a moo user, with sudo group,
 useradd -g sudo -s /bin/bash -p users -d /home/moo -m moo
 
 # make INSTALLDIR directory
 mkdir ${INSTALLDIR}
 cd ${INSTALLDIR}
 
-# wget both files
+# wget enCore, git clone LambdaMOO
 wget ${ENCORE_URL}
-wget ${LAMBDA_MOO_URL}
+git clone https://github.com/rhinoceraptor/lambdamoo.git
 
-# untar LambdaMOO and enCore to ${INSTALLDIR}
-tar -zxvf LambdaMOO-1.8.1.tar.gz
+# untar enCore to ${INSTALLDIR}
 tar -zxvf enCore-4.0.1.tar.gz
 
 # make src directory and move source files to src directory
