@@ -33,7 +33,7 @@ wget ${ENCORE_URL}
 wget ${LAMBDA_MOO_URL}
 
 # untar LambdaMOO and enCore to ${INSTALLDIR}
-tar -zxvf LambdaMOO-1.8.1-unicode.tar.gz
+tar -zxvf LambdaMOO-1.8.1.tar.gz
 tar -zxvf enCore-4.0.1.tar.gz
 
 # make src directory and move source files to src directory
