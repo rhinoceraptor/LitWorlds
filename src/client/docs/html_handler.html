@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>html_handler.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="Cakefile.html">
+                Cakefile.coffee
+              </a>
+            
+              
+              <a class="source" href="app.html">
+                app.coffee
+              </a>
+            
+              
+              <a class="source" href="html_handler.html">
+                html_handler.coffee
+              </a>
+            
+              
+              <a class="source" href="disconnect_modal.html">
+                disconnect_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="error_modal.html">
+                error_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="license_modal.html">
+                license_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="login_modal.html">
+                login_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="settings_modal.html">
+                settings_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="moo.html">
+                moo.coffee
+              </a>
+            
+              
+              <a class="source" href="moo_router.html">
+                moo_router.coffee
+              </a>
+            
+              
+              <a class="source" href="navbar.html">
+                navbar.coffee
+              </a>
+            
+              
+              <a class="source" href="text_handler.html">
+                text_handler.coffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>html_handler.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>define -&gt;
+  <span class="hljs-class"><span class="hljs-keyword">class</span> @<span class="hljs-title">html_handler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
+    <span class="hljs-attribute">el</span>: <span class="hljs-string">".html-wrapper"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Get identifier for page, call mainView.request_markup</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">link_handler</span>: <span class="hljs-function"><span class="hljs-params">(ident)</span> -&gt;</span>
+      <span class="hljs-built_in">console</span>.log <span class="hljs-string">"handling "</span> + ident
+      App.Views.mainView.request_markup(ident)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Insert the markup recieved in the html parameter</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">insert_markup</span>: <span class="hljs-function"><span class="hljs-params">(html, ident)</span> -&gt;</span>
+      <span class="hljs-built_in">console</span>.log <span class="hljs-string">'placing html in html container'</span>
+      $(<span class="hljs-string">'.html-container'</span>).html(html)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Insert the menu frame</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">insert_toolbar</span>: <span class="hljs-function"><span class="hljs-params">(html)</span> -&gt;</span>
+      <span class="hljs-built_in">console</span>.log <span class="hljs-string">'reloading the xpress toolbar'</span>
+      $(<span class="hljs-string">'.xpress-toolbar'</span>).html(html)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Keep the scroll position at the bottom of the scroll buffer when new
+text is added to it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">scroll_window</span>: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+      $html_out = $(<span class="hljs-string">".html-container"</span>)
+      $html_out.scrollTop(<span class="hljs-number">0</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Remove all markup within el</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">remove_markup</span>: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+      $(<span class="hljs-string">'.html-container'</span>).empty()
+      $(<span class="hljs-string">'.xpress-toolbar'</span>).empty()</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

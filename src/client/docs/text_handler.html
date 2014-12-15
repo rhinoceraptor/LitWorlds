@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>text_handler.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="Cakefile.html">
+                Cakefile.coffee
+              </a>
+            
+              
+              <a class="source" href="app.html">
+                app.coffee
+              </a>
+            
+              
+              <a class="source" href="html_handler.html">
+                html_handler.coffee
+              </a>
+            
+              
+              <a class="source" href="disconnect_modal.html">
+                disconnect_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="error_modal.html">
+                error_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="license_modal.html">
+                license_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="login_modal.html">
+                login_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="settings_modal.html">
+                settings_modal.coffee
+              </a>
+            
+              
+              <a class="source" href="moo.html">
+                moo.coffee
+              </a>
+            
+              
+              <a class="source" href="moo_router.html">
+                moo_router.coffee
+              </a>
+            
+              
+              <a class="source" href="navbar.html">
+                navbar.coffee
+              </a>
+            
+              
+              <a class="source" href="text_handler.html">
+                text_handler.coffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>text_handler.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h6 id="-">#</h6>
+<p>text_handler</p>
+<p>Responsible for all logic involving text input and output for the user.</p>
+<h6 id="-">#</h6>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+define -&gt;
+  <span class="hljs-class"><span class="hljs-keyword">class</span> @<span class="hljs-title">text_handler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Backbone</span>.<span class="hljs-title">View</span></span>
+    <span class="hljs-attribute">el</span>: <span class="hljs-string">".text-wrapper"</span>
+    <span class="hljs-attribute">initialize</span>: <span class="hljs-function">-&gt;</span>
+      <span class="hljs-property">@$el</span>.<span class="hljs-literal">on</span> <span class="hljs-string">"keydown"</span>, <span class="hljs-string">"#text-mode-input"</span>, <span class="hljs-property">@input_handler</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>We have to escape the backslashes, that’s why it looks goofy</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-property">@insert</span>(<span class="hljs-string">"\t                              _       \n"</span> +
+          <span class="hljs-string">"\t   ____ ___  ____  ____      (_)____  \n"</span> +
+          <span class="hljs-string">"\t  / __ `__ \\/ __ \\/ __ \\    / / ___/  \n"</span> +
+          <span class="hljs-string">"\t / / / / / / /_/ / /_/ /   / (__  )   \n"</span> +
+          <span class="hljs-string">"\t/_/ /_/ /_/\\____/\\____(_)_/ /____/    \n"</span> +
+          <span class="hljs-string">"\t                       /___/          \n"</span> +
+          <span class="hljs-string">"\t====================================\n"</span> +
+          <span class="hljs-string">"\tmoo.js version 0.0.1\n"</span> +
+          <span class="hljs-string">"\tFor license information, go to "</span> +
+          <span class="hljs-string">"Options --&gt; Licenses.\n\tTo connect the MUD, use the "</span> +
+          <span class="hljs-string">"Login button or manually log in by pressing Connect.\n"</span>)
+
+      <span class="hljs-property">@line_buf_length</span> = <span class="hljs-number">50</span>      <span class="hljs-comment"># programatic limit to backlog</span>
+      <span class="hljs-property">@scroll_buf_index</span> = <span class="hljs-number">0</span>      <span class="hljs-comment"># input log scroll index</span>
+      <span class="hljs-property">@line_buf_index</span> = <span class="hljs-number">0</span>        <span class="hljs-comment"># line_buf's number of stored lines</span>
+      <span class="hljs-property">@line_buf</span> = <span class="hljs-keyword">new</span> Array()    <span class="hljs-comment"># array to store previous entered lines</span>
+      <span class="hljs-property">@rooms</span> = <span class="hljs-keyword">new</span> Array()       <span class="hljs-comment"># array to store the possible rooms to move to</span>
+      <span class="hljs-property">@links</span> = <span class="hljs-keyword">new</span> Array()       <span class="hljs-comment"># array to store the possible links to click</span>
+
+    <span class="hljs-attribute">insert</span>: <span class="hljs-function"><span class="hljs-params">(line)</span> =&gt;</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>socket.io returns text as an ArrayBuffer object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> <span class="hljs-keyword">typeof</span> line <span class="hljs-keyword">is</span> <span class="hljs-string">"object"</span>
+        line = <span class="hljs-property">@arraybuf_to_string</span>(line)
+
+      start = <span class="hljs-string">"&lt;http://"</span>         <span class="hljs-comment"># Start of a URL</span>
+      end = <span class="hljs-string">"&gt;."</span>                 <span class="hljs-comment"># end of a URL</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Did we get a URL with the telnet data?
+They come in the form <a href="http://domain.tld:7000/123/">http://domain.tld:7000/123/</a>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> line.indexOf(start) &gt; -<span class="hljs-number">1</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>We got a url, so load it for the user</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        start_index = line.indexOf(start) + <span class="hljs-number">1</span>
+        end_index = line.indexOf(end)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Sometimes URLs are the last part of a text segment</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> start_index &gt; end_index
+          end_index = line.lastIndexOf(end)
+          url = line.substring(start_index, end_index)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Kindly remove the URL from the user’s text data stream</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          line = line.substring(<span class="hljs-number">0</span>, start_index - <span class="hljs-number">1</span>)
+        <span class="hljs-keyword">else</span>
+          url = line.substring(start_index, end_index)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Kindly remove the URL from the user’s text data stream</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          line = line.substring(line.indexOf(end) + <span class="hljs-number">2</span>, line.length)
+        App.Views.mainView.request_url(url)
+
+      $log_output = $(<span class="hljs-string">"#text-mode-backlog"</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Append to backlog, then erase console
+If there is no text already, don’t add a newline.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> $log_output.val() <span class="hljs-keyword">isnt</span> <span class="hljs-string">''</span>
+        $log_output.val($log_output.val() + line)
+      <span class="hljs-keyword">else</span>
+        $log_output.val(line)
+      <span class="hljs-property">@scroll_backlog</span>()
+
+    <span class="hljs-attribute">input_handler</span>: <span class="hljs-function"><span class="hljs-params">(e)</span> =&gt;</span>
+      $text_input = $(<span class="hljs-string">"#text-mode-input"</span>)
+      input = $text_input.val()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Handle ctrl-l, clear the screen</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> e.ctrlKey <span class="hljs-keyword">and</span> e.keyCode <span class="hljs-keyword">is</span> <span class="hljs-number">76</span>
+        e.preventDefault()
+        <span class="hljs-property">@clear_backlog</span>()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Up arrow, go up through the previous line buffer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> e.keyCode <span class="hljs-keyword">is</span> <span class="hljs-number">38</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-property">@scroll_buf_index</span> &lt; <span class="hljs-property">@line_buf_index</span>
+          index = <span class="hljs-property">@line_buf_index</span> - <span class="hljs-property">@scroll_buf_index</span> - <span class="hljs-number">1</span>
+          $text_input.val(<span class="hljs-property">@line_buf</span>[index])
+
+          <span class="hljs-keyword">if</span> <span class="hljs-property">@scroll_buf_index</span> &lt; <span class="hljs-property">@line_buf_index</span> - <span class="hljs-number">1</span>
+            <span class="hljs-property">@scroll_buf_index</span>++</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Down arrow, go down through the previous line buffer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> e.keyCode <span class="hljs-keyword">is</span> <span class="hljs-number">40</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-property">@scroll_buf_index</span> &gt; <span class="hljs-number">0</span>
+          <span class="hljs-property">@scroll_buf_index</span>--
+          index = <span class="hljs-property">@line_buf_index</span> - <span class="hljs-property">@scroll_buf_index</span> - <span class="hljs-number">1</span>
+          $text_input.val(<span class="hljs-property">@line_buf</span>[index])</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Once the user goes back to the start of the line_buf array,
+return them to a blank input area.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">else</span>
+          $text_input.val(<span class="hljs-string">""</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Handle newlines/enter key presses</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> e.keyCode <span class="hljs-keyword">is</span> <span class="hljs-number">13</span>
+        e.preventDefault()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>do nothing if blank string entered</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> input <span class="hljs-keyword">is</span> <span class="hljs-string">""</span>
+          input = <span class="hljs-string">"\n"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>If limit on the line buffer is not reached, push the input</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> <span class="hljs-property">@line_buf_index</span> &lt; <span class="hljs-property">@line_buf_length</span>
+          <span class="hljs-property">@line_buf</span>.push(input)
+          <span class="hljs-property">@line_buf_index</span>++</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Send the input onto the socket.io logic in moo</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        App.Views.mainView.telnet_line_out(input)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>reset the input area and the previous line buffer index</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        $text_input.val(<span class="hljs-string">""</span>)
+        <span class="hljs-property">@scroll_buf_index</span> = <span class="hljs-number">0</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>The native JS array works as a LIFO stack. To pop the last
+element we have to reverse it first, pop the element, and
+reverse it again.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> <span class="hljs-property">@line_buf</span>.length &gt; <span class="hljs-property">@line_buf_length</span>
+          <span class="hljs-property">@line_buf</span>.reverse()
+          last = <span class="hljs-property">@line_buf</span>.pop()
+          <span class="hljs-property">@line_buf</span>.reverse()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Keep the scroll position at the bottom of the scroll buffer when new
+text is added to it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">scroll_backlog</span>: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+      $log = $(<span class="hljs-string">"#text-mode-backlog"</span>)
+      $log.scrollTop($log[<span class="hljs-number">0</span>].scrollHeight - $log.height())</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Scroll the backlog such that the backlog is cleared.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">clear_backlog</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+      $log = $(<span class="hljs-string">"#text-mode-backlog"</span>)
+      num_newlines = $log[<span class="hljs-number">0</span>].value.split(<span class="hljs-regexp">/\r\n|\r|\n/</span>).length
+      height = parseInt($log.height() / parseInt($log.css(<span class="hljs-string">"line-height"</span>)))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Add one extra newline just to be sure.
+The text areas don’t align in scale exactly to line height</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      newlines = Array(height + <span class="hljs-number">1</span>).join(<span class="hljs-string">"\n"</span>)
+      <span class="hljs-property">@insert</span>(newlines)
+
+    <span class="hljs-attribute">set_line_buffer</span>: <span class="hljs-function"><span class="hljs-params">(length)</span> =&gt;</span>
+      <span class="hljs-property">@line_buf_length</span> = length</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>socket.io text data comes in ArrayBuffer format. We want to
+convert it to UTF-8 text.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-attribute">arraybuf_to_string</span>: <span class="hljs-function"><span class="hljs-params">(buf)</span> -&gt;</span>
+      <span class="hljs-keyword">return</span> String.fromCharCode.apply(<span class="hljs-literal">null</span>, <span class="hljs-keyword">new</span> Uint8Array(buf))</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
