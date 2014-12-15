@@ -54,10 +54,12 @@ define ->
           url = line.substring(start_index, end_index)
           # Kindly remove the URL from the user's text data stream
           line = line.substring(line.indexOf(end) + 2, line.length)
-        # Code to open in iframe here!!!
-        if document.getElementsByName('web_frame')?
+
+        # Change the url of the Xpress browser iframe to the new URL, if we
+        # are in a standard Xpress session.
+        if top.frames["web_frame"]?
           console.log "reload web_frame to " + url
-          document.getElementsByName('web_frame').src = url
+          top.frames["web_frame"].location = url
       @user_output(line)
 
     user_output: (line) =>

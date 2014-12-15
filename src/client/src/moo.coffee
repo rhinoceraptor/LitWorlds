@@ -1,25 +1,29 @@
 # Central class for the Literate Worlds project.
 # moo.coffee handles all of the socket.io logic, other classes call functions
 # here when they need to do something with the socket.
-
 define [], () ->
   class moo extends Backbone.View
     el: ".main-body"
 
     initialize: ->
-      @socket = io.connect("http://127.0.0.1:8080" || location.host)
+      @socket = io.connect(server + ":8080")
       @socket.on 'connect', () -> console.log 'connected to socket'
       @socket.on 'disconnect', @disconnect
       @socket.on 'error', @error
       @socket.on 'tcp_line', @telnet_line_in
+      $(window).resize(() =>
+        @set_height()
+      )
 
-    # Here, we recieve the hash URL parameter, which is the autoloign string
-    # for enCore. We send it over the socket, which prompts the server to
-    # connect to telnet for us, and it sends the autologin string.
-    render: (autologin) ->
-      console.log autologin
+    # Set the height correctly. autologin will an inline var in the source HTML
+    render: () ->
+      @set_height()
       @socket.emit('init', autologin)
 
+    set_height: () ->
+      frame_height = top.frames["java_frame"].innerHeight
+      $("#text-mode-backlog").css
+        "height": "#{frame_height - 35}px"
     disconnect: ->
       App.Views.text_handler.disconnect()
 
