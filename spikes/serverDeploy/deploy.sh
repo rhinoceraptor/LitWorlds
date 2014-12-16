@@ -19,7 +19,7 @@ set -e
 # install updates, sudo, apache, gcc, bison, vim non-interatively
 apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
-apt-get -q -y install sudo apache2 gcc make bison vim csh
+apt-get -q -y install sudo apache2 gcc make bison vim git csh
 
 # create a moo user, with sudo group,
 useradd -g sudo -s /bin/bash -p users -d /home/moo -m moo
@@ -41,15 +41,15 @@ mkdir src
 mv *.tar.gz src
 
 # compile the MOO server
-cd ${INSTALLDIR}/MOO-1.8.1
+cd ${INSTALLDIR}/lambdamoo
 sh configure
 make
 
 # make bin directory, copy the moo server and the restart script to it
 cd ${INSTALLDIR}
 mkdir bin
-cp MOO-1.8.1/moo bin/
-cp MOO-1.8.1/restart bin/
+cp lambdamoo/moo bin/
+cp lambdamoo/restart bin/
 
 # go to the apache install directory and create an alias for Xpress
 cd ${APACHEDIR}
@@ -57,8 +57,8 @@ echo -e "Alias /encore \"/usr/local/moo/encore\"\n<Directory /usr/local/moo/enco
 
 # Add enCore.db, moo, and restart to the bin directory
 cd ${INSTALLDIR}/bin
-cp ../MOO-1.8.1/moo .
-cp ../MOO-1.8.1/restart .
+cp ../lambdamoo/moo .
+cp ../lambdamoo/restart .
 cp ../encore/enCore.db .
 
 # check that the bin directory has the correct contents
@@ -80,4 +80,3 @@ chown -R moo moo
 su moo
 cd ${INSTALLDIR}/bin
 chmod +x restart
-./restart enCore
