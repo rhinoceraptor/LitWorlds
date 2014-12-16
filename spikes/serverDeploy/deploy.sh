@@ -90,3 +90,6 @@ ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
 echo -n ", (option 8), and set the base URL to http://"
 ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
 echo -n -e "/encore\n"
+
+echo "You also need to set a password for the moo user on your system."
+exit
