@@ -76,7 +76,17 @@ fi
 cd ${INSTALLDIR}/..
 chown -R moo moo
 
-# Restart the enCore server
+# Start the enCore server
 su moo
 cd ${INSTALLDIR}/bin
-chmod +x restart
+chmod 755 restart
+
+# Restart Apache
+service apache2 restart
+
+# Inform user of configuration needed to enCore database inside MOO
+echo -n "To access the MOO, connect via telnet on localhost on port 7777, run '@configure', and set the domain name to:"
+ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
+echo -n ", (option 8), and set the base URL to http://"
+ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'
+echo -n -e "/encore\n"
