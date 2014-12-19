@@ -5,39 +5,10 @@
 # Dependancy imports
 ###############################################################################
 net = require 'net'
-http = require 'http'
 socket_io = require 'socket.io'
-express = require 'express'
-http = require 'http'
-fs = require 'fs'
+port = "8080" # leave this in config!
 
-# Read config.json, set parameters accordingly
-###############################################################################
-config = fs.readFileSync('./config.json')
-try
-  obj = JSON.parse(config)
-  server_name = obj.server_name
-  socket_port = obj.socket_port
-  client_port = obj.client_port
-  node_domain = obj.node_domain
-  server = obj.server
-  telnet_port = obj.telnet_port
-  console.log 'server configuration:\n---------------------'
-  console.log '\tserver_name: ' + server_name
-  console.log '\tsocket_port: ' + socket_port
-  console.log '\tclient_port: ' + client_port
-  console.log '\tnode_domain: ' + node_domain
-  console.log '\tserver: ' + server
-  console.log '\ttelnet_port: ' + telnet_port
-catch err
-  console.log 'Error reading config.json!'
-  process.exit(1)
-
-# Set up express to serve the client and socket.io to listen to the socket_port
-###############################################################################
-app = express()
-io = socket_io.listen(socket_port)
-app.use('/', express.static('../client/'))
+io = socket_io.listen(port)
 
 # Listen for client connections
 io.sockets.on('connection', (io) =>
@@ -88,9 +59,3 @@ handle_session = (io, autologin) =>
       telnet.destroy()
       telnet = null
   )
-
-# Serve the client application on client_port
-app.listen(client_port, (err) ->
-  if err
-    console.log err
-)
