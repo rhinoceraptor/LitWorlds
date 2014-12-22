@@ -5,7 +5,7 @@
 ###############################################################################
 class text_handler
   constructor: ->
-    $("#text-mode-input").on("keydown", @input_handler)
+    $("#text-input").on("keydown", @input_handler)
     # We have to escape the backslashes, that's why it looks goofy
     @insert("\t                              _       \n" +
         "\t   ____ ___  ____  ____      (_)____  \n" +
@@ -55,7 +55,7 @@ class text_handler
     @user_output(line)
 
   user_output: (line) =>
-    $log_output = $("#text-mode-backlog")
+    $log_output = $("#text-backlog")
     # Append to backlog, then erase console
     # If there is no text already, don't add a newline.
     if $log_output.val() isnt ''
@@ -65,7 +65,7 @@ class text_handler
     @scroll_backlog()
 
   input_handler: (e) =>
-    $text_input = $("#text-mode-input")
+    $text_input = $("#text-input")
     input = $text_input.val()
 
     # Handle ctrl-l, clear the screen
@@ -117,13 +117,13 @@ class text_handler
         @line_buf.reverse()
 
   # Keep scroll position at bottom of scroll buffer when new text is added
-  scroll_backlog: () ->
-    $log = $("#text-mode-backlog")
+  scroll_backlog: () =>
+    $log = $("#text-backlog")
     $log.scrollTop($log[0].scrollHeight - $log.height())
 
   # Scrolls the backlog such that the backlog is cleared
   clear_backlog: () =>
-    $log = $("#text-mode-backlog")
+    $log = $("#text-backlog")
     num_newlines = $log[0].value.split(/\r\n|\r|\n/).length
     height = $log.height() / parseInt(window.getComputedStyle($log[0]).fontSize)
     # Add extra newline to be safe, textareas don't align to line height
@@ -135,13 +135,15 @@ class text_handler
 
   # socket.io text data comes in ArrayBuffer format. We want to
   # convert it to UTF-8 text.
-  arraybuf_to_string : (buf) ->
+  arraybuf_to_string : (buf) =>
     return String.fromCharCode.apply(null, new Uint8Array(buf))
 
-  error: () ->
-    @user_output("\n\n\n\nAn error occured. ")
+  error: () =>
+    @clear_backlog()
+    @user_output("\tAn error occured. ")
     @user_output("Please try reloading your browser.\n")
 
-  disconnect: () ->
-    @user_output("\n\n\n\nYou have been disconnected from the MUD. ")
+  disconnect: () =>
+    @clear_backlog()
+    @user_output("\tYou have been disconnected from the MUD. ")
     @user_output("Please try reloading your browser.\n")

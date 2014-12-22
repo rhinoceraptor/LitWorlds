@@ -31,23 +31,21 @@ handle_session = (io, param) =>
 
   # Register telnet events
   telnet.on('data', (telnet_data) -> io.emit('tcp_line', telnet_data))
-  telnet.on('error', () -> io.emit('error'))
+  telnet.on('error', () -> io.emit('err'))
   telnet.on('close', () -> io.emit('disconnect'))
 
   # Register socket.io events
   io.on('io_line', (socket_data) -> io_line(telnet, io, socket_data))
-  io.on('error', () -> io.emit('error', 'timeout'))
+  io.on('error', () -> io.emit('err', 'timeout'))
   io.on('disconnect', () -> close_telnet(telnet))
   io.on('close', () -> close_telnet(telnet))
 
 # When the client sends data over the socket.io connection, write it to telnet
 io_line = (telnet, io, socket_data) =>
-  console.log 'io_line: ' + socket_data
-  if telnet?
-    if telnet.writable
-      telnet.write(socket_data + "\r\n")
-    else
-      io.emit('error', 'timeout')
+  if telnet? and telnet.writable
+    telnet.write(socket_data + "\r\n")
+  else
+    io.emit('err')
 
 # Close the telnet connection, and set the telnet var to null
 close_telnet = (telnet) =>

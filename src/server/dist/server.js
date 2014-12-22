@@ -9,8 +9,6 @@ socket_port = '8080';
 
 io = socket_io.listen(socket_port);
 
-console.log('listening for clients on port ' + socket_port);
-
 io.sockets.on('connection', function(io) {
   console.log('Incoming socket.io connection\n');
   return io.on('init', (function(_this) {
@@ -23,7 +21,6 @@ io.sockets.on('connection', function(io) {
 handle_session = (function(_this) {
   return function(io, param) {
     var telnet, telnet_port, telnet_server;
-    console.log(io.conn.id);
     telnet_server = param.server;
     telnet_port = param.port;
     telnet = net.createConnection(telnet_port, telnet_server);
@@ -32,7 +29,7 @@ handle_session = (function(_this) {
       return io.emit('tcp_line', telnet_data);
     });
     telnet.on('error', function() {
-      return io.emit('error');
+      return io.emit('err');
     });
     telnet.on('close', function() {
       return io.emit('disconnect');
@@ -41,7 +38,7 @@ handle_session = (function(_this) {
       return io_line(telnet, io, socket_data);
     });
     io.on('error', function() {
-      return io.emit('error', 'timeout');
+      return io.emit('err', 'timeout');
     });
     io.on('disconnect', function() {
       return close_telnet(telnet);
@@ -55,19 +52,17 @@ handle_session = (function(_this) {
 io_line = (function(_this) {
   return function(telnet, io, socket_data) {
     console.log('io_line: ' + socket_data);
-    if (telnet != null) {
-      if (telnet.writable) {
-        return telnet.write(socket_data + "\r\n");
-      } else {
-        return io.emit('error', 'timeout');
-      }
+    if ((telnet != null) && telnet.writable) {
+      console.log('if telnet.writable');
+      return telnet.write(socket_data + "\r\n");
+    } else {
+      return io.emit('err');
     }
   };
 })(this);
 
 close_telnet = (function(_this) {
   return function(telnet) {
-    console.log('close_telnet');
     console.log('close the telnet connection!\n');
     if (telnet != null) {
       telnet.destroy();

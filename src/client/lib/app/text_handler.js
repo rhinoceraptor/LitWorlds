@@ -4,12 +4,16 @@ var text_handler,
 
 text_handler = (function() {
   function text_handler() {
+    this.disconnect = __bind(this.disconnect, this);
+    this.error = __bind(this.error, this);
+    this.arraybuf_to_string = __bind(this.arraybuf_to_string, this);
     this.set_line_buffer = __bind(this.set_line_buffer, this);
     this.clear_backlog = __bind(this.clear_backlog, this);
+    this.scroll_backlog = __bind(this.scroll_backlog, this);
     this.input_handler = __bind(this.input_handler, this);
     this.user_output = __bind(this.user_output, this);
     this.insert = __bind(this.insert, this);
-    $("#text-mode-input").on("keydown", this.input_handler);
+    $("#text-input").on("keydown", this.input_handler);
     this.insert("\t                              _       \n" + "\t   ____ ___  ____  ____      (_)____  \n" + "\t  / __ `__ \\/ __ \\/ __ \\    / / ___/  \n" + "\t / / / / / / /_/ / /_/ /   / (__  )   \n" + "\t/_/ /_/ /_/\\____/\\____(_)_/ /____/    \n" + "\t                       /___/          \n" + "\t====================================\n" + "\tmoo.js version 0.0.1\n\n\n\n\n");
     this.line_buf_length = 50;
     this.scroll_buf_index = 0;
@@ -45,7 +49,7 @@ text_handler = (function() {
 
   text_handler.prototype.user_output = function(line) {
     var $log_output;
-    $log_output = $("#text-mode-backlog");
+    $log_output = $("#text-backlog");
     if ($log_output.val() !== '') {
       $log_output.val($log_output.val() + line);
     } else {
@@ -56,7 +60,7 @@ text_handler = (function() {
 
   text_handler.prototype.input_handler = function(e) {
     var $text_input, index, input, last;
-    $text_input = $("#text-mode-input");
+    $text_input = $("#text-input");
     input = $text_input.val();
     if (e.ctrlKey && e.keyCode === 76) {
       e.preventDefault();
@@ -99,13 +103,13 @@ text_handler = (function() {
 
   text_handler.prototype.scroll_backlog = function() {
     var $log;
-    $log = $("#text-mode-backlog");
+    $log = $("#text-backlog");
     return $log.scrollTop($log[0].scrollHeight - $log.height());
   };
 
   text_handler.prototype.clear_backlog = function() {
     var $log, height, newlines, num_newlines;
-    $log = $("#text-mode-backlog");
+    $log = $("#text-backlog");
     num_newlines = $log[0].value.split(/\r\n|\r|\n/).length;
     height = $log.height() / parseInt(window.getComputedStyle($log[0]).fontSize);
     newlines = Array(parseInt(height) + 1).join("\n");
@@ -121,12 +125,14 @@ text_handler = (function() {
   };
 
   text_handler.prototype.error = function() {
-    this.user_output("\n\n\n\nAn error occured. ");
+    this.clear_backlog();
+    this.user_output("\tAn error occured. ");
     return this.user_output("Please try reloading your browser.\n");
   };
 
   text_handler.prototype.disconnect = function() {
-    this.user_output("\n\n\n\nYou have been disconnected from the MUD. ");
+    this.clear_backlog();
+    this.user_output("\tYou have been disconnected from the MUD. ");
     return this.user_output("Please try reloading your browser.\n");
   };
 
