@@ -47,6 +47,8 @@ if (typeof params === "undefined" || params === null) {
   localecho = params.localecho;
 }
 
+console.log('connecting to http://' + sock_server + ':' + sock_port);
+
 socket = io.connect('http://' + sock_server + ":" + sock_port);
 
 socket.on('connect', (function(_this) {
@@ -65,7 +67,6 @@ socket.on('disconnect', function() {
 });
 
 socket.on('err', function() {
-  console.log('error!!!');
   return app.text.error();
 });
 

@@ -39,6 +39,7 @@ else
   localecho = params.localecho
 
 # Create the socket variable and register event callbacks for it
+console.log 'connecting to http://' + sock_server + ':' + sock_port
 socket = io.connect('http://' + sock_server + ":" + sock_port)
 socket.on 'connect', () =>
   console.log 'connected to socket'
