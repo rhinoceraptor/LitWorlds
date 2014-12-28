@@ -1,13 +1,15 @@
 body {
   background-color: #D1D1D1;
+  margin: 0px 0px 0px 0px;
+  padding: 0px;
 }
 
 .text-mode-ul {
   position: absolute;
-  width: calc(100% - 20px);
+  width: calc(100% - 6px);
   height: 100%;
   padding: 0px;
-  margin: 0px;
+  margin: 0;
   font-family: monospace;
   font-size: 15;
 }
@@ -17,7 +19,6 @@ body {
 }
 
 #text-backlog {
-  height: calc(100% - 40px);
   width: 100%;
   resize: none;
 }

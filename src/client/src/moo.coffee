@@ -5,7 +5,11 @@
 # instantiating app.text, registering resize callback, calling set_height
 $ ->
   app.text = new text_handler()
-  $(window).resize(() -> set_height())
+  # iOS fires the $(window).resize() event on page scroll, don't register a
+  # $(window).resize() event if we're on an iOS device. Call set_height once.
+  device = navigator.platform
+  if device isnt 'iPad' and device isnt 'iPhone' and device isnt 'iPod'
+    $(window).resize(() -> set_height())
   set_height()
 
 app = {}
