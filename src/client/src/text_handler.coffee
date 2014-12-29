@@ -28,6 +28,7 @@ class text_handler
 
     start = "<http://"         # Start of a URL
     end = ">."                 # end of a URL
+    url = ""
 
     # Did we get a URL with the telnet data?
     # They come in the form <http://domain.tld:7000/123/>.
@@ -53,6 +54,8 @@ class text_handler
         console.log "reload web_frame to " + url
         top.frames["web_frame"].location = url
     @user_output(line)
+    # Return the URL for testing
+    return url
 
   user_output: (line) =>
     $log_output = $("#text-backlog")

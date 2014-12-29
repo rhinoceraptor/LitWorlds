@@ -28,6 +28,7 @@ text_handler = (function() {
     }
     start = "<http://";
     end = ">.";
+    url = "";
     if (line.indexOf(start) > -1) {
       start_index = line.indexOf(start) + 1;
       end_index = line.indexOf(end);
@@ -44,7 +45,8 @@ text_handler = (function() {
         top.frames["web_frame"].location = url;
       }
     }
-    return this.user_output(line);
+    this.user_output(line);
+    return url;
   };
 
   text_handler.prototype.user_output = function(line) {

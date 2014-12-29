@@ -7,9 +7,36 @@ beforeEach(function() {
   return test.text = new text_handler();
 });
 
-describe("text_handler", function() {
-  it("should correctly parse URLs at the beginning of text blocks", function() {});
-  it("should correctly parse URLs at the end of text blocks", function() {});
-  it("should show an error message", function() {});
-  return it("should show an disconnect message", function() {});
+describe('text_handler', function() {
+  it('should bind a \'keydown\' event handler to #text-input', function() {
+    var event_name;
+    event_name = $._data($('#text-input')[0], 'events').keydown[0].type;
+    return expect(event_name).toEqual('keydown');
+  });
+  it('should define an int variable line_buf_length', function() {
+    return expect(test.text.line_buf_length).toEqual(jasmine.any(Number));
+  });
+  it('should define an int variable scroll_buf_index', function() {
+    return expect(test.text.scroll_buf_index).toEqual(jasmine.any(Number));
+  });
+  it('should define an int variable line_buf_index', function() {
+    return expect(test.text.line_buf_index).toEqual(jasmine.any(Number));
+  });
+  it('should define a line buffer array', function() {
+    return expect(test.text.line_buf.constructor).toEqual(Array);
+  });
+  it('should correctly parse URLs at the beginning of text blocks', function() {
+    var data, new_url;
+    data = "<http://mydomain.tld/123>. This is a stream of data coming from enCore DB running on LambdaMOO. This particular test stream has a URL at the beginning of the stream. The insert function will return just the URL.";
+    new_url = test.text.insert(data);
+    return expect(new_url).toEqual("http://mydomain.tld/123");
+  });
+  it('should correctly parse URLs at the end of text blocks', function() {
+    var data, new_url;
+    data = "This is a stream of data coming from enCore DB on LambdaMOO. This particular test stream has a URL at the end of the stream. The insertfunction will return just the URL. <http://mydomain.tld/123>.";
+    new_url = test.text.insert(data);
+    return expect(new_url).toEqual("http://mydomain.tld/123");
+  });
+  it('should show an error message when prompted', function() {});
+  return it('should show an disconnect message when prompted', function() {});
 });

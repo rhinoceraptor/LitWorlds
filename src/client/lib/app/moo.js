@@ -2,10 +2,14 @@
 var app, autologin, font, fontsize, host_name, localecho, moo_name, port, set_height, sock_port, sock_server, socket, telnet_line_out;
 
 $(function() {
+  var device;
   app.text = new text_handler();
-  $(window).resize(function() {
-    return set_height();
-  });
+  device = navigator.platform;
+  if (device !== 'iPad' && device !== 'iPhone' && device !== 'iPod') {
+    $(window).resize(function() {
+      return set_height();
+    });
+  }
   return set_height();
 });
 
