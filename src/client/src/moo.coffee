@@ -6,7 +6,7 @@
 $ ->
   app.text = new text_handler()
   # iOS fires the $(window).resize() event on page scroll, don't register a
-  # $(window).resize() event if we're on an iOS device. Call set_height once.
+  # $(window).resize() event if we're on an iOS device
   device = navigator.platform
   if device isnt 'iPad' and device isnt 'iPhone' and device isnt 'iPod'
     $(window).resize(() -> set_height())
@@ -18,8 +18,12 @@ sock_port = '8080'
 # Set the height for text-backlog appropriately if we are in a frameset
 set_height = () ->
   if top.frames["java_frame"]?
+    console.log "we are in a java frame"
     frame_height = top.frames["java_frame"].innerHeight
-    $("#text-backlog").css "height": "#{frame_height - 35}px"
+    $("#text-backlog").css "height": "#{frame_height - 63}px"
+  else if top.innerHeight?
+    frame_height = top.innerHeight
+    $("#text-backlog").css "height": "#{frame_height - 63}px"
 
 telnet_line_out = (line) => socket.emit('io_line', line)
 
@@ -51,6 +55,7 @@ socket.on 'connect', () =>
   console.log 'initiate telnet connection to ' + host_name + ":" + port
   socket.emit('init', {server: host_name, port: port})
 
+# Register socket.io events
 socket.on('disconnect', () -> app.text.disconnect())
 socket.on('err', () -> app.text.error())
 socket.on('tcp_line', (telnet_data) => app.text.insert(telnet_data))
