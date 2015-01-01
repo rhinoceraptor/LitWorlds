@@ -1,7 +1,7 @@
 # simple tester for server.coffee
 # Use it with jasmine-node:
 # # npm install -g jasmine-node
-# $ jasmine-node --coffee --forceexit spec/server_spec.coffee
+# $ jasmine-node --coffee --forceexit spec/
 
 net = require('net')
 io = require('socket.io-client')
