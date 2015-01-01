@@ -4,8 +4,8 @@
 
 # Dependancy imports
 ####################
-net = require 'net'
-socket_io = require 'socket.io'
+net = require('net')
+socket_io = require('socket.io')
 socket_port = '8080'
 
 # Create the io var, and listen for client connections

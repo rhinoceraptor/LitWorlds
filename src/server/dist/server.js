@@ -51,9 +51,7 @@ handle_session = (function(_this) {
 
 io_line = (function(_this) {
   return function(telnet, io, socket_data) {
-    console.log('io_line: ' + socket_data);
     if ((telnet != null) && telnet.writable) {
-      console.log('if telnet.writable');
       return telnet.write(socket_data + "\r\n");
     } else {
       return io.emit('err');
