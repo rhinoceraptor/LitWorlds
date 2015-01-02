@@ -38,6 +38,22 @@ describe 'text_handler', ->
     new_url = test.text.insert(data)
     expect(new_url).toEqual("http://mydomain.tld/123")
 
+  it 'should output to the user', ->
+    backlog = test.text.user_output("This should be presented to the user")
+    expect(backlog.val().endsWith("This should be presented to the user")).toEqual(true)
+
+  it 'should set the line buffer', ->
+    expect(test.text.set_line_buffer(5)).toEqual(5)
+
+  it 'should return a string from a buffer array', ->
+    inArr = [65, 66, 67]
+    res = test.text.arraybuf_to_string(inArr)
+    expect(res).toEqual("ABC")
+
   it 'should show an error message when prompted', ->
+    backlog = test.text.error()
+    expect(backlog.val().endsWith("\tAn error occured. Please try reloading your browser.\n")).toEqual(true)
 
   it 'should show an disconnect message when prompted', ->
+    backlog = test.text.disconnect()
+    expect(backlog.val().endsWith("\tYou have been disconnected from the MUD. Please try reloading your browser.\n")).toEqual(true)
