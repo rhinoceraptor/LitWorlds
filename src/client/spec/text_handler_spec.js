@@ -56,9 +56,106 @@ describe('text_handler', function() {
     backlog = test.text.error();
     return expect(backlog.val().endsWith("\tAn error occured. Please try reloading your browser.\n")).toEqual(true);
   });
-  return it('should show an disconnect message when prompted', function() {
+  it('should show an disconnect message when prompted', function() {
     var backlog;
     backlog = test.text.disconnect();
     return expect(backlog.val().endsWith("\tYou have been disconnected from the MUD. Please try reloading your browser.\n")).toEqual(true);
+  });
+  it('should call clear_backlog() when ctrl + L is pressed', function() {
+    var e;
+    spyOn(test.text, "clear_backlog");
+    e = document.createEvent('KeyboardEvent');
+    e.initKeyEvent('keydown', true, true, window, true, false, false, false, 76, 0);
+    test.text.input_handler(e);
+    return expect(test.text.clear_backlog).toHaveBeenCalled();
+  });
+  it('should go up through the previous line buffer', function() {
+    var lineVal, up;
+    test.text.line_buf.push("line 1");
+    test.text.line_buf.push("line 2");
+    test.text.line_buf.push("line 3");
+    test.text.line_buf_index += 3;
+    up = document.createEvent('KeyboardEvent');
+    up.initKeyEvent('keydown', true, true, window, false, false, false, false, 38, 0);
+    test.text.input_handler(up);
+    lineVal = $("#text-input").val();
+    expect(lineVal).toEqual("line 3");
+    test.text.input_handler(up);
+    lineVal = $("#text-input").val();
+    expect(lineVal).toEqual("line 2");
+    test.text.input_handler(up);
+    lineVal = $("#text-input").val();
+    return expect(lineVal).toEqual("line 1");
+  });
+  it('should go down through the previous line buffer', function() {
+    var down, lineVal;
+    test.text.line_buf.push("line 1");
+    test.text.line_buf.push("line 2");
+    test.text.line_buf.push("line 3");
+    test.text.line_buf_index += 3;
+    down = document.createEvent('KeyboardEvent');
+    down.initKeyEvent('keydown', true, true, window, false, false, false, false, 40, 0);
+    test.text.input_handler(down);
+    lineVal = $("#text-input").val();
+    expect(lineVal).toEqual("");
+    test.text.scroll_buf_index = 3;
+    test.text.input_handler(down);
+    lineVal = $("#text-input").val();
+    expect(lineVal).toEqual("line 1");
+    test.text.input_handler(down);
+    lineVal = $("#text-input").val();
+    expect(lineVal).toEqual("line 2");
+    test.text.input_handler(down);
+    lineVal = $("#text-input").val();
+    return expect(lineVal).toEqual("line 3");
+  });
+  it("should call telnet_line_out when enter is pressed", function() {
+    var enter;
+    spyOn(window, "telnet_line_out");
+    $("#text-input").val("This line is to be sent to telnet_line_out");
+    enter = document.createEvent('KeyboardEvent');
+    enter.initKeyEvent('keydown', true, true, window, false, false, false, false, 13, 0);
+    test.text.input_handler(enter);
+    return expect(window.telnet_line_out).toHaveBeenCalledWith("This line is to be sent to telnet_line_out");
+  });
+  it("should send '\\n' if text-input is empty when entered is pressed", function() {
+    var enter;
+    spyOn(window, "telnet_line_out");
+    $("#text-input").val("");
+    enter = document.createEvent('KeyboardEvent');
+    enter.initKeyEvent('keydown', true, true, window, false, false, false, false, 13, 0);
+    test.text.input_handler(enter);
+    return expect(window.telnet_line_out).toHaveBeenCalledWith("\n");
+  });
+  it("should push input to the line_buf when enter is pressed", function() {
+    var enter;
+    $("#text-input").val("This is a test line to enter into the line_buf");
+    expect(test.text.line_buf_index).toEqual(0);
+    enter = document.createEvent('KeyboardEvent');
+    enter.initKeyEvent('keydown', true, true, window, false, false, false, false, 13, 0);
+    test.text.input_handler(enter);
+    expect(test.text.line_buf_index).toEqual(1);
+    return expect(test.text.line_buf[0]).toEqual("This is a test line to enter into the line_buf");
+  });
+  it("should pop an item off the lin_buf when its length exceeds line_buf_length", function() {
+    var enter;
+    test.text.line_buf_length = 3;
+    test.text.line_buf.push("Line 1");
+    test.text.line_buf.push("Line 2");
+    test.text.line_buf.push("Line 3");
+    test.text.line_buf_index = 3;
+    $("#text-input").val("Line 4");
+    enter = document.createEvent('KeyboardEvent');
+    enter.initKeyEvent('keydown', true, true, window, false, false, false, false, 13, 0);
+    test.text.input_handler(enter);
+    expect(test.text.line_buf_index).toEqual(3);
+    expect(test.text.line_buf.length).toEqual(3);
+    expect(test.text.line_buf[0]).toEqual("Line 2");
+    return expect(test.text.line_buf[2]).toEqual("Line 4");
+  });
+  return it("should call scroll_backlog in user_output", function() {
+    spyOn(test.text, "scroll_backlog");
+    test.text.user_output("Test line output");
+    return expect(test.text.scroll_backlog).toHaveBeenCalled();
   });
 });
