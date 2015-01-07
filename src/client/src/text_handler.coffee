@@ -102,7 +102,7 @@ class text_handler
         input = "\n"
 
       # If limit on the line buffer is not reached, push the input
-      if @line_buf_index < @line_buf_length
+      if @line_buf_index <= @line_buf_length
         @line_buf.push(input)
         @line_buf_index++
 
@@ -118,6 +118,7 @@ class text_handler
         @line_buf.reverse()
         last = @line_buf.pop()
         @line_buf.reverse()
+        @line_buf_index--
 
   # Keep scroll position at bottom of scroll buffer when new text is added
   scroll_backlog: () =>

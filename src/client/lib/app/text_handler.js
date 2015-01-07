@@ -88,7 +88,7 @@ text_handler = (function() {
       if (input === "") {
         input = "\n";
       }
-      if (this.line_buf_index < this.line_buf_length) {
+      if (this.line_buf_index <= this.line_buf_length) {
         this.line_buf.push(input);
         this.line_buf_index++;
       }
@@ -98,7 +98,8 @@ text_handler = (function() {
       if (this.line_buf.length > this.line_buf_length) {
         this.line_buf.reverse();
         last = this.line_buf.pop();
-        return this.line_buf.reverse();
+        this.line_buf.reverse();
+        return this.line_buf_index--;
       }
     }
   };
