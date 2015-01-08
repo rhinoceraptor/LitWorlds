@@ -10,7 +10,7 @@ body {
   height: 100%;
   padding: 0px;
   margin: 0;
-  font-family: monospace;
+  font-family: "Courier New", monospace, serif;
   font-size: 15;
 }
 
@@ -21,9 +21,11 @@ body {
 #text-backlog {
   width: 100%;
   resize: none;
+  font-family: "Courier New", monospace, serif;
 }
 
 #text-input {
   width: 100%;
   resize: none;
+  font-family: "Courier New", monospace, serif;
 }

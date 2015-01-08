@@ -17,13 +17,12 @@ sock_port = '8080'
 
 # Set the height for text-backlog appropriately if we are in a frameset
 set_height = () ->
-  if top.frames["java_frame"]?
-    console.log "we are in a java frame"
+  if window.top.frames["java_frame"]?
     frame_height = top.frames["java_frame"].innerHeight
-    $("#text-backlog").css "height": "#{frame_height - 63}px"
-  else if top.innerHeight?
+    $("#text-backlog").css "height": "#{frame_height - 68}px"
+  else if window.top.innerHeight?
     frame_height = top.innerHeight
-    $("#text-backlog").css "height": "#{frame_height - 63}px"
+    $("#text-backlog").css "height": "#{frame_height - 68}px"
 
 telnet_line_out = (line) => socket.emit('io_line', line)
 
