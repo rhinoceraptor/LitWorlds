@@ -1,9 +1,10 @@
-# Literary Worlds
-# Node.JS interchange server
+# Literary Worlds Node.JS interchange server
+#
 # Interchanges data between a client with socket.io and a MUD server
 
+# ---
+
 # Dependancy imports
-####################
 net = require('net')
 socket_io = require('socket.io')
 socket_port = '8080'
@@ -18,6 +19,14 @@ io.sockets.on('connection', (io) ->
   io.on('init', (param) => handle_session(io, param))
 )
 
+# ## *handle_session*
+# <small>Parameters</small>
+#
+# **io** websocket,
+# **param** JSON object
+#
+# <small>Description</small>
+#
 # Handle a user session. When telnet data comes in, write it to the user over
 # websocket. When user sends data over the websocket, send it to telnet session.
 # param is a JSON object with the server and port to connect to over telnet.
@@ -40,6 +49,15 @@ handle_session = (io, param) =>
   io.on('disconnect', () -> close_telnet(telnet))
   io.on('close', () -> close_telnet(telnet))
 
+# ## *io_line*
+# <small>Parameters</small>
+#
+# **telnet** telnet session,
+# **io** websocket,
+# **socket_data** data from websocket
+#
+# <small>Description</small>
+#
 # When the client sends data over the socket.io connection, write it to telnet
 io_line = (telnet, io, socket_data) =>
   if telnet? and telnet.writable
@@ -47,6 +65,13 @@ io_line = (telnet, io, socket_data) =>
   else
     io.emit('err')
 
+# ## *close_telnet*
+# <small>Parameters</small>
+#
+# **telnet** telnet session
+#
+# <small>Description</small>
+#
 # Close the telnet connection, and set the telnet var to null
 close_telnet = (telnet) =>
   console.log('close the telnet connection!\n')

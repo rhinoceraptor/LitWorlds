@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>server.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="Cakefile.html">
+                Cakefile.coffee
+              </a>
+            
+              
+              <a class="source" href="server.html">
+                server.coffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>server.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Literary Worlds Node.JS interchange server</p>
+<p>Interchanges data between a client with socket.io and a MUD server</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Dependancy imports</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>net = <span class="hljs-built_in">require</span>(<span class="hljs-string">'net'</span>)
+socket_io = <span class="hljs-built_in">require</span>(<span class="hljs-string">'socket.io'</span>)
+socket_port = <span class="hljs-string">'8080'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Create the io var, and listen for client connections</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>io = socket_io.listen(socket_port)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Listen for client connections</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>io.sockets.<span class="hljs-literal">on</span>(<span class="hljs-string">'connection'</span>, <span class="hljs-function"><span class="hljs-params">(io)</span> -&gt;</span>
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Incoming socket.io connection\n'</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>When the client sends init event, call handle_session</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  io.<span class="hljs-literal">on</span>(<span class="hljs-string">'init'</span>, <span class="hljs-function"><span class="hljs-params">(param)</span> =&gt;</span> handle_session(io, param))
+)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h2 id="-handle_session-"><em>handle_session</em></h2>
+<p><small>Parameters</small></p>
+<p><strong>io</strong> websocket,
+<strong>param</strong> JSON object</p>
+<p><small>Description</small></p>
+<p>Handle a user session. When telnet data comes in, write it to the user over
+websocket. When user sends data over the websocket, send it to telnet session.
+param is a JSON object with the server and port to connect to over telnet.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">handle_session</span> = <span class="hljs-params">(io, param)</span> =&gt;</span>
+  telnet_server = param.server
+  telnet_port = param.port</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Create the telnet session</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  telnet = net.createConnection(telnet_port, telnet_server)
+  <span class="hljs-built_in">console</span>.log <span class="hljs-string">'created telnet connection via '</span> + telnet_server + <span class="hljs-string">":"</span> + telnet_port</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Register telnet events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  telnet.<span class="hljs-literal">on</span>(<span class="hljs-string">'data'</span>, <span class="hljs-function"><span class="hljs-params">(telnet_data)</span> -&gt;</span> io.emit(<span class="hljs-string">'tcp_line'</span>, telnet_data))
+  telnet.<span class="hljs-literal">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> io.emit(<span class="hljs-string">'err'</span>))
+  telnet.<span class="hljs-literal">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> io.emit(<span class="hljs-string">'disconnect'</span>))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Register socket.io events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  io.<span class="hljs-literal">on</span>(<span class="hljs-string">'io_line'</span>, <span class="hljs-function"><span class="hljs-params">(socket_data)</span> -&gt;</span> io_line(telnet, io, socket_data))
+  io.<span class="hljs-literal">on</span>(<span class="hljs-string">'error'</span>, <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> io.emit(<span class="hljs-string">'err'</span>, <span class="hljs-string">'timeout'</span>))
+  io.<span class="hljs-literal">on</span>(<span class="hljs-string">'disconnect'</span>, <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> close_telnet(telnet))
+  io.<span class="hljs-literal">on</span>(<span class="hljs-string">'close'</span>, <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> close_telnet(telnet))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <h2 id="-io_line-"><em>io_line</em></h2>
+<p><small>Parameters</small></p>
+<p><strong>telnet</strong> telnet session,
+<strong>io</strong> websocket,
+<strong>socket_data</strong> data from websocket</p>
+<p><small>Description</small></p>
+<p>When the client sends data over the socket.io connection, write it to telnet</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">io_line</span> = <span class="hljs-params">(telnet, io, socket_data)</span> =&gt;</span>
+  <span class="hljs-keyword">if</span> telnet? <span class="hljs-keyword">and</span> telnet.writable
+    telnet.write(socket_data + <span class="hljs-string">"\r\n"</span>)
+  <span class="hljs-keyword">else</span>
+    io.emit(<span class="hljs-string">'err'</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h2 id="-close_telnet-"><em>close_telnet</em></h2>
+<p><small>Parameters</small></p>
+<p><strong>telnet</strong> telnet session</p>
+<p><small>Description</small></p>
+<p>Close the telnet connection, and set the telnet var to null</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">close_telnet</span> = <span class="hljs-params">(telnet)</span> =&gt;</span>
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'close the telnet connection!\n'</span>)
+  <span class="hljs-keyword">if</span> telnet?
+    telnet.destroy()
+    telnet = <span class="hljs-literal">null</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
