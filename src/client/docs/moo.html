@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>moo.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="Cakefile.html">
+                Cakefile.coffee
+              </a>
+            
+              
+              <a class="source" href="moo.html">
+                moo.coffee
+              </a>
+            
+              
+              <a class="source" href="text_handler.html">
+                text_handler.coffee
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>moo.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>moo.coffee contains the socket.io connection logic as well as some window
+resize CSS logic. It instantiates a text_handler and registers socket events.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <hr>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Use jQuery DOMReady function to ensure everything is loaded before
+instantiating app.text, registering resize callback, calling set_height</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>$ -&gt;
+  app.text = <span class="hljs-keyword">new</span> text_handler()</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>iOS fires the $(window).resize() event on page scroll, don’t register a
+$(window).resize() event if we’re on an iOS device</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  device = navigator.platform
+  <span class="hljs-keyword">if</span> device <span class="hljs-keyword">isnt</span> <span class="hljs-string">'iPad'</span> <span class="hljs-keyword">and</span> device <span class="hljs-keyword">isnt</span> <span class="hljs-string">'iPhone'</span> <span class="hljs-keyword">and</span> device <span class="hljs-keyword">isnt</span> <span class="hljs-string">'iPod'</span>
+    $(<span class="hljs-built_in">window</span>).resize(<span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> set_height())
+  set_height()
+
+app = {}
+sock_port = <span class="hljs-string">'8080'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <h2 id="-set_height-"><em>set_height</em></h2>
+<p><small>Description</small></p>
+<p>Set the height for text-backlog appropriately if we are in a frameset</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">set_height</span> = <span class="hljs-params">()</span> -&gt;</span>
+  <span class="hljs-keyword">if</span> <span class="hljs-built_in">window</span>.top.frames[<span class="hljs-string">"java_frame"</span>]?
+    frame_height = top.frames[<span class="hljs-string">"java_frame"</span>].innerHeight
+    $(<span class="hljs-string">"#text-backlog"</span>).css <span class="hljs-string">"height"</span>: <span class="hljs-string">"<span class="hljs-subst">#{frame_height - <span class="hljs-number">68</span>}</span>px"</span>
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> <span class="hljs-built_in">window</span>.top.innerHeight?
+    frame_height = top.innerHeight
+    $(<span class="hljs-string">"#text-backlog"</span>).css <span class="hljs-string">"height"</span>: <span class="hljs-string">"<span class="hljs-subst">#{frame_height - <span class="hljs-number">68</span>}</span>px"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <h2 id="-telnet_line_out-"><em>telnet_line_out</em></h2>
+<p><small>Description</small></p>
+<p>Emits an event to all connected clients</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-function"><span class="hljs-title">telnet_line_out</span> = <span class="hljs-params">(line)</span> =&gt;</span> socket.emit(<span class="hljs-string">'io_line'</span>, line)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>If params are undefined, set them for local testing</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">if</span> !params?
+  moo_name = <span class="hljs-string">"Moo.js"</span>
+  host_name = <span class="hljs-string">"127.0.0.1"</span>
+  port = <span class="hljs-string">"7777"</span>
+  font = <span class="hljs-string">"Courier New"</span>
+  fontsize = <span class="hljs-string">"12"</span>
+  localecho = <span class="hljs-string">"false"</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>params should be a global variable in inline Javascript written by enCore</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">else</span>
+  moo_name = params.MOOname
+  host_name = params.HostName
+  sock_server = params.SocketServer
+  autologin = params.autologin
+  port = params.port
+  font = params.font
+  fontsize = params.fontsize
+  localecho = params.localecho</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Create the socket variable and register event callbacks for it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">console</span>.log <span class="hljs-string">'connecting to http://'</span> + sock_server + <span class="hljs-string">':'</span> + sock_port
+socket = io.connect(<span class="hljs-string">'http://'</span> + sock_server + <span class="hljs-string">":"</span> + sock_port)
+socket.<span class="hljs-literal">on</span> <span class="hljs-string">'connect'</span>, <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+  <span class="hljs-built_in">console</span>.log <span class="hljs-string">'connected to socket'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Emit the init event with the connection parameters for telnet.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-built_in">console</span>.log <span class="hljs-string">'initiate telnet connection to '</span> + host_name + <span class="hljs-string">":"</span> + port
+  socket.emit(<span class="hljs-string">'init'</span>, {<span class="hljs-attribute">server</span>: host_name, <span class="hljs-attribute">port</span>: port})</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Register socket.io events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>socket.<span class="hljs-literal">on</span>(<span class="hljs-string">'disconnect'</span>, <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> app.text.disconnect())
+socket.<span class="hljs-literal">on</span>(<span class="hljs-string">'err'</span>, <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> app.text.error())
+socket.<span class="hljs-literal">on</span>(<span class="hljs-string">'tcp_line'</span>, <span class="hljs-function"><span class="hljs-params">(telnet_data)</span> =&gt;</span> app.text.insert(telnet_data))</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Use our autologin string for the telnet session if we have one</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">if</span> autologin?
+  <span class="hljs-property">@telnet_line_out</span>(autologin + <span class="hljs-string">"\r\n"</span>)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,6 +1,8 @@
 # moo.coffee contains the socket.io connection logic as well as some window
 # resize CSS logic. It instantiates a text_handler and registers socket events.
 
+# ---
+
 # Use jQuery DOMReady function to ensure everything is loaded before
 # instantiating app.text, registering resize callback, calling set_height
 $ ->
@@ -14,7 +16,9 @@ $ ->
 
 app = {}
 sock_port = '8080'
-
+# ## *set_height*
+# <small>Description</small>
+#
 # Set the height for text-backlog appropriately if we are in a frameset
 set_height = () ->
   if window.top.frames["java_frame"]?
@@ -24,6 +28,10 @@ set_height = () ->
     frame_height = top.innerHeight
     $("#text-backlog").css "height": "#{frame_height - 68}px"
 
+# ## *telnet_line_out*
+# <small>Description</small>
+#
+# Emits an event to all connected clients
 telnet_line_out = (line) => socket.emit('io_line', line)
 
 # If params are undefined, set them for local testing

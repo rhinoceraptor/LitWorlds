@@ -1,8 +1,16 @@
+# Template and modified from https://github.com/socrata/soda-js/blob/master/Cakefile ,
+# https://github.com/kgn/wheel.coffee/blob/master/Cakefile , and
+# https://github.com/twilson63/cakefile-template
+
+# ---
+
 # The files to build. The first is the resulting directory for the .js files.
 # The second directory is the source .coffee files.
+# The third directory contains the generated docs from docoo.
 files = [
   'lib/app'
   'src'
+  'docs'
 ]
 
 test = [
@@ -10,10 +18,12 @@ test = [
   'spec/spec_src'
 ]
 
+# Require libraries
 fs = require 'fs'
 {print} = require 'util'
 {spawn, exec} = require 'child_process'
 
+# Throw an error if `which` is not installed
 try
   which = require('which').sync
 catch err
@@ -27,13 +37,75 @@ green = '\x1b[0;32m'
 reset = '\x1b[0m'
 red = '\x1b[0;31m'
 
-# Task definitions
-task 'build', 'compile source', -> build -> log ":)", green
-task 'watch', 'compile and watch', -> build true, -> log ":-)", green
-task 'test', 'run tests', -> build_test -> log ":)", green
-task 'clean', 'clean generated files', -> clean -> log ";)", green
+# Cakefile Tasks
+#
+# ## *docs*
+#
+# Generate Annotated Documentation
+#
+# <small>Usage</small>
+#
+# ```
+# cake docs
+# ```
+task 'docs', 'generate documentation', -> docco -> log "Done", green
 
-# Used for building recursively through the directory structure
+# ## *build*
+#
+# Builds Source
+#
+# <small>Usage</small>
+#
+# ```
+# cake build
+# ```
+task 'build', 'compile source', -> build -> log "Done", green
+
+# ## *watch*
+#
+# Builds your source whenever it changes
+#
+# <small>Usage</small>
+#
+# ```
+# cake watch
+# ```
+task 'watch', 'compile and watch', -> build true, -> log "Watch Ended", green
+# ## *test*
+#
+# Build your tests.
+#
+# <small>Usage</small>
+#
+# ```
+# cake test
+# ```
+task 'test', 'build tests', -> buildTest -> log "Test Built - See SpecRunner.hmtl", green
+
+# ## *clean*
+#
+# Cleans up generated js and doc files
+#
+# <small>Usage</small>
+#
+# ```
+# cake clean
+# ```
+task 'clean', 'clean generated files', -> clean -> log "Removed all non-.coffeee files in lib/app, src, docs, spec, and spec/spec_src", green
+
+# Internal Functions
+#
+# ## *walk*
+#
+# **given** string as dir which represents a directory in relation to local directory
+# **and** callback as done in the form of (err, results)
+# **then** recurse through directory returning an array of files
+#
+# Examples
+#
+# ``` coffeescript
+# walk 'src', (err, results) -> console.log results
+# ```
 walk = (dir, done) ->
   results = []
   fs.readdir dir, (err, list) ->
@@ -54,15 +126,39 @@ walk = (dir, done) ->
         results.push file
         done(null, results) unless --pending
 
+# ## *log*
+#
+# **given** string as a message
+# **and** string as a color
+# **and** optional string as an explanation
+# **then** builds a statement and logs to console.
+# 
 log = (message, color, explanation) -> console.log color + message + reset + ' ' + (explanation or '')
 
+# ## *launch*
+#
+# **given** string as a cmd
+# **and** optional array and option flags
+# **and** optional callback
+# **then** spawn cmd with options
+# **and** inhereit will use parent's stdios
+# **and** on child process exit emit callback if set and status is 0
 launch = (cmd, options=[], callback) ->
   cmd = which(cmd) if which
-  app = spawn cmd, options
-  app.stdout.pipe(process.stdout)
-  app.stderr.pipe(process.stderr)
-  app.on 'exit', (status) -> callback?() if status is 0
+  app = spawn cmd, options,
+    stdio: "inherit"
+  app.on 'exit', (status) ->
+    if status is 0
+      callback()
+    else
+      process.exit(status);
 
+# ## *build*
+#
+# **given** optional boolean as watch
+# **and** optional function as callback
+# **then** invoke launch passing coffee command
+# **and** defaulted options to compile src to dist
 build = (watch, callback) ->
   if typeof watch is 'function'
     callback = watch
@@ -73,7 +169,13 @@ build = (watch, callback) ->
   options.unshift '-w' if watch
   launch 'coffee', options, callback
 
-build_test = (watch, callback) ->
+# ## *buildTest*
+#
+# **given** optional boolean as watch
+# **and** optional function as callback
+# **then** invoke launch passing coffee command
+# **and** defaulted options to compile src to dist
+buildTest = (watch, callback) ->
   if typeof watch is 'function'
     callback = watch
     watch = false
@@ -83,26 +185,75 @@ build_test = (watch, callback) ->
   options.unshift '-w' if watch
   launch 'coffee', options, callback
 
+# ## *unlinkIfCoffeeFile*
+#
+# **given** string as file
+# **and** file ends in '.coffee'
+# **then** convert '.coffee' to '.js'
+# **and** remove the result
 unlinkIfCoffeeFile = (file) ->
   if file.match /\.coffee$/
     fs.unlink file.replace(/\.coffee$/, '.js'), ->
     true
   else false
 
+# ## *unlinkIfNotCoffeeFile*
+#
+# **given** string as file
+# **and** file does not end in '.coffee'
+# **then** remove the result
+unlinkIfNotCoffeeFile = (file) ->
+  unless file.match /\.coffee$/
+    fs.unlink file, ->
+    true
+  else false
+
+# ## *clean*
+#
+# **given** optional function as callback
+# **then** loop through files variable
+# **and** call unlinkIfCoffeeFile on each
 clean = (callback) ->
   try
-    for file in files
+    for file in files.concat test
       unless unlinkIfCoffeeFile file
         walk file, (err, results) ->
           for f in results
-            unlinkIfCoffeeFile f
+            unlinkIfNotCoffeeFile f
 
     callback?()
   catch err
 
+# ## *moduleExists*
+#
+# **given** name for module
+# **when** trying to require module
+# **and** not found
+# **then** print not found message with install helper in red
+# **and** return false if not found
 moduleExists = (name) ->
   try
     require name
   catch err
     log "#{name} required: npm install #{name}", red
     false
+
+# ## *docco*
+#
+# **given** optional function as callback
+# **then** invoke launch passing docco command
+#
+# **NOTE:**
+# docco only builds docs for .coffee files, so make a copy of Cakefile as Cakefile.coffee,
+# then after the docs are made, delete (unlink) Cakefile.coffee
+docco = (callback) ->
+  fs.readFile('Cakefile', 'utf8', (readerr, text) ->
+    throw readerr if readerr
+    fs.writeFile('src/Cakefile.coffee', text, (writeerr) ->
+      throw writeerr if writeerr
+      walk "src", (err, files) ->
+        launch "docco", files, ->
+          fs.unlink "src/Cakefile.coffee"
+          callback()
+     )
+  )

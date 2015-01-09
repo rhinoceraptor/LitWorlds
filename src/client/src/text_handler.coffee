@@ -1,9 +1,17 @@
-###############################################################################
-# text_handler
-#
 # Responsible for all logic involving text input and output for the user.
-###############################################################################
+
+# ---
+
 class text_handler
+# ## *constructor*
+# <small>Properties</small>
+#
+# **line_buf_length** programatic limit to backlog,
+# **scroll_buf_index** input log scroll index,
+# **line_buf_index** line_buf's number of stored lines,
+# **line_buf** array to store previous entered lines
+#
+# Initializes *properties* and displays 'moo.js' ASCII art
   constructor: ->
     $("#text-input").on("keydown", @input_handler)
     # We have to escape the backslashes, that's why it looks goofy
@@ -16,11 +24,17 @@ class text_handler
         "\t====================================\n" +
         "\tmoo.js version 0.0.1\n\n\n\n\n")
 
-    @line_buf_length = 50      # programatic limit to backlog
-    @scroll_buf_index = 0      # input log scroll index
-    @line_buf_index = 0        # line_buf's number of stored lines
-    @line_buf = new Array()    # array to store previous entered lines
+    @line_buf_length = 50
+    @scroll_buf_index = 0
+    @line_buf_index = 0
+    @line_buf = new Array()
 
+  # ## *insert*
+  # <small>Prameters</small>
+  #
+  # **line** string
+  #
+  # Handles url manipulation and display line
   insert: (line) =>
     # socket.io returns text as an ArrayBuffer object, convert if needed
     if typeof line is "object"
@@ -56,7 +70,12 @@ class text_handler
     @user_output(line)
     # Return the URL for testing
     return url
-
+  # ## *user_output*
+  # <small>Prameters</small>
+  #
+  # **line** string
+  #
+  # Appends user output to backlog, then erases the console
   user_output: (line) =>
     $log_output = $("#text-backlog")
     # Append to backlog, then erase console
@@ -67,6 +86,12 @@ class text_handler
       $log_output.val(line)
     @scroll_backlog()
 
+  # ## *input_handler*
+  # <small>Prameters</small>
+  #
+  # **e** Event
+  #
+  # Handles input of commands (e.g. Ctrl+L clear screen)
   input_handler: (e) =>
     $text_input = $("#text-input")
     input = $text_input.val()
@@ -120,11 +145,15 @@ class text_handler
         @line_buf.reverse()
         @line_buf_index--
 
+  # ## *scroll_backlog*
+  #
   # Keep scroll position at bottom of scroll buffer when new text is added
   scroll_backlog: () =>
     $log = $("#text-backlog")
     $log.scrollTop($log[0].scrollHeight - $log.height())
 
+  # ## *scroll_backlog*
+  #
   # Scrolls the backlog such that the backlog is cleared
   clear_backlog: () =>
     $log = $("#text-backlog")
@@ -133,20 +162,37 @@ class text_handler
     # Add extra newline to be safe, textareas don't align to line height
     newlines = Array(parseInt(height) + 1).join("\n")
     @insert(newlines)
-
+  
+  # ## *set_line_buffer*
+  # <small>Prameters</small>
+  #
+  # **length** size to set line_buf_length
+  #
+  # Sets line_buf_length to given *length*
   set_line_buffer: (length) =>
     @line_buf_length = length
 
+  # ## *arraybuf_to_string*
+  # <small>Prameters</small>
+  #
+  # **buf** ArrayBuffer
+  #
   # socket.io text data comes in ArrayBuffer format. We want to
   # convert it to UTF-8 text.
   arraybuf_to_string : (buf) =>
     return String.fromCharCode.apply(null, new Uint8Array(buf))
 
+  # ## *error*
+  #
+  # Displays error message to user
   error: () =>
     @clear_backlog()
     @user_output("\tAn error occured. ")
     @user_output("Please try reloading your browser.\n")
 
+  # ## *disconnect*
+  #
+  # Clears the backlog and displays disconnect message to user
   disconnect: () =>
     @clear_backlog()
     @user_output("\tYou have been disconnected from the MUD. ")
