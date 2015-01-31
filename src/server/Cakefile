@@ -15,7 +15,7 @@ files = [
 
 # Require libraries
 fs = require 'fs'
-{print} = require 'stdout'
+{print} = require 'util'
 {spawn, exec} = require 'child_process'
 
 # Throw an error if `which` is not installed
@@ -147,7 +147,7 @@ launch = (cmd, options=[], callback) ->
     if status is 0
       callback()
     else
-      process.exit(status);
+      process.exit(status)
 
 # ## *build*
 #
@@ -249,7 +249,7 @@ docco = (callback) ->
     fs.writeFile('src/Cakefile.coffee', text, (writeerr) ->
       throw writeerr if writeerr
       walk "src", (err, files) ->
-        launch "docco", files, ->
+        launch "./node_modules/docco/bin/docco", files, ->
           fs.unlink "src/Cakefile.coffee"
           callback()
      )
