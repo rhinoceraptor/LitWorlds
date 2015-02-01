@@ -39,8 +39,10 @@ describe 'text_handler', ->
     expect(new_url).toEqual("http://mydomain.tld/123")
 
   it 'should output to the user', ->
-    backlog = test.text.user_output("This should be presented to the user")
-    expect(backlog.val().endsWith("This should be presented to the user")).toEqual(true)
+    test_str = "This should be presented to the user"
+    test.text.user_output(test_str)
+    output_str = $("#text-backlog")[0].value
+    expect(output_str.indexOf(test_str, output_str.length - test_str.length)).not.toEqual(-1)
 
   it 'should set the line buffer', ->
     expect(test.text.set_line_buffer(5)).toEqual(5)
@@ -51,16 +53,21 @@ describe 'text_handler', ->
     expect(res).toEqual("ABC")
 
   it 'should show an error message when prompted', ->
-    backlog = test.text.error()
-    expect(backlog.val().endsWith("\tAn error occured. Please try reloading your browser.\n")).toEqual(true)
+    test.text.error()
+    err_str = "\tAn error occured. Please try reloading your browser.\n"
+    output_str = $("#text-backlog")[0].value
+    expect(output_str.indexOf(err_str, output_str.length - err_str.length)).not.toEqual(-1)
 
   it 'should show an disconnect message when prompted', ->
-    backlog = test.text.disconnect()
-    expect(backlog.val().endsWith("\tYou have been disconnected from the MUD. Please try reloading your browser.\n")).toEqual(true)
+    test.text.disconnect()
+    disc_str = "\tYou have been disconnected from the MUD. Please try reloading your browser.\n"
+    output_str = $("#text-backlog")[0].value
+    expect(output_str.indexOf(disc_str, output_str.length - disc_str.length)).not.toEqual(-1)
 
   it 'should call clear_backlog() when ctrl + L is pressed', ->
     spyOn(test.text,"clear_backlog")
     e = document.createEvent('KeyboardEvent')
+    console.log e
     e.initKeyEvent('keydown',true,true,window,true,false,false,false,76,0)
     test.text.input_handler(e)
     expect(test.text.clear_backlog).toHaveBeenCalled()
@@ -94,7 +101,7 @@ describe 'text_handler', ->
     test.text.line_buf.push("line 1")
     test.text.line_buf.push("line 2")
     test.text.line_buf.push("line 3")
-    test.text.line_buf_index += 3   
+    test.text.line_buf_index += 3
 
     #setup keydown event for down arrow
     down = document.createEvent('KeyboardEvent')
