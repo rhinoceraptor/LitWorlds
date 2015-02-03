@@ -2,6 +2,9 @@ test = {}
 
 beforeEach ->
   test.text = new text_handler()
+# Clean up the event handlers attached to #text-input
+afterEach ->
+  $("#text-input").unbind()
 
 describe 'text_handler', ->
   # Test the constructor for the text_handler class
@@ -65,98 +68,89 @@ describe 'text_handler', ->
     expect(output_str.indexOf(disc_str, output_str.length - disc_str.length)).not.toEqual(-1)
 
   it 'should call clear_backlog() when ctrl + L is pressed', ->
-    spyOn(test.text,"clear_backlog")
-    e = document.createEvent('KeyboardEvent')
-    console.log e
-    e.initKeyEvent('keydown',true,true,window,true,false,false,false,76,0)
-    test.text.input_handler(e)
+    spyOn(test.text, "clear_backlog")
+    e = $.Event("keydown", {keyCode: 76, ctrlKey: true})
+    $("#text-input").trigger(e)
     expect(test.text.clear_backlog).toHaveBeenCalled()
 
   it 'should go up through the previous line buffer', ->
-    #populate line_buf
+    # populate line_buf
     test.text.line_buf.push("line 1")
     test.text.line_buf.push("line 2")
     test.text.line_buf.push("line 3")
     test.text.line_buf_index += 3
     
-    #setup keydown event for up arrow
-    up = document.createEvent('KeyboardEvent')
-    up.initKeyEvent('keydown',true,true,window,false,false,false,false,38,0)
-    
-    #Press up arrow 3 times checking value after each
-    test.text.input_handler(up)
-    lineVal = $("#text-input").val()
-    expect(lineVal).toEqual("line 3")
+    # setup keydown event for up arrow
+    e = $.Event("keydown", {keyCode: 38})
+    $("#text-input").trigger(e)
+    # Press up arrow 3 times checking value after each
+    line_val = $("#text-input").val()
+    expect(line_val).toEqual("line 3")
 
-    test.text.input_handler(up)
-    lineVal = $("#text-input").val()
-    expect(lineVal).toEqual("line 2")
+    $("#text-input").trigger(e)
+    line_val = $("#text-input").val()
+    expect(line_val).toEqual("line 2")
 
-    test.text.input_handler(up)
-    lineVal = $("#text-input").val()
-    expect(lineVal).toEqual("line 1")
+    $("#text-input").trigger(e)
+    line_val = $("#text-input").val()
+    expect(line_val).toEqual("line 1")
 
   it 'should go down through the previous line buffer', ->
-    #populate line_buf
+    # Populate line_buf
+    test.text.line_buf_index = 0
     test.text.line_buf.push("line 1")
     test.text.line_buf.push("line 2")
     test.text.line_buf.push("line 3")
     test.text.line_buf_index += 3
 
-    #setup keydown event for down arrow
-    down = document.createEvent('KeyboardEvent')
-    down.initKeyEvent('keydown',true,true,window,false,false,false,false,40,0)
-    
-    # with a line_buf_index = 0, no value should be put into text-input
-    test.text.input_handler(down)
-    lineVal = $("#text-input").val()
-    expect(lineVal).toEqual("")
+    # Setup keydown event for down arrow
+    e = $.Event("keydown", {keyCode: 40})
+
+    # With a line_buf_index = 0, no value should be put into text-input
+    $("#text-input").trigger(e)
+    line_val = $("#text-input").val()
+    expect(line_val).toEqual("")
 
     test.text.scroll_buf_index = 3
     
-    #Press down arrow three times checking value after each
-    test.text.input_handler(down)
-    lineVal = $("#text-input").val()
-    expect(lineVal).toEqual("line 1")
+    # Press down arrow three times checking value after each
+    $("#text-input").trigger(e)
+    line_val = $("#text-input").val()
+    expect(line_val).toEqual("line 1")
     
-    test.text.input_handler(down)
-    lineVal = $("#text-input").val()
-    expect(lineVal).toEqual("line 2")
+    $("#text-input").trigger(e)
+    line_val = $("#text-input").val()
+    expect(line_val).toEqual("line 2")
 
-    test.text.input_handler(down)
-    lineVal = $("#text-input").val()
-    expect(lineVal).toEqual("line 3")
+    $("#text-input").trigger(e)
+    line_val = $("#text-input").val()
+    expect(line_val).toEqual("line 3")
 
   it "should call telnet_line_out when enter is pressed", ->
     spyOn(window,"telnet_line_out")
     $("#text-input").val("This line is to be sent to telnet_line_out")
 
-    enter = document.createEvent('KeyboardEvent')
-    enter.initKeyEvent('keydown',true,true,window,false,false,false,false,13,0)
-
-    test.text.input_handler(enter)
+    e = $.Event("keydown", {keyCode: 13})
+    $("#text-input").trigger(e)
     expect(window.telnet_line_out).toHaveBeenCalledWith("This line is to be sent to telnet_line_out")
 
   it "should send '\\n' if text-input is empty when entered is pressed", ->
-    spyOn(window,"telnet_line_out")
+    spyOn(window, "telnet_line_out")
     $("#text-input").val("")
 
-    enter = document.createEvent('KeyboardEvent')
-    enter.initKeyEvent('keydown',true,true,window,false,false,false,false,13,0)
-
-    test.text.input_handler(enter)
+    e = $.Event("keydown", {keyCode: 13})
+    $("#text-input").trigger(e)
     expect(window.telnet_line_out).toHaveBeenCalledWith("\n")
 
   it "should push input to the line_buf when enter is pressed", ->
-    $("#text-input").val("This is a test line to enter into the line_buf")
+    str = "This is a test line to enter into the line_buf"
     expect(test.text.line_buf_index).toEqual(0)
+    $("#text-input").val(str)
 
-    enter = document.createEvent('KeyboardEvent')
-    enter.initKeyEvent('keydown',true,true,window,false,false,false,false,13,0)
-    test.text.input_handler(enter)
-
+    e = $.Event("keydown", {keyCode: 13})
+    $("#text-input").trigger(e)
     expect(test.text.line_buf_index).toEqual(1)
-    expect(test.text.line_buf[0]).toEqual("This is a test line to enter into the line_buf")
+    expect(test.text.line_buf[0]).toEqual(str)
 
   it "should pop an item off the lin_buf when its length exceeds line_buf_length", ->
     test.text.line_buf_length = 3
@@ -166,9 +160,8 @@ describe 'text_handler', ->
     test.text.line_buf_index = 3
 
     $("#text-input").val("Line 4")
-    enter = document.createEvent('KeyboardEvent')
-    enter.initKeyEvent('keydown',true,true,window,false,false,false,false,13,0)
-    test.text.input_handler(enter)
+    e = $.Event("keydown", {keyCode: 13})
+    $("#text-input").trigger(e)
 
     expect(test.text.line_buf_index).toEqual(3)
     expect(test.text.line_buf.length).toEqual(3)
@@ -179,3 +172,4 @@ describe 'text_handler', ->
     spyOn(test.text,"scroll_backlog")
     test.text.user_output("Test line output")
     expect(test.text.scroll_backlog).toHaveBeenCalled()
+

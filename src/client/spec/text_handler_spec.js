@@ -7,6 +7,10 @@ beforeEach(function() {
   return test.text = new text_handler();
 });
 
+afterEach(function() {
+  return $("#text-input").unbind();
+});
+
 describe('text_handler', function() {
   it('should bind a \'keydown\' event handler to #text-input', function() {
     var event_name;
@@ -70,91 +74,102 @@ describe('text_handler', function() {
   it('should call clear_backlog() when ctrl + L is pressed', function() {
     var e;
     spyOn(test.text, "clear_backlog");
-    e = document.createEvent('KeyboardEvent');
-    console.log(e);
-    e.initKeyEvent('keydown', true, true, window, true, false, false, false, 76, 0);
-    test.text.input_handler(e);
+    e = $.Event("keydown", {
+      keyCode: 76,
+      ctrlKey: true
+    });
+    $("#text-input").trigger(e);
     return expect(test.text.clear_backlog).toHaveBeenCalled();
   });
   it('should go up through the previous line buffer', function() {
-    var lineVal, up;
+    var e, line_val;
     test.text.line_buf.push("line 1");
     test.text.line_buf.push("line 2");
     test.text.line_buf.push("line 3");
     test.text.line_buf_index += 3;
-    up = document.createEvent('KeyboardEvent');
-    up.initKeyEvent('keydown', true, true, window, false, false, false, false, 38, 0);
-    test.text.input_handler(up);
-    lineVal = $("#text-input").val();
-    expect(lineVal).toEqual("line 3");
-    test.text.input_handler(up);
-    lineVal = $("#text-input").val();
-    expect(lineVal).toEqual("line 2");
-    test.text.input_handler(up);
-    lineVal = $("#text-input").val();
-    return expect(lineVal).toEqual("line 1");
+    e = $.Event("keydown", {
+      keyCode: 38
+    });
+    $("#text-input").trigger(e);
+    line_val = $("#text-input").val();
+    expect(line_val).toEqual("line 3");
+    $("#text-input").trigger(e);
+    line_val = $("#text-input").val();
+    expect(line_val).toEqual("line 2");
+    $("#text-input").trigger(e);
+    line_val = $("#text-input").val();
+    return expect(line_val).toEqual("line 1");
   });
   it('should go down through the previous line buffer', function() {
-    var down, lineVal;
+    var e, line_val;
+    test.text.line_buf_index = 0;
     test.text.line_buf.push("line 1");
     test.text.line_buf.push("line 2");
     test.text.line_buf.push("line 3");
     test.text.line_buf_index += 3;
-    down = document.createEvent('KeyboardEvent');
-    down.initKeyEvent('keydown', true, true, window, false, false, false, false, 40, 0);
-    test.text.input_handler(down);
-    lineVal = $("#text-input").val();
-    expect(lineVal).toEqual("");
+    e = $.Event("keydown", {
+      keyCode: 40
+    });
+    $("#text-input").trigger(e);
+    line_val = $("#text-input").val();
+    expect(line_val).toEqual("");
     test.text.scroll_buf_index = 3;
-    test.text.input_handler(down);
-    lineVal = $("#text-input").val();
-    expect(lineVal).toEqual("line 1");
-    test.text.input_handler(down);
-    lineVal = $("#text-input").val();
-    expect(lineVal).toEqual("line 2");
-    test.text.input_handler(down);
-    lineVal = $("#text-input").val();
-    return expect(lineVal).toEqual("line 3");
+    $("#text-input").trigger(e);
+    line_val = $("#text-input").val();
+    expect(line_val).toEqual("line 1");
+    $("#text-input").trigger(e);
+    line_val = $("#text-input").val();
+    expect(line_val).toEqual("line 2");
+    $("#text-input").trigger(e);
+    line_val = $("#text-input").val();
+    return expect(line_val).toEqual("line 3");
   });
   it("should call telnet_line_out when enter is pressed", function() {
-    var enter;
+    var e;
     spyOn(window, "telnet_line_out");
     $("#text-input").val("This line is to be sent to telnet_line_out");
-    enter = document.createEvent('KeyboardEvent');
-    enter.initKeyEvent('keydown', true, true, window, false, false, false, false, 13, 0);
-    test.text.input_handler(enter);
+    e = $.Event("keydown", {
+      keyCode: 13
+    });
+    $("#text-input").trigger(e);
     return expect(window.telnet_line_out).toHaveBeenCalledWith("This line is to be sent to telnet_line_out");
   });
   it("should send '\\n' if text-input is empty when entered is pressed", function() {
-    var enter;
+    var e;
     spyOn(window, "telnet_line_out");
     $("#text-input").val("");
-    enter = document.createEvent('KeyboardEvent');
-    enter.initKeyEvent('keydown', true, true, window, false, false, false, false, 13, 0);
-    test.text.input_handler(enter);
-    return expect(window.telnet_line_out).toHaveBeenCalledWith("\n");
+    e = $.Event("keydown", {
+      keyCode: 13
+    });
+    $("#text-input").trigger(e);
+    expect(window.telnet_line_out).toHaveBeenCalledWith("\n");
+    return $("#text-input").unbind();
   });
   it("should push input to the line_buf when enter is pressed", function() {
-    var enter;
-    $("#text-input").val("This is a test line to enter into the line_buf");
+    var e, str;
+    str = "This is a test line to enter into the line_buf";
     expect(test.text.line_buf_index).toEqual(0);
-    enter = document.createEvent('KeyboardEvent');
-    enter.initKeyEvent('keydown', true, true, window, false, false, false, false, 13, 0);
-    test.text.input_handler(enter);
+    $("#text-input").val(str);
+    e = $.Event("keydown", {
+      keyCode: 13
+    });
+    $("#text-input").trigger(e);
     expect(test.text.line_buf_index).toEqual(1);
-    return expect(test.text.line_buf[0]).toEqual("This is a test line to enter into the line_buf");
+    expect(test.text.line_buf[0]).toEqual(str);
+    return $("#text-input").unbind();
   });
   it("should pop an item off the lin_buf when its length exceeds line_buf_length", function() {
-    var enter;
+    var e;
     test.text.line_buf_length = 3;
     test.text.line_buf.push("Line 1");
     test.text.line_buf.push("Line 2");
     test.text.line_buf.push("Line 3");
     test.text.line_buf_index = 3;
     $("#text-input").val("Line 4");
-    enter = document.createEvent('KeyboardEvent');
-    enter.initKeyEvent('keydown', true, true, window, false, false, false, false, 13, 0);
-    test.text.input_handler(enter);
+    e = $.Event("keydown", {
+      keyCode: 13
+    });
+    $("#text-input").trigger(e);
     expect(test.text.line_buf_index).toEqual(3);
     expect(test.text.line_buf.length).toEqual(3);
     expect(test.text.line_buf[0]).toEqual("Line 2");

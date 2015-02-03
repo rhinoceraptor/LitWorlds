@@ -93,6 +93,7 @@ text_handler = (function() {
         this.line_buf_index++;
       }
       $text_input.val("");
+      console.log("sending " + input + " to telnet_line_out");
       telnet_line_out(input);
       this.scroll_buf_index = 0;
       if (this.line_buf.length > this.line_buf_length) {
@@ -112,6 +113,7 @@ text_handler = (function() {
 
   text_handler.prototype.clear_backlog = function() {
     var $log, height, newlines, num_newlines;
+    console.log("what up what up");
     $log = $("#text-backlog");
     num_newlines = $log[0].value.split(/\r\n|\r|\n/).length;
     height = $log.height() / parseInt(window.getComputedStyle($log[0]).fontSize);
