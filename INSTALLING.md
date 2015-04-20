@@ -127,18 +127,14 @@ First, clone the git repository for the telnet client:
 
 ```
 $ cd && git clone https://github.com/rhinoceraptor/LitWorlds.git
-$ cd LitWorlds && git checkout telnet_only
+$ cd LitWorlds
 ```
 
 Next, install the dependancies for the server:
 ```
 $ cd src/server
 $ npm install
-```
-
-Build the server into executable JavaScript:
-```
-$ cake build
+$ npm run-script setup
 ```
 
 We can now run the server. Copy it to the MOO base directory for convenience:
@@ -150,7 +146,7 @@ $ cp -r server /usr/local/moo/
 Next, go to the client directory, and build the code:
 ```
 $ cd client
-$ cake build
+$ npm run-script setup
 ```
 
 Copy the client to the MOO base directory:

@@ -3,6 +3,10 @@
   "author": "Jack Lewis",
   "license": "BSD 2 Clause",
   "dependencies": {
+    "coffee-script": "^1.9.2",
     "docco": "^0.7.0"
+  },
+  "scripts": {
+    "setup": "npm install && ./node_modules/coffee-script/bin/cake build && ./node_modules/coffee-script/bin/cake docs"
   }
 }

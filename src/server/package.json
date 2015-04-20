@@ -3,11 +3,13 @@
   "author": "Jack Lewis",
   "license": "BSD 2 Clause",
   "dependencies": {
+    "coffee-script": "^1.9.2",
     "docco": "^0.7.0",
     "socket.io": "~1.2.1",
     "socket.io-client": "^1.2.1"
   },
   "scripts": {
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "setup": "npm install && ./node_modules/coffee-script/bin/cake build && ./node_modules/coffee-script/bin/cake docs"
   }
 }
