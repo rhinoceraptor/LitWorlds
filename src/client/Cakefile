@@ -8,7 +8,7 @@
 # The second directory is the source .coffee files.
 # The third directory contains the generated docs from docoo.
 files = [
-  'lib/app'
+  'dist'
   'src'
   'docs'
 ]
@@ -132,7 +132,7 @@ walk = (dir, done) ->
 # **and** string as a color
 # **and** optional string as an explanation
 # **then** builds a statement and logs to console.
-# 
+#
 log = (message, color, explanation) -> console.log color + message + reset + ' ' + (explanation or '')
 
 # ## *launch*
@@ -151,7 +151,7 @@ launch = (cmd, options=[], callback) ->
     if status is 0
       callback()
     else
-      process.exit(status);
+      process.exit(status)
 
 # ## *build*
 #
@@ -252,8 +252,8 @@ docco = (callback) ->
     fs.writeFile('src/Cakefile.coffee', text, (writeerr) ->
       throw writeerr if writeerr
       walk "src", (err, files) ->
-        launch "docco", files, ->
+        launch "./node_modules/docco/bin/docco", files, ->
           fs.unlink "src/Cakefile.coffee"
           callback()
-     )
+    )
   )

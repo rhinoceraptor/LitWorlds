@@ -1,0 +1,8 @@
+{
+  "name": "LiteraryWorldsClient",
+  "author": "Jack Lewis",
+  "license": "BSD 2 Clause",
+  "dependencies": {
+    "docco": "^0.7.0"
+  }
+}

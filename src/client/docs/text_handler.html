@@ -16,23 +16,25 @@
           <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
           <a class="small" href="javascript:void(0);">+</a>
           <div id="jump_wrapper">
-          <div id="jump_page">
-            
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
               
-              <a class="source" href="Cakefile.html">
-                Cakefile.coffee
-              </a>
-            
+                
+                <a class="source" href="Cakefile.html">
+                  Cakefile.coffee
+                </a>
               
-              <a class="source" href="moo.html">
-                moo.coffee
-              </a>
-            
+                
+                <a class="source" href="moo.html">
+                  moo.coffee
+                </a>
               
-              <a class="source" href="text_handler.html">
-                text_handler.coffee
-              </a>
-            
+                
+                <a class="source" href="text_handler.html">
+                  text_handler.coffee
+                </a>
+              
+            </div>
           </div>
         </li>
       </ul>
@@ -70,9 +72,6 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">text_handler</span></span></pre></div></div>
-            
         </li>
         
         
@@ -81,6 +80,21 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">text_handler</span></span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <h2 id="-constructor-"><em>constructor</em></h2>
 <p><small>Properties</small></p>
@@ -98,11 +112,11 @@
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>We have to escape the backslashes, that’s why it looks goofy</p>
 
@@ -125,11 +139,11 @@
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <h2 id="-insert-"><em>insert</em></h2>
 <p><small>Prameters</small></p>
@@ -143,11 +157,11 @@
         </li>
         
         
-        <li id="section-6">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>socket.io returns text as an ArrayBuffer object, convert if needed</p>
 
@@ -163,11 +177,11 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Did we get a URL with the telnet data?
 They come in the form <a href="http://domain.tld:7000/123/">http://domain.tld:7000/123/</a>.</p>
@@ -179,11 +193,11 @@ They come in the form <a href="http://domain.tld:7000/123/">http://domain.tld:70
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>We got a url, so load it for the user</p>
 
@@ -195,11 +209,11 @@ They come in the form <a href="http://domain.tld:7000/123/">http://domain.tld:70
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Sometimes URLs are the last part of a text segment</p>
 
@@ -207,23 +221,6 @@ They come in the form <a href="http://domain.tld:7000/123/">http://domain.tld:70
             
             <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> start_index &gt; end_index
         end_index = line.lastIndexOf(end)
-        url = line.substring(start_index, end_index)</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-10">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
-              </div>
-              <p>Kindly remove the URL from the user’s text data stream</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>        line = line.substring(<span class="hljs-number">0</span>, start_index - <span class="hljs-number">1</span>)
-      <span class="hljs-keyword">else</span>
         url = line.substring(start_index, end_index)</pre></div></div>
             
         </li>
@@ -239,7 +236,9 @@ They come in the form <a href="http://domain.tld:7000/123/">http://domain.tld:70
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        line = line.substring(line.indexOf(end) + <span class="hljs-number">2</span>, line.length)</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        line = line.substring(<span class="hljs-number">0</span>, start_index - <span class="hljs-number">1</span>)
+      <span class="hljs-keyword">else</span>
+        url = line.substring(start_index, end_index)</pre></div></div>
             
         </li>
         
@@ -249,6 +248,21 @@ They come in the form <a href="http://domain.tld:7000/123/">http://domain.tld:70
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Kindly remove the URL from the user’s text data stream</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        line = line.substring(line.indexOf(end) + <span class="hljs-number">2</span>, line.length)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Change the url of the Xpress browser iframe to the new URL, if we
 are in a standard Xpress session.</p>
@@ -263,11 +277,11 @@ are in a standard Xpress session.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Return the URL for testing</p>
 
@@ -278,11 +292,11 @@ are in a standard Xpress session.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <h2 id="-user_output-"><em>user_output</em></h2>
 <p><small>Prameters</small></p>
@@ -297,11 +311,11 @@ are in a standard Xpress session.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Append to backlog, then erase console
 If there is no text already, don’t add a newline.</p>
@@ -317,11 +331,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <h2 id="-input_handler-"><em>input_handler</em></h2>
 <p><small>Prameters</small></p>
@@ -337,11 +351,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Handle ctrl-l, clear the screen</p>
 
@@ -354,11 +368,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Up arrow, go up through the previous line buffer</p>
 
@@ -374,11 +388,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Down arrow, go down through the previous line buffer</p>
 
@@ -393,11 +407,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>When user is back to start of line_buf array, display blank input area</p>
 
@@ -409,11 +423,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Handle newlines/enter key presses</p>
 
@@ -425,11 +439,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>do nothing if blank string entered</p>
 
@@ -441,11 +455,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-23">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>If limit on the line buffer is not reached, push the input</p>
 
@@ -458,11 +472,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-24">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Reset the input area and the previous line buffer index</p>
 
@@ -473,11 +487,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Send the user input to the socket.io output handler in moo.coffee</p>
 
@@ -489,11 +503,11 @@ If there is no text already, don’t add a newline.</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>The native JS array works as a LIFO stack. To pop the last element we
 have to reverse it first, pop the element, and reverse it again.</p>
@@ -509,11 +523,11 @@ have to reverse it first, pop the element, and reverse it again.</p>
         </li>
         
         
-        <li id="section-27">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <h2 id="-scroll_backlog-"><em>scroll_backlog</em></h2>
 <p>Keep scroll position at bottom of scroll buffer when new text is added</p>
@@ -527,11 +541,11 @@ have to reverse it first, pop the element, and reverse it again.</p>
         </li>
         
         
-        <li id="section-28">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <h2 id="-scroll_backlog-"><em>scroll_backlog</em></h2>
 <p>Scrolls the backlog such that the backlog is cleared</p>
@@ -546,11 +560,11 @@ have to reverse it first, pop the element, and reverse it again.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <p>Add extra newline to be safe, textareas don’t align to line height</p>
 
@@ -562,11 +576,11 @@ have to reverse it first, pop the element, and reverse it again.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <h2 id="-set_line_buffer-"><em>set_line_buffer</em></h2>
 <p><small>Prameters</small></p>
@@ -581,11 +595,11 @@ have to reverse it first, pop the element, and reverse it again.</p>
         </li>
         
         
-        <li id="section-31">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <h2 id="-arraybuf_to_string-"><em>arraybuf_to_string</em></h2>
 <p><small>Prameters</small></p>
@@ -601,11 +615,11 @@ convert it to UTF-8 text.</p>
         </li>
         
         
-        <li id="section-32">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <h2 id="-error-"><em>error</em></h2>
 <p>Displays error message to user</p>
@@ -620,11 +634,11 @@ convert it to UTF-8 text.</p>
         </li>
         
         
-        <li id="section-33">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <h2 id="-disconnect-"><em>disconnect</em></h2>
 <p>Clears the backlog and displays disconnect message to user</p>

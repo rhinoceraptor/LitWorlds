@@ -128,7 +128,7 @@ walk = (dir, done) ->
 # **and** string as a color
 # **and** optional string as an explanation
 # **then** builds a statement and logs to console.
-# 
+#
 log = (message, color, explanation) -> console.log color + message + reset + ' ' + (explanation or '')
 
 # ## *launch*
@@ -231,7 +231,7 @@ jasmine = (options, callback) ->
   options.push '--forceexit'
   options.push '--coffee'
   options.reverse()
-  
+
   launch 'jasmine-node', options, callback
 
 

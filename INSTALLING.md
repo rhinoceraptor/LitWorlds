@@ -279,6 +279,3 @@ if (!caller_perms().wizard)
 
 You now should have a functioning enCore Xpress server that will work on modern browsers, and mobile devices.
 
-
-
-
