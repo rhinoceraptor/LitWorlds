@@ -30,7 +30,7 @@ class text_handler
     @line_buf = new Array()
 
   # ## *insert*
-  # <small>Prameters</small>
+  # <small>Parameters</small>
   #
   # **line** string
   #
@@ -65,13 +65,12 @@ class text_handler
       # Change the url of the Xpress browser iframe to the new URL, if we
       # are in a standard Xpress session.
       if top.frames["web_frame"]?
-        console.log "reload web_frame to " + url
         top.frames["web_frame"].location = url
     @user_output(line)
     # Return the URL for testing
     return url
   # ## *user_output*
-  # <small>Prameters</small>
+  # <small>Parameters</small>
   #
   # **line** string
   #
@@ -87,7 +86,7 @@ class text_handler
     @scroll_backlog()
 
   # ## *input_handler*
-  # <small>Prameters</small>
+  # <small>Parameters</small>
   #
   # **e** Event
   #
@@ -162,9 +161,9 @@ class text_handler
     # Add extra newline to be safe, textareas don't align to line height
     newlines = Array(parseInt(height) + 1).join("\n")
     @insert(newlines)
-  
+
   # ## *set_line_buffer*
-  # <small>Prameters</small>
+  # <small>Parameters</small>
   #
   # **length** size to set line_buf_length
   #
@@ -173,7 +172,7 @@ class text_handler
     @line_buf_length = length
 
   # ## *arraybuf_to_string*
-  # <small>Prameters</small>
+  # <small>Parameters</small>
   #
   # **buf** ArrayBuffer
   #
