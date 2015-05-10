@@ -72,6 +72,7 @@ Next, move the executable for LambdaMOO, and the enCore database into the direct
 $ cp moo restart.sh /usr/local/moo/bin
 $ cd ..
 $ cp encore/enCore.db /usr/local/moo/bin/
+$ cp -r encore /usr/local/moo/
 ```
 
 Install an alias for enCore assets in Apache:
