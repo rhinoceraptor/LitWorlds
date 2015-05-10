@@ -170,8 +170,8 @@ nohup ./moo $1.db $1.db.new $2 >> $1.log 2>&1 &
 
 Add the following:
 ```
-forever stopall
-forever start /usr/local/moo/server/dist/server.js
+/usr/local/bin/forever stopall
+/usr/local/bin/forever start /usr/local/moo/server/dist/server.js
 ```
 
 The only thing left to do it modify two verbs in enCore to replace the Java applet with the new client.
