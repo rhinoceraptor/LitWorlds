@@ -171,6 +171,16 @@ forever start /usr/local/moo/client/dist/server.js
 
 The only thing left to do it modify two verbs in enCore to replace the Java applet with the new client.
 
+If yoour Apache server is not running on port 80, you will need to modify the base_url variable for each verb so that the correct port is used, for example:
+
+```
+base_url = tostr("http://", $network.site, "/");
+```
+For port 8080, change to
+```
+base_url = tostr("http://", $network.site, ":8080/");
+```
+
 Log in to enCore web as the wizard, with a Java applet-enabled browser. Firefox with Iced Tea plugin works under Linux.
 
 Click the "Program" button in the toolbar. Enter "#147" in the textbox, and click "View".
@@ -197,7 +207,7 @@ if (!caller_perms().wizard)
     base_url = tostr("http://", $network.site, "/");
     style = 0;
     "CSS for the JavaScript MOO client";
-    body = {tostr("<link rel=\"stylesheet\" href=\"", base_url, "encore/client/lib/css/lw.css\">")};
+    body = {tostr("<link rel=\"stylesheet\" href=\"", base_url, "encore/client/dist/lib/lw.css\">")};
     "JavaScript object containing parameters for the Javascript MOO telnet client";
     body = {@body, tostr("<script type=\"text/javascript\"> ")};
     body = {@body, tostr("var params = {")};
@@ -247,7 +257,7 @@ if (!caller_perms().wizard)
     base_url = tostr("http://", $network.site, "/");
     style = 0;
     "CSS for the JavaScript MOO client";
-    body = {tostr("<link rel=\"stylesheet\" href=\"", base_url, "encore/client/lib/css/lw.css\">")};
+    body = {tostr("<link rel=\"stylesheet\" href=\"", base_url, "encore/client/dist/lib/lw.css\">")};
     "JavaScript object containing parameters for the Javascript MOO telnet client";
     body = {@body, tostr("<script type=\"text/javascript\"> ")};
     body = {@body, tostr("var params = {")};
