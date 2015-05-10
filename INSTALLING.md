@@ -71,7 +71,7 @@ Next, move the executable for LambdaMOO, and the enCore database into the direct
 ```
 $ cp moo restart.sh /usr/local/moo/bin
 $ cd ..
-$ cp encore/enCore.db /usr/local/moo/
+$ cp encore/enCore.db /usr/local/moo/bin/
 ```
 
 Install an alias for enCore assets in Apache:
@@ -86,6 +86,7 @@ Now you have a fully functionin (Java based) enCore server. To run it do:
 
 ```
 $ cd /usr/local/moo/bin
+$ chmod +x restart.sh
 $ ./restart.sh enCore
 ```
 
