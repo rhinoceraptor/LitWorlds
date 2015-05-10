@@ -7,6 +7,6 @@
     "docco": "^0.7.0"
   },
   "scripts": {
-    "setup": "npm install && ./node_modules/coffee-script/bin/cake build && ./node_modules/coffee-script/bin/cake docs"
+    "setup": "npm install && ./node_modules/coffee-script/bin/cake build"
   }
 }

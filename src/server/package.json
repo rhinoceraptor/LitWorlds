@@ -10,6 +10,6 @@
   },
   "scripts": {
     "start": "node dist/server.js",
-    "setup": "npm install && ./node_modules/coffee-script/bin/cake build && ./node_modules/coffee-script/bin/cake docs"
+    "setup": "npm install && ./node_modules/coffee-script/bin/cake build"
   }
 }
