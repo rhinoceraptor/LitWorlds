@@ -6,7 +6,7 @@ I will use
 ```
 $ command
 ```
-to denote commands that are to be run as a normal user, and
+to denote commands that are to be run as the moo user, and
 ```
 # command
 ```
@@ -161,7 +161,7 @@ Now, for convenience in running the server, we will add a line to the restart.sh
 
 Starting after the line 42, which reads
 ```
-file: restart.sh
+file: /usr/local/moo/bin/restart.sh
 ----------------
 
 
@@ -174,9 +174,20 @@ Add the following:
 /usr/local/bin/forever start /usr/local/moo/server/dist/server.js
 ```
 
+Next, add a cron entry to run ```restart,sh``` on boot:
+
+```
+$ crontab -e
+```
+Pick your favorite editor for cron, and add:
+
+```
+@reboot cd /usr/local/moo/bin/ && ./restart.sh enCore
+```
+
 The only thing left to do it modify two verbs in enCore to replace the Java applet with the new client.
 
-If yoour Apache server is not running on port 80, you will need to modify the base_url variable for each verb so that the correct port is used, for example:
+If your Apache server is not running on port 80, you will need to modify the base_url variable for each verb so that the correct port is used, for example:
 
 ```
 base_url = tostr("http://", $network.site, "/");
